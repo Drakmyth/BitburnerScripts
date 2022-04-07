@@ -7,7 +7,7 @@ This repository contains scripts I have written while playing the idle hacking g
 Functional scripts are scripts that are either facilitate automation or are intended to be executed directly to display information.
 
 ### daemon.js
-Simple weaken-grow-hack script. Takes the hostname as a parameter. Has hardcoded money and security thresholds at 0.75 and 5 respectively.
+Simple weaken-grow-hack script. Takes the hostname as a parameter. Has hardcoded money and security thresholds at 0.75 and 5 respectively. There's typically no reason to run this script manually (though you can) because it is deployed and executed automatically by `flood.js`.
 
 ```
 run daemon.js home
