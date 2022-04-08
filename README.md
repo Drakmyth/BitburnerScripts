@@ -21,7 +21,7 @@ run flood.js
 ```
 
 ### map.js
-Prints a recursive network tree to the terminal. Will start at `home` if no argument is provided, but providing a hostname will start the map from the specified host.
+Prints a recursive network tree to the terminal. Will start at `home` if no argument is provided, but providing a hostname will start the map from the specified host. Can also supply a `-o` or `--organization` flag to print the organization name alongside the host name for each server found.
 
 ```
 run map.js home
