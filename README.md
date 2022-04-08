@@ -27,6 +27,13 @@ Prints a recursive network tree to the terminal. Hardcoded to start at `home`.
 run map.js
 ```
 
+### servers.js
+Purchases and/or upgrades servers to the largest amount of RAM the player can afford at the time the script is executed. Always purchases the maximum number of servers, and keeps all servers at the same amount of RAM. Automatically kills any running scripts on existing servers, but will not automatically run scripts on the newly purchased servers.
+
+```
+run servers.js
+```
+
 ## Library Scripts
 Library scripts are not themselves executable, but contain functions that are intended to be imported into other scripts.
 
