@@ -43,6 +43,34 @@ export async function main(ns) {
 }
 ```
 
+## Visual Studio Code Integration
+These scripts can be copy-pasted into the game, or you can edit them in VS Code and have them update in the game automatically!
+
+1. Install the [Bitburner VSCode Integration](https://marketplace.visualstudio.com/items?itemName=bitburner.bitburner-vscode-integration) extension
+1. Inside the Bitburner game, in the top menu bar:
+    1. Enable the API Server by selecting `API Server -> Enable Server`
+    1. Enable Autostart by selecting `API Server -> Autostart` so this works automatically on whenever you open the game
+    1. Select `API Server -> Copy Auth Token` to copy the authentication token to your clipboard
+1. In this directory create a `.vscode/settings.json` file with the following contents
+    ```json
+    {
+        "bitburner.authToken": "<YOUR_AUTH_TOKEN_HERE>",
+        "bitburner.scriptRoot": ".",
+        "bitburner.fileWatcher.enable": true,
+        "bitburner.showPushSuccessNotification": true,
+        "bitburner.showFileWatcherEnabledNotification": true,
+    }
+    ```
+
+Additional information is available in the [bitburner-vscode](https://github.com/bitburner-official/bitburner-vscode) repository.
+
+## Enabling Intellisense
+This repository is set up to enable Intellisense for the NS global object used in the various game scripts. However, I don't want to include that file here as it is part of the base game. To enabled Intellisense, follow these steps:
+
+1. Download [NetscriptDefinitions.d.ts](https://github.com/danielyxie/bitburner/blob/dev/src/ScriptEditor/NetscriptDefinitions.d.ts) into the root folder
+1. Add `declare global { const NS: NS; }` before the first line in that file
+1. Add `"javascript.preferences.importModuleSpecifier": "non-relative"` to your `.vscode/settings.json` file
+
 ## License
 
 These scripts are licensed under the MIT License (MIT). See LICENSE for details.
