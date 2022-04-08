@@ -7,31 +7,50 @@ This repository contains scripts I have written while playing the idle hacking g
 Functional scripts are scripts that are either facilitate automation or are intended to be executed directly to display information.
 
 ### daemon.js
-Simple weaken-grow-hack script. Takes the hostname as a parameter. Has hardcoded money and security thresholds at 0.75 and 5 respectively. There's typically no reason to run this script manually (though you can) because it is deployed and executed automatically by `flood.js`.
-
 ```
-run daemon.js home
+$ run daemon.js [HOST]
+
+Executes a weaken-grow-hack loop against HOST. Available money threshold 75% of
+maximum money. Security threshold is minimum security level + 5.
 ```
 
 ### flood.js
-Automates the deployment of `daemon.js` across the network. Will recursively crawl the network cracking into any server it finds, then uploading and executing `daemon.js` on that server using enough threads to saturate the system. Currently supports opening up to 3 ports (SSH, FTP, SMTP). If a server requires more ports than that it will be skipped. If `daemon.js` is already running on a server, the existing process will be killed and `daemon.js` will be reuploaded and re-executed. This allows for deployment of updated versions of `daemon.js` across the network. Can optionally be supplied with `-v` or `--verbose` flags for much more detailed logging, though this significantly slows the execution of the script.
-
 ```
-run flood.js
+$ run flood.js [OPTION]
+
+Recursively deploys and executes daemon.js to all servers on the network. Will
+automatically crack servers to gain root access. If a server is unable to be
+cracked, it will be skipped. Already existing instances of daemon.js will be
+replaced with the latest version. Currently supports opening up to 3 ports during
+a cracking attempt (SSH, FTP, SMTP).
+
+Options:
+-v, --verbose           Print extra detailed logging
 ```
 
 ### map.js
-Prints a recursive network tree to the terminal. Will start at `home` if no argument is provided, but providing a hostname will start the map from the specified host. Can also supply a `-o` or `--organization` flag to print the organization name alongside the host name for each server found.
-
 ```
-run map.js home
+$ run map.js [OPTION] [HOST]
+
+Displays a recursive network tree starting at HOST (if provided, otherwise "home").
+
+Options:
+-m, --money             Show money available on each server
+-o, --organization      Show the organization name of each server
 ```
 
 ### servers.js
-Purchases and/or upgrades servers to the largest amount of RAM the player can afford at the time the script is executed. Always purchases the maximum number of servers, and keeps all servers at the same amount of RAM. Automatically kills any running scripts on existing servers, but will not automatically run scripts on the newly purchased servers.
-
 ```
-run servers.js
+$ run servers.js [OPTION]
+
+Purchases or upgrades servers to the maximum amount of RAM affordable. Always
+purchases maximum number of servers and keeps all server resources equivalent.
+Running scripts will be terminated before upgrade.
+
+Options:
+-s, --simulate          Simulates the upgrade process to display the required
+                        cost without purchasing new servers or terminating
+                        existing scripts.
 ```
 
 ## Library Scripts

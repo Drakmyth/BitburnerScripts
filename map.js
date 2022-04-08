@@ -4,12 +4,33 @@ function print_host(ns, prefix, host) {
 
 	let flags = ns.flags([
 		['o', false],
-		['organization', false]
+		['organization', false],
+		['m', false],
+		['money', false]
 	]);
 
 	let show_organization = flags['o'] || flags['organization'];
+	let show_money = flags['m'] || flags['money'];
+	let server = ns.getServer(host);
+
+	if (show_organization || show_money) {
+		label += " (";
+	}
+
 	if (show_organization) {
-		label += " (" + ns.getServer(host).organizationName + ")";
+		label += server.organizationName;
+	}
+
+	if (show_organization && show_money) {
+		label += " - ";
+	}
+
+	if (show_money) {
+		label += ns.nFormat(server.moneyAvailable, '($0.000a)');
+	}
+
+	if (show_organization || show_money) {
+		label += ")";
 	}
 
 	ns.tprint(label);
