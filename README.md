@@ -45,7 +45,8 @@ $ run servers.js [OPTION]
 
 Purchases or upgrades servers to the maximum amount of RAM affordable. Always
 purchases maximum number of servers and keeps all server resources equivalent.
-Running scripts will be terminated before upgrade.
+Running scripts will be terminated before upgrade. Will only purchase servers
+able to run at least one thread of daemon.js.
 
 Options:
 -s, --simulate          Simulates the upgrade process to display the required

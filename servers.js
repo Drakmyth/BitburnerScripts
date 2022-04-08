@@ -20,7 +20,7 @@ function delete_servers(ns) {
 /** @param {NS} ns */
 function get_current_server_ram(ns) {
     let servers = ns.getPurchasedServers();
-    return servers.length > 0 ? ns.getServerMaxRam(servers[0]) : 0.5;
+    return servers.length > 0 ? ns.getServerMaxRam(servers[0]) : 0;
 }
 
 /** @param {NS} ns */
@@ -40,8 +40,15 @@ export async function main(ns) {
     let simulate = flags['s'] || flags['simulate'];
 
     let current_ram = get_current_server_ram(ns);
+    let daemon_ram = ns.getScriptRam("daemon.js");
+
+    let minimum_ram = 1
+    while (minimum_ram < daemon_ram) {
+        minimum_ram *= 2
+    }
+
     ns.tprint("Current Server RAM: " + current_ram);
-    let next_upgrade = current_ram;
+    let next_upgrade = current_ram < minimum_ram ? minimum_ram : current_ram * 2;
     while(can_afford_upgrade(ns, next_upgrade * 2)) {
         next_upgrade *= 2;
     }
