@@ -50,8 +50,9 @@ function walk(ns, host, prefix="") {
 /** @param {NS} ns */
 export async function main(ns) {
 	let host = "home";
-	if (ns.args.length > 0) {
-		host = ns.args[0];
+	let args = ns.args.filter(a => a[0] != '-');
+	if (args.length > 0) {
+		host = args[0];
 	}
 	ns.tprint(host);
 	walk(ns, host);
