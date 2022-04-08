@@ -47,7 +47,9 @@ export async function main(ns) {
     }
     
     if (current_ram === next_upgrade) {
-        ns.tprint("Next upgrade at $" + ns.getPurchasedServerCost(next_upgrade * 2) * ns.getPurchasedServerLimit());
+        let upgrade_cost = ns.getPurchasedServerCost(next_upgrade * 2) * ns.getPurchasedServerLimit();
+        let formatted_cost = ns.nFormat(upgrade_cost, '($0.000a)')
+        ns.tprint("Next upgrade at " + formatted_cost);
         return;
     }
     
