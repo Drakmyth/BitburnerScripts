@@ -45,7 +45,7 @@ import * as log from "log.lib.js";
 
 /** @param {NS} ns **/
 export async function main(ns) {
-	log.info("This will always print to terminal.")
+    log.info("This will always print to terminal.")
     log.verbose("This will only print if -v or --verbose are provided.")
 }
 ```
