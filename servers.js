@@ -32,11 +32,18 @@ function can_afford_upgrade(ns, ram) {
 /** @param {NS} ns */
 export async function main(ns) {
 
+    let flags = ns.flags([
+        ['s', false],
+        ['simulate', false]
+    ]);
+
+    let simulate = flags['s'] || flags['simulate'];
+
     let current_ram = get_current_server_ram(ns);
     ns.tprint("Current Server RAM: " + current_ram);
     let next_upgrade = current_ram;
     while(can_afford_upgrade(ns, next_upgrade * 2)) {
-        next_upgrade *= 2
+        next_upgrade *= 2;
     }
     
     if (current_ram === next_upgrade) {
@@ -46,8 +53,10 @@ export async function main(ns) {
     
     ns.tprint("Next Affordable Upgrade: " + next_upgrade);
 
-    delete_servers(ns);
-    ns.tprint("Buying upgraded servers...");
-    buy_servers(ns, next_upgrade);
-    ns.tprint("Servers upgraded. Make sure to run flood.js.");
+    if (!simulate) {
+        delete_servers(ns);
+        ns.tprint("Buying upgraded servers...");
+        buy_servers(ns, next_upgrade);
+        ns.tprint("Servers upgraded. Make sure to run flood.js.");
+    }
 }
