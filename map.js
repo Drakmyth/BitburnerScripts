@@ -28,6 +28,10 @@ function walk(ns, host, prefix="") {
 
 /** @param {NS} ns */
 export async function main(ns) {
-	ns.tprint("home");
-	walk(ns, "home");
+	let host = "home";
+	if (ns.args.length > 0) {
+		host = ns.args[0];
+	}
+	ns.tprint(host);
+	walk(ns, host);
 }
