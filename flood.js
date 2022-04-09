@@ -18,27 +18,32 @@ function find_hosts(ns, current="home", all_hosts=new Set()) {
 
 /** @param {NS} ns **/
 export async function main(ns) {
-    let daemon = "daemon.js"
-    let daemon_ram = ns.getScriptRam(daemon);
     let hosts = find_hosts(ns);
+    let minMoneyThreshold = 1000000;
     log.info(ns, hosts);
-
+    
     for (let host of hosts) {
+        let script = "daemon.js";
+        if (ns.getServerMaxMoney(host) < minMoneyThreshold) {
+            script = "dbot.js";
+        }
+        let script_ram = ns.getScriptRam(script);
+
         log.verbose(ns, "Host: " + host);
-        if (!ns.scriptRunning(daemon, host)) {
+        if (!ns.scriptRunning(script, host)) {
             let cracked = await crack_host(ns, host);
             log.verbose(ns, "Host cracked: " + cracked);
             if (! cracked) continue;
-            log.verbose(ns, "Uploading daemon to host...");
-            await ns.scp(daemon, "home", host);
+            log.verbose(ns, "Uploading " + script + " to host...");
+            await ns.scp(script, "home", host);
             log.verbose(ns, "Upload complete");
-            let thread_count = Math.floor(ns.getServerMaxRam(host) / daemon_ram);
+            let thread_count = Math.floor(ns.getServerMaxRam(host) / script_ram);
             log.verbose(ns, "Killing existing processes...");
             ns.killall(host);
-            log.verbose(ns, "Running daemon on host...");
+            log.verbose(ns, "Running " + script + " on host...");
             if (thread_count > 0) {
-                ns.exec(daemon, host, thread_count, host);
-                log.verbose(ns, "Daemon running\n");
+                ns.exec(script, host, thread_count, host);
+                log.verbose(ns, script + " running\n");
             }
         }
     }

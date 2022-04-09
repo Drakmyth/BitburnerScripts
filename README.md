@@ -14,15 +14,27 @@ Executes a weaken-grow-hack loop against HOST. Available money threshold 75% of
 maximum money. Security threshold is minimum security level + 5.
 ```
 
+### dbot.js
+```
+$ run dbot.js
+
+A variant of daemon.js that crawls the network looking for servers with at least
+75% of their maximum money, and will weaken and hack those servers that it finds.
+Where daemon.js is often used to cause a server to hack itself, dbot.js is used
+on servers that do not have their own money to hack to enable those servers to hack
+others.
+```
+
 ### flood.js
 ```
 $ run flood.js [OPTION]
 
-Recursively deploys and executes daemon.js to all servers on the network. Will
-automatically crack servers to gain root access. If a server is unable to be
-cracked, it will be skipped. Already existing instances of daemon.js will be
-replaced with the latest version. Currently supports opening up to 3 ports during
-a cracking attempt (SSH, FTP, SMTP).
+Recursively deploys and executes either daemon.js or dbot.js (depending on the
+server's maximum money) to all servers on the network. Will automatically crack
+servers to gain root access. If a server is unable to be cracked, it will be
+skipped. Already existing instances of daemon.js and dbot.js will be replaced
+with the latest versions. Currently supports opening up to 3 ports during a
+cracking attempt (SSH, FTP, SMTP).
 
 Options:
 -v, --verbose           Print extra detailed logging
