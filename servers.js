@@ -1,9 +1,9 @@
 /** @param {NS} ns */
-function buy_servers(ns, ram) {
+async function buy_servers(ns, ram) {
     while(ns.getPurchasedServers().length < ns.getPurchasedServerLimit()) {
         let bought = ns.purchaseServer("foo", ram) !== "";
         if (!bought) {
-            ns.sleep(5000);
+            await ns.sleep(5000);
         }
     }
 }
@@ -70,7 +70,7 @@ export async function main(ns) {
     if (!simulate) {
         delete_servers(ns);
         ns.tprint("Buying upgraded servers...");
-        buy_servers(ns, next_upgrade);
+        await buy_servers(ns, next_upgrade);
         ns.tprint("Servers upgraded. Make sure to run flood.js.");
     }
 }
