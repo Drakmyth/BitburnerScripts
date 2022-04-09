@@ -6,14 +6,17 @@ function print_host(ns, prefix, host) {
 		['o', false],
 		['organization', false],
 		['m', false],
-		['money', false]
+		['money', false],
+		['r', false],
+		['root', false]
 	]);
 
 	let show_organization = flags['o'] || flags['organization'];
 	let show_money = flags['m'] || flags['money'];
+	let show_root = flags['r'] || flags['root'];
 	let server = ns.getServer(host);
 
-	if (show_organization || show_money) {
+	if (show_organization || show_money || show_root) {
 		label += " (";
 	}
 
@@ -21,7 +24,7 @@ function print_host(ns, prefix, host) {
 		label += server.organizationName;
 	}
 
-	if (show_organization && show_money) {
+	if (show_organization && (show_money || show_root)) {
 		label += " - ";
 	}
 
@@ -29,7 +32,15 @@ function print_host(ns, prefix, host) {
 		label += ns.nFormat(server.moneyAvailable, '($0.000a)');
 	}
 
-	if (show_organization || show_money) {
+	if (show_money && show_root) {
+		label += " - ";
+	}
+
+	if (show_root) {
+		label += server.hasAdminRights ? "ROOT" : "USER";
+	}
+
+	if (show_organization || show_money || show_root) {
 		label += ")";
 	}
 
