@@ -33,8 +33,7 @@ Recursively deploys and executes either daemon.js or dbot.js (depending on the
 server's maximum money) to all servers on the network. Will automatically crack
 servers to gain root access. If a server is unable to be cracked, it will be
 skipped. Already existing instances of daemon.js and dbot.js will be replaced
-with the latest versions. Currently supports opening up to 3 ports during a
-cracking attempt (SSH, FTP, SMTP).
+with the latest versions.
 
 Options:
 -v, --verbose           Print extra detailed logging

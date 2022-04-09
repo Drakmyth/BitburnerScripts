@@ -72,6 +72,12 @@ async function crack_host(ns, host) {
         } else if (! server.smtpPortOpen && ns.fileExists("relaysmtp.exe")) {
             log.verbose(ns, "Opening SMTP port...");
             ns.relaysmtp(host);
+        } else if (! server.httpPortOpen && ns.fileExists("httpworm.exe")) {
+            log.verbose(ns, "Opening HTTP port...");
+            ns.httpworm(host);
+        } else if (! server.sqlPortOpen && ns.fileExists("sqlinject.exe")) {
+            log.verbose(ns, "Opening SQL port...");
+            ns.sqlinject(host);
         } else {
             log.verbose(ns, "Can't open more ports.");
             break;
