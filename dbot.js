@@ -34,5 +34,7 @@ export async function main(ns) {
                 await ns.hack(target);
             }
         }
+
+        await ns.sleep(5000);
 	}
 }
