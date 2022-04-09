@@ -16,32 +16,20 @@ function print_host(ns, prefix, host) {
 	let show_root = flags['r'] || flags['root'];
 	let server = ns.getServer(host);
 
-	if (show_organization || show_money || show_root) {
-		label += " (";
-	}
+	let tags = []
 
 	if (show_organization) {
-		label += server.organizationName;
+		tags.push(server.organizationName);
 	}
-
-	if (show_organization && (show_money || show_root)) {
-		label += " - ";
-	}
-
 	if (show_money) {
-		label += ns.nFormat(server.moneyAvailable, '($0.000a)');
+		tags.push(ns.nFormat(server.moneyAvailable, '($0.000a)'));
 	}
-
-	if (show_money && show_root) {
-		label += " - ";
-	}
-
 	if (show_root) {
-		label += server.hasAdminRights ? "ROOT" : "USER";
+		tags.push(server.hasAdminRights ? "ROOT" : "USER");
 	}
 
-	if (show_organization || show_money || show_root) {
-		label += ")";
+	if (tags.length > 0) {
+		label += " (" + tags.join(" - ") + ")";
 	}
 
 	ns.tprint(label);
