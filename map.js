@@ -38,7 +38,10 @@ function print_host(ns, prefix, host) {
 /** @param {NS} ns */
 function walk(ns, host, prefix="") {
 	let servers = ns.scan(host);
-	servers.shift();
+	if (host != "home") {
+		servers.shift();
+	}
+	
 	for (let [index, next] of servers.entries()) {
 		print_host(ns, prefix, next);
 		let next_prefix = prefix + (index < servers.length - 1 ? "  |  " : "     ")
