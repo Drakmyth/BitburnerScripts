@@ -21,6 +21,8 @@ export async function main(ns) {
 
     while(true) {
         for (let target of targets) {
+
+            if (! ns.hasRootAccess(target)) continue;
             if (ns.getHackingLevel() < ns.getServerRequiredHackingLevel(target)) continue;
 
             let moneyThresh = ns.getServerMaxMoney(target) * 0.75;
