@@ -9,6 +9,7 @@ class Upgrade {
 
 /** @param {NS} ns **/
 export async function main(ns) {
+    ns.disableLog("sleep");
     while (true) {
         let maximumCost = ns.getPlayer().money * 0.25;
         let purchaseUpgrade = new Upgrade("purchase", -1, ns.hacknet.getPurchaseNodeCost(), () => { ns.hacknet.purchaseNode() });
@@ -34,12 +35,11 @@ export async function main(ns) {
             }
         }
 
-        if (bestUpgrade.type === "purchase") {
-            ns.print("Purchasing node for " + ns.nFormat(bestUpgrade.cost, '($0.000a)') + "...");
-        } else if (bestUpgrade.type !== "none") {
-            ns.print("Upgrading hacknet-node-" + bestUpgrade.node + " " + bestUpgrade.type + " for " + ns.nFormat(bestUpgrade.cost, '($0.000a)') + "...");
-        }
-
         await bestUpgrade.func();
+        if (bestUpgrade.type === "purchase") {
+            ns.print("Purchased node for " + ns.nFormat(bestUpgrade.cost, '($0.000a)') + ".");
+        } else if (bestUpgrade.type !== "none") {
+            ns.print("Upgraded hacknet-node-" + bestUpgrade.node + " " + bestUpgrade.type + " for " + ns.nFormat(bestUpgrade.cost, '($0.000a)') + ".");
+        }
     }
 }
