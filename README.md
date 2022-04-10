@@ -1,10 +1,22 @@
 # Bitburner Scripts
 [![License](https://img.shields.io/github/license/Drakmyth/BitburnerScripts)](https://github.com/Drakmyth/BitburnerScripts/blob/master/LICENSE.md)
 
-This repository contains scripts I have written while playing the idle hacking game [Bitburner](https://store.steampowered.com/app/1812820/Bitburner/). Scripts are divided into two types: `Functional Scripts` and `Library Scripts`.
+This repository contains scripts I have written while playing the idle hacking game [Bitburner](https://store.steampowered.com/app/1812820/Bitburner/). Scripts are divided into three types: `Application Scripts`, `Functional Scripts` and `Library Scripts`.
+
+## Appliction Scripts
+Application scripts will persistently run in the background and continue operating until terminated. Use `tail` to observe the logs of a script for status.
+
+### hacknet.app.js
+```
+$ run hacknet.app.js
+
+Automatically purchases or upgrades hacknet nodes. Will continuously buy the most
+expensive upgrade available or a new hacknet node that costs less than 25% of the
+player's current money.
+```
 
 ## Functional Scripts
-Functional scripts are scripts that are either facilitate automation or are intended to be executed directly to display information.
+Functional scripts are scripts that are either facilitate automation or are intended to be executed directly to display information. They will terminate automatically once they have completed execution.
 
 ### daemon.js
 ```
