@@ -25,6 +25,13 @@ $ run contracts/ast2.js HOST FILENAME
 Solves and submits the answer for the `Algorithmic Stock Trader II` contract.
 ```
 
+### contracts/moi.js
+```
+$ run contracts/moi.js HOST FILENAME
+
+Solves and submits the answer for the `Merge Overlapping Intervals` contract.
+```
+
 ### daemon.js
 ```
 $ run daemon.js [HOST]
