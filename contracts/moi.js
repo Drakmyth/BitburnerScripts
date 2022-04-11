@@ -26,5 +26,8 @@ export async function main(ns) {
     }
 
     let result = ns.codingcontract.attempt(data, contract, host, { returnReward: true })
-    ns.print(result === "" ? "Incorrect answer: " + data_to_str(data) : result);
+    let success = result !== "";
+    let msg = !success ? "Incorrect answer: " + data_to_str(data) : result;
+    let variant = success ? "success": "error";
+    ns.toast(msg, variant, 5000);
 }

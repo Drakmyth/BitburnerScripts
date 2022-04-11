@@ -73,6 +73,10 @@ export async function main(ns) {
     let contract = ns.args[1];
     let timeline = new Timeline(ns.codingcontract.getData(contract, host));
     let profit =  timeline.calculate_profit();
-    let result = ns.codingcontract.attempt(profit, contract, host, { returnReward: true })
-    ns.print(result === "" ? "Incorrect answer: " + profit : result);
+
+    let result = ns.codingcontract.attempt(profit, contract, host, { returnReward: true });
+    let success = result !== "";
+    let msg = !success ? "Incorrect answer: " + profit : result;
+    let variant = success ? "success": "error";
+    ns.toast(msg, variant, 5000);
 }
