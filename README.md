@@ -18,6 +18,14 @@ player's current money.
 ## Functional Scripts
 Functional scripts are scripts that are either facilitate automation or are intended to be executed directly to display information. They will terminate automatically once they have completed execution.
 
+### contracts.js
+```
+$ run contracts.js [HOST]
+
+Crawls the network to find coding contracts and prints what it finds to the
+terminal. HOST defaults to `home` if not provided.
+```
+
 ### contracts/ast2.js
 ```
 $ run contracts/ast2.js HOST FILENAME
