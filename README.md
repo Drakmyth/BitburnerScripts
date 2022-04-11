@@ -40,6 +40,13 @@ $ run contracts/moi.js HOST FILENAME
 Solves and submits the answer for the `Merge Overlapping Intervals` contract.
 ```
 
+### contracts/mpst.js
+```
+$ run contracts/mpst.js HOST FILENAME
+
+Solves and submits the answer for the `Minimum Path Sum in a Triangle` contract.
+```
+
 ### contracts/sms.js
 ```
 $ run contracts/sms.js HOST FILENAME
