@@ -40,6 +40,13 @@ $ run contracts/moi.js HOST FILENAME
 Solves and submits the answer for the `Merge Overlapping Intervals` contract.
 ```
 
+### contracts/sms.js
+```
+$ run contracts/sms.js HOST FILENAME
+
+Solves and submits the answer for the `Subarray with Maximum Sum` contract.
+```
+
 ### daemon.js
 ```
 $ run daemon.js [HOST]
