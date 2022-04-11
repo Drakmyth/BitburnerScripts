@@ -18,7 +18,7 @@ export async function main(ns) {
         data.shift();
     }
 
-    if (Math.sign(data[data.length - 1])) {
+    if (Math.sign(data[data.length - 1]) < 0) {
         data.pop();
     }
 
