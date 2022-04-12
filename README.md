@@ -26,6 +26,13 @@ Crawls the network to find coding contracts and prints what it finds to the
 terminal. HOST defaults to `home` if not provided.
 ```
 
+### contracts/ast1.js
+```
+$ run contracts/ast1.js HOST FILENAME
+
+Solves and submits the answer for the `Algorithmic Stock Trader I` contract.
+```
+
 ### contracts/ast2.js
 ```
 $ run contracts/ast2.js HOST FILENAME
