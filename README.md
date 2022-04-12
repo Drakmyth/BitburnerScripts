@@ -94,6 +94,7 @@ $ run map.js [OPTION] [HOST]
 Displays a recursive network tree starting at HOST (if provided, otherwise "home").
 
 Options:
+-l, --level             Show hacking skill required to hack server
 -m, --money             Show money available on each server
 -o, --organization      Show the organization name of each server
 -r, --root              Show user access level of each server

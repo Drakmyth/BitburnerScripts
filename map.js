@@ -3,6 +3,8 @@ function print_host(ns, prefix, host) {
 	let label = prefix + "  \\-- " + host;
 
 	let flags = ns.flags([
+		['l', false],
+		['level', false],
 		['o', false],
 		['organization', false],
 		['m', false],
@@ -11,6 +13,7 @@ function print_host(ns, prefix, host) {
 		['root', false]
 	]);
 
+	let show_level = flags['l'] || flags['level'];
 	let show_organization = flags['o'] || flags['organization'];
 	let show_money = flags['m'] || flags['money'];
 	let show_root = flags['r'] || flags['root'];
@@ -18,6 +21,9 @@ function print_host(ns, prefix, host) {
 
 	let tags = []
 
+	if (show_level) {
+		tags.push(server.requiredHackingSkill);
+	}
 	if (show_organization) {
 		tags.push(server.organizationName);
 	}
