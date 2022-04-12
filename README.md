@@ -26,6 +26,13 @@ Crawls the network to find coding contracts and prints what it finds to the
 terminal. HOST defaults to `home` if not provided.
 ```
 
+### contracts/ajg.js
+```
+$ run contracts/ajg.js HOST FILENAME
+
+Solves and submits the answer for the `Array Jumping Game` contract.
+```
+
 ### contracts/ast1.js
 ```
 $ run contracts/ast1.js HOST FILENAME
