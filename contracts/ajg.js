@@ -23,5 +23,5 @@ export async function main(ns) {
 
     let answer = data[0][1] ? 1 : 0;
     ns.print(`Answer: ${answer}`);
-    ns.writePort(responsePort, answer);
+    ns.writePort(responsePort, JSON.stringify(answer));
 }
