@@ -36,5 +36,5 @@ export async function main(ns) {
 
     let profit = rele[maxTransactions];
     ns.print(`Maximum profit is ${profit}`);
-    ns.writePort(responsePort, profit);
+    ns.writePort(responsePort, JSON.stringify(profit));
 }
