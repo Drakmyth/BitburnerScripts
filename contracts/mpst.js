@@ -1,21 +1,19 @@
 /** @param {NS} ns */
 export async function main(ns) {
-    let host = ns.args[0];
-    let contract = ns.args[1];
-    let data = ns.codingcontract.getData(contract, host);
-
-    ns.print(data);
+    let input = JSON.parse(ns.args[0]);
+    let responsePort = ns.args[1];
+    ns.print(input);
     
-    let sums = [data[0]];
-    for (let row = 1; row < data.length; row++) {
+    let sums = [input[0]];
+    for (let row = 1; row < input.length; row++) {
         let rowSums = []
-        for (let i = 0; i < data[row].length; i++) {
-            let current = data[row][i];
+        for (let i = 0; i < input[row].length; i++) {
+            let current = input[row][i];
             if (i === 0) {
                 rowSums.push(sums[row-1][i] + current);
                 continue;
             }
-            if (i === data[row].length - 1) {
+            if (i === input[row].length - 1) {
                 rowSums.push(sums[row-1][i-1] + current);
                 continue;
             }
@@ -28,10 +26,6 @@ export async function main(ns) {
     }
 
     let smallestSum = Math.min(...sums[sums.length - 1]);
-
-    let result = ns.codingcontract.attempt(smallestSum, contract, host, { returnReward: true })
-    let success = result !== "";
-    let msg = !success ? "Incorrect answer: " + smallestSum : result;
-    let variant = success ? "success": "error";
-    ns.toast(msg, variant, 5000);
+    ns.print(`Smallest sum is ${smallestSum}`);
+    ns.writePort(responsePort, smallestSum);
 }
