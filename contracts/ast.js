@@ -1,5 +1,3 @@
-import * as Ports from "ports.lib.js";
-
 /** @param {NS} ns */
 export async function main(ns) {
     let input = JSON.parse(ns.args[0]);
