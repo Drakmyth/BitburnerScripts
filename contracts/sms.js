@@ -1,10 +1,10 @@
 /** @param {NS} ns */
 export async function main(ns) {
-    let host = ns.args[0];
-    let contract = ns.args[1];
-    let data = ns.codingcontract.getData(contract, host);
-    
-    data = data.filter(i => i !== 0);
+    let input = JSON.parse(ns.args[0]);
+    let responsePort = ns.args[1];
+    ns.print(input);
+
+    let data = input.filter(i => i !== 0);
     
     for (let i = 0; i < data.length - 1; i++) {
         if (Math.sign(data[i]) === Math.sign(data[i+1])) {
@@ -34,9 +34,6 @@ export async function main(ns) {
         }
     }
 
-    let result = ns.codingcontract.attempt(biggestSum, contract, host, { returnReward: true })
-    let success = result !== "";
-    let msg = !success ? "Incorrect answer: " + biggestSum : result;
-    let variant = success ? "success": "error";
-    ns.toast(msg, variant, 5000);
+    ns.print(`Maximum profit is ${biggestSum}`);
+    ns.writePort(responsePort, JSON.stringify(biggestSum));
 }
