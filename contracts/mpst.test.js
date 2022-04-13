@@ -77,7 +77,7 @@ export async function main(ns) {
             await ns.sleep(1);
         }
 
-        let result = port.read() === test.output;
+        let result = JSON.parse(port.read()) === test.output;
         ns.tprint(`Test ${index + 1}/${testCases.length}: ${result ? `PASS` : `!!!! FAILED !!!!`}`);
     }
 }

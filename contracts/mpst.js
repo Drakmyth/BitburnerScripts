@@ -27,5 +27,5 @@ export async function main(ns) {
 
     let smallestSum = Math.min(...sums[sums.length - 1]);
     ns.print(`Smallest sum is ${smallestSum}`);
-    ns.writePort(responsePort, smallestSum);
+    ns.writePort(responsePort, JSON.stringify(smallestSum));
 }
