@@ -9,6 +9,7 @@ class Upgrade {
 
 /** @param {NS} ns **/
 export async function main(ns) {
+    ns.tail();
     ns.disableLog("sleep");
     while (true) {
         let maximumCost = ns.getPlayer().money * 0.25;
