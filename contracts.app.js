@@ -16,7 +16,8 @@ const contractTypes = [
     new ContractType(`Array Jumping Game`, `contracts/ajg.js`),
     new ContractType(`Minimum Path Sum in a Triangle`, `contracts/mpst.js`),
     new ContractType(`Merge Overlapping Intervals`, `contracts/moi.js`),
-    new ContractType(`Subarray with Maximum Sum`, `contracts/sms.js`)
+    new ContractType(`Subarray with Maximum Sum`, `contracts/sms.js`),
+    new ContractType(`Find Largest Prime Factor`, `contracts/flpf.js`)
 ];
 
 class Contract {
