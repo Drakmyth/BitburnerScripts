@@ -1,76 +1,25 @@
 # Bitburner Scripts
 [![License](https://img.shields.io/github/license/Drakmyth/BitburnerScripts)](https://github.com/Drakmyth/BitburnerScripts/blob/master/LICENSE.md)
 
-This repository contains scripts I have written while playing the idle hacking game [Bitburner](https://store.steampowered.com/app/1812820/Bitburner/). Scripts are divided into three types: `Application Scripts`, `Functional Scripts` and `Library Scripts`.
+This repository contains scripts I have written while playing the idle hacking game [Bitburner](https://store.steampowered.com/app/1812820/Bitburner/).
 
 ## Appliction Scripts
-Application scripts will persistently run in the background and continue operating until terminated. Use `tail` to observe the logs of a script for status.
+Application scripts will persistently run in the background and continue operating until terminated. Tail log will be opened automatically upon execution.
 
-### hacknet.app.js
-```
-$ run hacknet.app.js
+- [contracts.app.js](contracts.app.js) - Finds and automatically solves contracts. Uses `known-servers.json.txt`. Update ContractType list to add new contract solvers.
 
-Automatically purchases or upgrades hacknet nodes. Will continuously buy the most
-expensive upgrade available or a new hacknet node that costs less than 25% of the
-player's current money.
-```
+- [cracker.app.js](cracker.app.js) - Automatically cracks servers as cracking requirements are met. Uses `known-servers.json.txt`. Skips servers that cannot be cracked due to low hacking skill, missing port opener programs, or admin access already being available.
+
+- [hacknet.app.js](hacknet.app.js) - Automatically purchases and upgrades hacknet nodes. Will use up to 25% of the player's current money to buy a new hacknet node or the most expensive upgrade available.
+
+- [netmapper.app.js](netmapper.app.js) - Crawls the network to identify servers and stores its findings in `known-servers.json.txt`. This file is used by other application scripts to avoid having to walk the network to get a list of servers.
 
 ## Functional Scripts
 Functional scripts are scripts that are either facilitate automation or are intended to be executed directly to display information. They will terminate automatically once they have completed execution.
 
-### contracts.js
-```
-$ run contracts.js [HOST]
-
-Crawls the network to find coding contracts and prints what it finds to the
-terminal. HOST defaults to `home` if not provided.
-```
-
-### contracts/ajg.js
-```
-$ run contracts/ajg.js HOST FILENAME
-
-Solves and submits the answer for the `Array Jumping Game` contract.
-```
-
-### contracts/ast1.js
-```
-$ run contracts/ast1.js HOST FILENAME
-
-Solves and submits the answer for the `Algorithmic Stock Trader I` contract.
-```
-
-### contracts/ast2.js
-```
-$ run contracts/ast2.js HOST FILENAME
-
-Solves and submits the answer for the `Algorithmic Stock Trader II` contract.
-```
-
-### contracts/moi.js
-```
-$ run contracts/moi.js HOST FILENAME
-
-Solves and submits the answer for the `Merge Overlapping Intervals` contract.
-```
-
-### contracts/mpst.js
-```
-$ run contracts/mpst.js HOST FILENAME
-
-Solves and submits the answer for the `Minimum Path Sum in a Triangle` contract.
-```
-
-### contracts/sms.js
-```
-$ run contracts/sms.js HOST FILENAME
-
-Solves and submits the answer for the `Subarray with Maximum Sum` contract.
-```
-
 ### daemon.js
 ```
-$ run daemon.js [HOST]
+$ run daemon.js <HOST>
 
 Executes a weaken-grow-hack loop against HOST. Available money threshold 75% of
 maximum money. Security threshold is minimum security level + 5.
@@ -130,20 +79,42 @@ Options:
 ```
 
 ## Library Scripts
-Library scripts are not themselves executable, but contain functions that are intended to be imported into other scripts.
+Library scripts are not themselves executable, but contain functions or constants that are intended to be imported into other scripts.
 
-### log.lib.js
-Contains functions to simplify providing verbose logging without clogging up the terminal. Adds `-v` and `--verbose` flags to scripts that import this library. Intended to be imported in its entirety.
+- [log.lib.js](log.lib.js) - **DEPRECATED** - Contains functions to simplify providing verbose logging without clogging up the terminal. Adds `-v` and `--verbose` flags to scripts that import this library. Intended to be imported in its entirety. No longer useful as functional scripts are being transitioned to application scripts which allows use of `ns.print` to not flood the terminal.
 
-```js
-import * as log from "log.lib.js";
+  - Example:
+    ```js
+    import * as log from "log.lib.js";
 
-/** @param {NS} ns **/
-export async function main(ns) {
-    log.info("This will always print to terminal.")
-    log.verbose("This will only print if -v or --verbose are provided.")
-}
-```
+    /** @param {NS} ns **/
+    export async function main(ns) {
+        log.info(`This will always print to terminal.`)
+        log.verbose(`This will only print if -v or --verbose are provided.`)
+    }
+    ```
+
+- [ports.lib.js](ports.lib.js) - Contains constants that define which ports to use for different purposes.
+
+## Contract Solvers
+Contract solvers are used by `contracts.app.js` to automatically complete contracts. Each solver includes a `.test.js` file that can be executed to run various payloads against it to ensure the solver is working properly. The solvers should not be executed manually except through these test scripts as they rely on having a second script listening on a port to receive the contract solution.
+
+
+
+| Contract                       | Script                                           |
+|--------------------------------|--------------------------------------------------|
+| Algorithmic Stock Trader I     | [contracts/ast.js](contracts/ast.js)<sup>1</sup> |
+| Algorithmic Stock Trader II    | [contracts/ast.js](contracts/ast.js)<sup>1</sup> |
+| Algorithmic Stock Trader III   | [contracts/ast.js](contracts/ast.js)<sup>1</sup> |
+| Algorithmic Stock Trader IV    | [contracts/ast.js](contracts/ast.js)<sup>1</sup> |
+| Array Jumping Game             | [contracts/ajg.js](contracts/ajg.js)             |
+| Minimum Path Sum in a Triangle | [contracts/mpst.js](contracts/mpst.js)           |
+| Merge Overlapping Intervals    | [contracts/moi.js](contracts/moi.js)             |
+| Subarray with Maximum Sum      | [contracts/sms.js](contracts/sms.js)             |
+| Find Largest Prime Factor      | [contracts/flpf.js](contracts/flpf.js)           |
+| Spiralize Matrix               | [contracts/sm.js](contracts/sm.js)               |
+
+<sup>1</sup> <small>All four Algorithmic Stock Trader (AST) contracts use the same script. The solver for AST IV is capable of solving all previous levels of this contract, so the inputs of AST I, II, and III are transformed by `contracts.app.js` to treat them all like AST IV.</small>
 
 ## Visual Studio Code Integration
 These scripts can be copy-pasted into the game, or you can edit them in VS Code and have them update in the game automatically!
