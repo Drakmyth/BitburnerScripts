@@ -18,7 +18,8 @@ const contractTypes = [
     new ContractType(`Merge Overlapping Intervals`, `contracts/moi.js`),
     new ContractType(`Subarray with Maximum Sum`, `contracts/sms.js`),
     new ContractType(`Find Largest Prime Factor`, `contracts/flpf.js`),
-    new ContractType(`Spiralize Matrix`, `contracts/sm.js`)
+    new ContractType(`Spiralize Matrix`, `contracts/sm.js`),
+    new ContractType(`HammingCodes: Integer to encoded Binary`, `contracts/hammingcodes/integer-to-encoded-binary.js`)
 ];
 
 class Contract {
