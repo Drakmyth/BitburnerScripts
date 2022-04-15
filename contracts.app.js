@@ -61,7 +61,7 @@ class Contract {
 }
 
 /** @param {NS} ns */
-function findContracts(ns, host) {
+function getContracts(ns, host) {
     let contracts = [];
     let contractFiles = ns.ls(host, `.cct`);
     for (let file of contractFiles) {
@@ -69,16 +69,6 @@ function findContracts(ns, host) {
         let type = contractTypes.find(t => t.title === title) || new ContractType(title);
         let input = ns.codingcontract.getData(file, host);
         contracts.push(new Contract(type, input, host, file));
-    }
-
-    let servers = ns.scan(host);
-    if (host != `home`) {
-        servers.shift();
-    }
-
-    for (let child of servers) {
-        let childContracts = findContracts(ns, child);
-        contracts.push(...childContracts);
     }
 
     return contracts;
@@ -89,27 +79,35 @@ export async function main(ns) {
     ns.tail();
     ns.disableLog(`ALL`);
     let tenMinutes = 1000 * 60 * 10;
+    let serverFile = `known-servers.json`;
     while (true) {
+        let servers = JSON.parse(ns.read(serverFile));
+        ns.print(`Reloaded ${serverFile}`);
+
         ns.print(`\nSearching for contracts...`);
-        let contracts = findContracts(ns, `home`);
-        for (let contract of contracts) {
-            ns.print(`Found: ${contract}`);
-            let status = await contract.solve(ns);
-            switch (status) {
-                case `reward`:
-                    ns.print(`    Reward: ${contract.reward}`);
-                    break;
-                case `fail`:
-                    ns.print(`    !!!! FAILED !!!!`);
-                    break;
-                case `new`:
-                    ns.print(`    !!!! NEW !!!!`);
-                    break;
-                default:
-                    break;
+        let foundContracts = false;
+        for (let server of servers) {
+            let contracts = getContracts(ns, server.hostname);
+            foundContracts = foundContracts || contracts.length > 0;
+            for (let contract of contracts) {
+                ns.print(`Found: ${contract}`);
+                let status = await contract.solve(ns);
+                switch (status) {
+                    case `reward`:
+                        ns.print(`    Reward: ${contract.reward}`);
+                        break;
+                    case `fail`:
+                        ns.print(`    !!!! FAILED !!!!`);
+                        break;
+                    case `new`:
+                        ns.print(`    !!!! NEW !!!!`);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
-        if (contracts.length < 1) {
+        if (!foundContracts) {
             ns.print(`No contracts found.`);
         }
         ns.print(`Will search again in 10 minutes.`);
