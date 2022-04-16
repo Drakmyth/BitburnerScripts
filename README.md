@@ -50,6 +50,15 @@ Options:
 -v, --verbose           Print extra detailed logging
 ```
 
+### init.js
+```
+$ run init.js
+
+Executes a hardcoded list of application scripts. This makes restarting those scripts
+easier after installing augments. Waits 1 second between each script to allow any
+initialization to complete before starting the next service.
+```
+
 ### map.js
 ```
 $ run map.js [OPTION] [HOST]
