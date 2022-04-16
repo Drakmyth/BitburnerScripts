@@ -46,13 +46,13 @@ class Contract {
 
         ns.run(this.type.script, 1, JSON.stringify(this.type.processInput(this.input)), Ports.CONTRACT_PORT);
 
-        let port = ns.getPortHandle(Ports.CONTRACT_PORT);
+        const port = ns.getPortHandle(Ports.CONTRACT_PORT);
         while (port.empty()) {
             await ns.sleep(1);
         }
 
-        let answer = JSON.parse(port.read());
-        let result = ns.codingcontract.attempt(answer, this.file, this.host, { returnReward: true });
+        const answer = JSON.parse(port.read());
+        const result = ns.codingcontract.attempt(answer, this.file, this.host, { returnReward: true });
         if (result !== ``) {
             this.reward = result;
             return `reward`;
@@ -65,12 +65,12 @@ class Contract {
 
 /** @param {NS} ns */
 function getContracts(ns, host) {
-    let contracts = [];
-    let contractFiles = ns.ls(host, `.cct`);
+    const contracts = [];
+    const contractFiles = ns.ls(host, `.cct`);
     for (let file of contractFiles) {
-        let title = ns.codingcontract.getContractType(file, host);
-        let type = contractTypes.find(t => t.title === title) || new ContractType(title);
-        let input = ns.codingcontract.getData(file, host);
+        const title = ns.codingcontract.getContractType(file, host);
+        const type = contractTypes.find(t => t.title === title) || new ContractType(title);
+        const input = ns.codingcontract.getData(file, host);
         contracts.push(new Contract(type, input, host, file));
     }
 
@@ -81,21 +81,21 @@ function getContracts(ns, host) {
 export async function main(ns) {
     ns.tail();
     ns.disableLog(`ALL`);
-    let tenMinutes = 1000 * 60 * 10;
-    let serverFile = `known-servers.json`;
+    const tenMinutes = 1000 * 60 * 10;
+    const serverFile = `known-servers.json`;
     while (true) {
-        let servers = JSON.parse(ns.read(serverFile));
+        const servers = JSON.parse(ns.read(serverFile));
 
         ns.print(`\nReloaded ${serverFile}`);
         ns.print(`Searching for contracts...`);
 
         let foundContracts = false;
         for (let server of servers) {
-            let contracts = getContracts(ns, server.hostname);
+            const contracts = getContracts(ns, server.hostname);
             foundContracts = foundContracts || contracts.length > 0;
             for (let contract of contracts) {
                 ns.print(`Found: ${contract}`);
-                let status = await contract.solve(ns);
+                const status = await contract.solve(ns);
                 switch (status) {
                     case `reward`:
                         ns.print(`    Reward: ${contract.reward}`);

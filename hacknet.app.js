@@ -12,17 +12,17 @@ export async function main(ns) {
     ns.tail();
     ns.disableLog(`ALL`);
     while (true) {
-        let maximumCost = ns.getPlayer().money * 0.25;
-        let purchaseUpgrade = new Upgrade(`purchase`, -1, ns.hacknet.getPurchaseNodeCost(), () => { ns.hacknet.purchaseNode() });
+        const maximumCost = ns.getPlayer().money * 0.25;
+        const purchaseUpgrade = new Upgrade(`purchase`, -1, ns.hacknet.getPurchaseNodeCost(), () => { ns.hacknet.purchaseNode() });
         let bestUpgrade = new Upgrade(`none`, -1, 0, async () => { await ns.sleep(5000); });
 
-        let ownedNodes = ns.hacknet.numNodes();
+        const ownedNodes = ns.hacknet.numNodes();
         if (ownedNodes < 1 && purchaseUpgrade.cost < maximumCost) {
             bestUpgrade = purchaseUpgrade;
         }
 
         for (let i = 0; i < ownedNodes; i++) {
-            let upgrades = [
+            const upgrades = [
                 purchaseUpgrade,
                 new Upgrade(`level`, i, ns.hacknet.getLevelUpgradeCost(i, 1), () => ns.hacknet.upgradeLevel(i, 1)),
                 new Upgrade(`ram`, i, ns.hacknet.getRamUpgradeCost(i, 1), () => ns.hacknet.upgradeRam(i, 1)),

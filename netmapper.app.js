@@ -1,12 +1,13 @@
 /** @param {NS} ns **/
 function findServers(ns, current, knownServers) {
-    let hosts = ns.scan(current.hostname);
+    const hosts = ns.scan(current.hostname);
     if (current.hostname !== `home`) {
         hosts.shift();
     }
-    let servers = hosts.map(host => ns.getServer(host));
+
+    const servers = hosts.map(host => ns.getServer(host));
     for (let server of servers) {
-        let index = knownServers.findIndex(s => server.hostname === s.hostname);
+        const index = knownServers.findIndex(s => server.hostname === s.hostname);
         if (index < 0){
             ns.print(`Found: ${server.hostname}`);
             knownServers.push(server);
@@ -21,9 +22,9 @@ function findServers(ns, current, knownServers) {
 export async function main(ns) {
     ns.tail();
     ns.disableLog(`ALL`);
-    let filename = `known-servers.json`;
-    let tenMinutes = 1000 * 60 * 10;
-    let servers = [];
+    const filename = `known-servers.json`;
+    const tenMinutes = 1000 * 60 * 10;
+    const servers = [];
 
     if (ns.fileExists(filename)) {
         ns.rm(filename);
