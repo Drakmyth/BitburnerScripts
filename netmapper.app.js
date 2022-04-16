@@ -26,8 +26,8 @@ export async function main(ns) {
     let servers = [];
 
     if (ns.fileExists(filename)) {
-        servers = JSON.parse(ns.read(filename));
-        ns.print(`Loaded ${filename}`);
+        ns.rm(filename);
+        ns.print(`Deleted existing ${filename}`);
     }
 
     let lastServerCount = servers.length;
