@@ -1,10 +1,4 @@
-function data_to_str(data) {
-    let str = [];
-    for (let pair of data) {
-        str.push(`(${pair.join(`, `)})`);
-    }
-    return `[${str.join(`, `)}]`;
-}
+// Merge Overlapping Intervals
 
 /** @param {NS} ns */
 export async function main(ns) {
@@ -12,7 +6,7 @@ export async function main(ns) {
     let responsePort = ns.args[1];
 
     input.sort((a, b) => a[0] - b[0]);
-    ns.print(input);
+    ns.print(`Input: ${JSON.stringify(input)}`);
 
     for (let i = 0; i < input.length - 1; i++) {
         let current = input[i];
@@ -25,6 +19,6 @@ export async function main(ns) {
         }
     }
 
-    ns.print(`Merged intervals: ${input}`);
+    ns.print(`Merged intervals: ${JSON.stringify(input)}`);
     ns.writePort(responsePort, JSON.stringify(input));
 }

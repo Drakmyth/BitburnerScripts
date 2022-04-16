@@ -1,8 +1,10 @@
+// Find Largest Prime Factor
+
 /** @param {NS} ns */
 export async function main(ns) {
     let input = JSON.parse(ns.args[0]);
     let responsePort = ns.args[1];
-    ns.print(input);
+    ns.print(`Input: ${input}`);
 
     let answer = input;
     for (let i = 2; i < input / 2; i++) {

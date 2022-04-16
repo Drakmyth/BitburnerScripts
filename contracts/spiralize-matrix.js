@@ -1,3 +1,5 @@
+// Spiralize Matrix
+
 /** @param {NS} ns */
 function sliceTop(ns, data) {
     let top = data.shift();
@@ -48,7 +50,7 @@ function sliceLeft(ns, data) {
 export async function main(ns) {
     let input = JSON.parse(ns.args[0]);
     let responsePort = ns.args[1];
-    ns.print(input);
+    ns.print(`Input: ${JSON.stringify(input)}`);
 
     let spiral = [];
     while (true) {

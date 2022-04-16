@@ -1,8 +1,10 @@
+// Minimum Path Sum in a Triangle
+
 /** @param {NS} ns */
 export async function main(ns) {
     let input = JSON.parse(ns.args[0]);
     let responsePort = ns.args[1];
-    ns.print(input);
+    ns.print(`Input ${JSON.stringify(input)}`);
     
     let sums = [input[0]];
     for (let row = 1; row < input.length; row++) {

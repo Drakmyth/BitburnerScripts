@@ -103,17 +103,17 @@ Contract solvers are used by `contracts.app.js` to automatically complete contra
 
 | Contract                                | Script                                                                                                     |
 |-----------------------------------------|------------------------------------------------------------------------------------------------------------|
-| Algorithmic Stock Trader I              | [contracts/ast.js](contracts/ast.js)<sup>1</sup>                                                           |
-| Algorithmic Stock Trader II             | [contracts/ast.js](contracts/ast.js)<sup>1</sup>                                                           |
-| Algorithmic Stock Trader III            | [contracts/ast.js](contracts/ast.js)<sup>1</sup>                                                           |
-| Algorithmic Stock Trader IV             | [contracts/ast.js](contracts/ast.js)<sup>1</sup>                                                           |
-| Array Jumping Game                      | [contracts/ajg.js](contracts/ajg.js)                                                                       |
-| Minimum Path Sum in a Triangle          | [contracts/mpst.js](contracts/mpst.js)                                                                     |
-| Merge Overlapping Intervals             | [contracts/moi.js](contracts/moi.js)                                                                       |
-| Subarray with Maximum Sum               | [contracts/sms.js](contracts/sms.js)                                                                       |
-| Find Largest Prime Factor               | [contracts/flpf.js](contracts/flpf.js)                                                                     |
-| Spiralize Matrix                        | [contracts/sm.js](contracts/sm.js)                                                                         |
-| HammingCodes: Integer to encoded Binary | [contracts/hammingcodes/integer-to-encoded-binary.js](contracts/hammingcodes/integer-to-encoded-binary.js) |
+| Algorithmic Stock Trader I              | [contracts/algorithmic-stock-trader.js](contracts/algorithmic-stock-trader.js)<sup>1</sup>                 |
+| Algorithmic Stock Trader II             | [contracts/algorithmic-stock-trader.js](contracts/algorithmic-stock-trader.js)<sup>1</sup>                 |
+| Algorithmic Stock Trader III            | [contracts/algorithmic-stock-trader.js](contracts/algorithmic-stock-trader.js)<sup>1</sup>                 |
+| Algorithmic Stock Trader IV             | [contracts/algorithmic-stock-trader.js](contracts/algorithmic-stock-trader.js)<sup>1</sup>                 |
+| Array Jumping Game                      | [contracts/array-jumping-game.js](contracts/array-jumping-game.js)                                         |
+| Find Largest Prime Factor               | [contracts/find-largest-prime-factor.js](contracts/find-largest-prime-factor.js)                           |
+| HammingCodes: Integer to encoded Binary | [contracts/hammingcodes-integer-to-encoded-binary.js](contracts/hammingcodes-integer-to-encoded-binary.js) |
+| Merge Overlapping Intervals             | [contracts/merge-overlapping-intervals.js](contracts/merge-overlapping-intervals.js)                       |
+| Minimum Path Sum in a Triangle          | [contracts/minimum-path-sum-in-a-triangle.js](contracts/minimum-path-sum-in-a-triangle.js)                 |
+| Spiralize Matrix                        | [contracts/spiralize-matrix.js](contracts/spiralize-matrix.js)                                             |
+| Subarray with Maximum Sum               | [contracts/subarray-with-maximum-sum.js](contracts/subarray-with-maximum-sum.js)                           |
 
 <sup>1</sup> <small>All four Algorithmic Stock Trader (AST) contracts use the same script. The solver for AST IV is capable of solving all previous levels of this contract, so the inputs of AST I, II, and III are transformed by `contracts.app.js` to treat them all like AST IV.</small>
 

@@ -1,8 +1,10 @@
+// Array Jumping Game
+
 /** @param {NS} ns */
 export async function main(ns) {
     let input = JSON.parse(ns.args[0]);
     let responsePort = ns.args[1];
-    ns.print(input);
+    ns.print(`Input: ${JSON.stringify(input)}`);
 
     let data = input.map(d => [d, false]);
     data[data.length - 1][1] = true;

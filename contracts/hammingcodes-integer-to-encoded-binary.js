@@ -4,7 +4,7 @@
 export async function main(ns) {
     let input = JSON.parse(ns.args[0]);
     let responsePort = ns.args[1];
-    ns.print(`Input: ${input}`);
+    ns.print(`Input: ${JSON.stringify(input)}`);
 
     let data = input.toString(2).split(``).map(b => Number.parseInt(b));
     ns.print(`Data: ${JSON.stringify(data)}`);

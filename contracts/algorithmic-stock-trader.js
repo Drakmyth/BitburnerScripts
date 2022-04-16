@@ -1,8 +1,13 @@
+// Algorithmic Stock Trader I
+// Algorithmic Stock Trader II
+// Algorithmic Stock Trader III
+// Algorithmic Stock Trader IV
+
 /** @param {NS} ns */
 export async function main(ns) {
     let input = JSON.parse(ns.args[0]);
     let responsePort = ns.args[1];
-    ns.print(input);
+    ns.print(`Input: ${JSON.stringify(input)}`);
 
     let maxTransactions = input[0];
     let prices = input[1];

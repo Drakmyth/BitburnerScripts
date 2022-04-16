@@ -1,8 +1,10 @@
+// Subarray with Maximum Sum
+
 /** @param {NS} ns */
 export async function main(ns) {
     let input = JSON.parse(ns.args[0]);
     let responsePort = ns.args[1];
-    ns.print(input);
+    ns.print(`Input: ${JSON.stringify(input)}`);
 
     let data = input.filter(i => i !== 0);
     
@@ -29,7 +31,7 @@ export async function main(ns) {
             let sum = data.slice(i, j+1).reduce((total, current) => total + current, 0);
             if (sum > biggestSum) {
                 biggestSum = sum;
-                ns.print("Found bigger sum: " + biggestSum + " at [" + i + ", " + j + "]");
+                ns.print(`Found bigger sum: ${biggestSum} at [${i}, ${j}]`);
             }
         }
     }

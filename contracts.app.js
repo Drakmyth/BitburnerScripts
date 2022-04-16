@@ -9,17 +9,17 @@ class ContractType {
 }
 
 const contractTypes = [
-    new ContractType(`Algorithmic Stock Trader I`, `contracts/ast.js`, (input) => [1, input]),
-    new ContractType(`Algorithmic Stock Trader II`, `contracts/ast.js`, (input) => [input.length, input]),
-    new ContractType(`Algorithmic Stock Trader III`, `contracts/ast.js`, (input) => [2, input]),
-    new ContractType(`Algorithmic Stock Trader IV`, `contracts/ast.js`),
-    new ContractType(`Array Jumping Game`, `contracts/ajg.js`),
-    new ContractType(`Minimum Path Sum in a Triangle`, `contracts/mpst.js`),
-    new ContractType(`Merge Overlapping Intervals`, `contracts/moi.js`),
-    new ContractType(`Subarray with Maximum Sum`, `contracts/sms.js`),
-    new ContractType(`Find Largest Prime Factor`, `contracts/flpf.js`),
-    new ContractType(`Spiralize Matrix`, `contracts/sm.js`),
-    new ContractType(`HammingCodes: Integer to encoded Binary`, `contracts/hammingcodes/integer-to-encoded-binary.js`)
+    new ContractType(`Algorithmic Stock Trader I`, `contracts/algorithmic-stock-trader.js`, (input) => [1, input]),
+    new ContractType(`Algorithmic Stock Trader II`, `contracts/algorithmic-stock-trader.js`, (input) => [input.length, input]),
+    new ContractType(`Algorithmic Stock Trader III`, `contracts/algorithmic-stock-trader.js`, (input) => [2, input]),
+    new ContractType(`Algorithmic Stock Trader IV`, `contracts/algorithmic-stock-trader.js`),
+    new ContractType(`Array Jumping Game`, `contracts/array-jumping-game.js`),
+    new ContractType(`Find Largest Prime Factor`, `contracts/find-largest-prime-factor.js`),
+    new ContractType(`HammingCodes: Integer to encoded Binary`, `contracts/hammingcodes-integer-to-encoded-binary.js`),
+    new ContractType(`Merge Overlapping Intervals`, `contracts/merge-overlapping-intervals.js`),
+    new ContractType(`Minimum Path Sum in a Triangle`, `contracts/minimum-path-sum-in-a-triangle.js`),
+    new ContractType(`Spiralize Matrix`, `contracts/spiralize-matrix.js`),
+    new ContractType(`Subarray with Maximum Sum`, `contracts/subarray-with-maximum-sum.js`)
 ];
 
 class Contract {
