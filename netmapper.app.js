@@ -6,9 +6,12 @@ function findServers(ns, current, knownServers) {
     }
     let servers = hosts.map(host => ns.getServer(host));
     for (let server of servers) {
-        if (knownServers.findIndex(s => server.hostname === s.hostname) < 0){
+        let index = knownServers.findIndex(s => server.hostname === s.hostname);
+        if (index < 0){
             ns.print(`Found: ${server.hostname}`);
             knownServers.push(server);
+        } else {
+            knownServers.splice(index, 1, server);
         }
         findServers(ns, server, knownServers);
     }
