@@ -47,7 +47,7 @@ export async function main(ns) {
             ns.print(`No known crackable servers.`);
         }
 
-        ns.print(`Will search again in 10 minutes.`);
+        ns.print(`Will search again at ${new Date(Date.now() + tenMinutes).toLocaleTimeString(_, { hour12: false })}.`);
         await ns.sleep(tenMinutes);
     }
 }

@@ -114,7 +114,7 @@ export async function main(ns) {
         if (!foundContracts) {
             ns.print(`No contracts found.`);
         }
-        ns.print(`Will search again in 10 minutes.`);
+        ns.print(`Will search again at ${new Date(Date.now() + tenMinutes).toLocaleTimeString(_, { hour12: false })}.`);
         await ns.sleep(tenMinutes);
     }
 }

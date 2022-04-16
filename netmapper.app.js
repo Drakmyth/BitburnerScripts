@@ -42,7 +42,7 @@ export async function main(ns) {
         lastServerCount = servers.length;
         ns.print(`Writing ${filename}...`);
         await ns.write(filename, JSON.stringify(servers), `w`);
-        ns.print(`Will search again in 10 minutes.`);
+        ns.print(`Will search again at ${new Date(Date.now() + tenMinutes).toLocaleTimeString(_, { hour12: false })}.`);
         await ns.sleep(tenMinutes);
     }
 }
