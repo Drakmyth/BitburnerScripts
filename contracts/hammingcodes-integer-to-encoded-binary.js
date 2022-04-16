@@ -2,11 +2,11 @@
 
 /** @param {NS} ns */
 export async function main(ns) {
-    let input = JSON.parse(ns.args[0]);
-    let responsePort = ns.args[1];
+    const input = JSON.parse(ns.args[0]);
+    const responsePort = ns.args[1];
     ns.print(`Input: ${JSON.stringify(input)}`);
 
-    let data = input.toString(2).split(``).map(b => Number.parseInt(b));
+    const data = input.toString(2).split(``).map(b => Number.parseInt(b));
     ns.print(`Data: ${JSON.stringify(data)}`);
 
     
@@ -15,10 +15,10 @@ export async function main(ns) {
         numParityBits++;
     }
     ns.print(`numParityBits: ${numParityBits}`);
-    let encoding = new Array(numParityBits + data.length + 1).fill(0);
-    let parityBits = [];
+    const encoding = new Array(numParityBits + data.length + 1).fill(0);
+    const parityBits = [];
     for (let i = 1; i < encoding.length; i++) {
-        let pow = Math.log2(i);
+        const pow = Math.log2(i);
         if (pow - Math.floor(pow) === 0) {
             parityBits.push(i);
             continue;
@@ -29,8 +29,8 @@ export async function main(ns) {
 
     ns.print(`ParityBits: ${JSON.stringify(parityBits)}`)
 
-    let parity = encoding.reduce((total, bit, index) => total ^= bit > 0 ? index : 0, 0);
-    let parityVals = parity.toString(2).split(``).map(b => Number.parseInt(b)).reverse();
+    const parity = encoding.reduce((total, bit, index) => total ^= bit > 0 ? index : 0, 0);
+    const parityVals = parity.toString(2).split(``).map(b => Number.parseInt(b)).reverse();
     while(parityVals.length < parityBits.length) {
         parityVals.push(0);
     }
@@ -40,13 +40,13 @@ export async function main(ns) {
     }
     ns.print(`Parity: ${JSON.stringify(parityVals)}`);
 
-    let globalParity = (encoding.toString().split(`1`).length - 1) % 2 === 0 ? 0 : 1;
+    const globalParity = (encoding.toString().split(`1`).length - 1) % 2 === 0 ? 0 : 1;
     ns.print(`GlobalParity: ${globalParity}`);
     encoding[0] = globalParity;
 
     ns.print(`Encoding: ${JSON.stringify(encoding)}`);
 
-    let answer = encoding.reduce((total, bit) => total += bit, ``);
+    const answer = encoding.reduce((total, bit) => total += bit, ``);
     ns.print(`Answer: ${answer}`);
     ns.writePort(responsePort, JSON.stringify(answer));
 }

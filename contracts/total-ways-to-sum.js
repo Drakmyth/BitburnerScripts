@@ -2,8 +2,8 @@
 
 /** @param {NS} ns */
 export async function main(ns) {
-    let input = JSON.parse(ns.args[0]);
-    let responsePort = ns.args[1];
+    const input = JSON.parse(ns.args[0]);
+    const responsePort = ns.args[1];
     ns.print(`Input: ${input}`);
 
     // Implementation taken from 
@@ -20,7 +20,7 @@ export async function main(ns) {
         }
     }
 
-    let answer = waysToSum[input];
+    const answer = waysToSum[input];
     ns.print(`Ways to sum is ${answer}`);
     ns.writePort(responsePort, JSON.stringify(answer));
 }

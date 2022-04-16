@@ -2,11 +2,11 @@
 
 /** @param {NS} ns */
 export async function main(ns) {
-    let input = JSON.parse(ns.args[0]);
-    let responsePort = ns.args[1];
+    const input = JSON.parse(ns.args[0]);
+    const responsePort = ns.args[1];
     ns.print(`Input: ${JSON.stringify(input)}`);
 
-    let data = input.filter(i => i !== 0);
+    const data = input.filter(i => i !== 0);
     
     for (let i = 0; i < data.length - 1; i++) {
         if (Math.sign(data[i]) === Math.sign(data[i+1])) {

@@ -25,13 +25,13 @@ export async function main(ns) {
     for (let [index, test] of testCases.entries()) {
         ns.run(`contracts/merge-overlapping-intervals.js`, 1, JSON.stringify(test.input), Ports.CONTRACT_TEST_PORT);
 
-        let port = ns.getPortHandle(Ports.CONTRACT_TEST_PORT);
+        const port = ns.getPortHandle(Ports.CONTRACT_TEST_PORT);
         while (port.empty()) {
             await ns.sleep(1);
         }
 
-        let response = JSON.parse(port.read());
-        let result = response.every((val, i) => val[0] === test.output[i][0] && val[1] === test.output[i][1]);
+        const response = JSON.parse(port.read());
+        const result = response.every((val, i) => val[0] === test.output[i][0] && val[1] === test.output[i][1]);
         ns.tprint(`Test ${index + 1}/${testCases.length}: ${result ? `PASS` : `!!!! FAILED !!!!`}`);
         if (!result) {
             ns.tprint(`    Expected: ${JSON.stringify(test.output)}, Received: ${JSON.stringify(response)}`);
