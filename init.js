@@ -1,6 +1,6 @@
 /** @param {NS} ns **/
 export async function main(ns) {
-    let scripts = [
+    const scripts = [
         `hacknet.app.js`,
         `netmapper.app.js`,
         `cracker.app.js`,
