@@ -57,7 +57,7 @@ export async function main(ns) {
     ];
 
     for (let [index, test] of testCases.entries()) {
-        ns.run(`contracts/ast.js`, 1, JSON.stringify(test.input), Ports.CONTRACT_TEST_PORT);
+        ns.run(`contracts/algorithmic-stock-trader.js`, 1, JSON.stringify(test.input), Ports.CONTRACT_TEST_PORT);
 
         let port = ns.getPortHandle(Ports.CONTRACT_TEST_PORT);
         while (port.empty()) {

@@ -23,7 +23,7 @@ export async function main(ns) {
     ];
 
     for (let [index, test] of testCases.entries()) {
-        ns.run(`contracts/moi.js`, 1, JSON.stringify(test.input), Ports.CONTRACT_TEST_PORT);
+        ns.run(`contracts/merge-overlapping-intervals.js`, 1, JSON.stringify(test.input), Ports.CONTRACT_TEST_PORT);
 
         let port = ns.getPortHandle(Ports.CONTRACT_TEST_PORT);
         while (port.empty()) {
