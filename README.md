@@ -114,6 +114,7 @@ Contract solvers are used by `contracts.app.js` to automatically complete contra
 | Minimum Path Sum in a Triangle          | [contracts/minimum-path-sum-in-a-triangle.js](contracts/minimum-path-sum-in-a-triangle.js)                 |
 | Spiralize Matrix                        | [contracts/spiralize-matrix.js](contracts/spiralize-matrix.js)                                             |
 | Subarray with Maximum Sum               | [contracts/subarray-with-maximum-sum.js](contracts/subarray-with-maximum-sum.js)                           |
+| Total Ways to Sum                       | [contracts/total-ways-to-sum.js](contracts/total-ways-to-sum.js)                                           |
 
 <sup>1</sup> <small>All four Algorithmic Stock Trader (AST) contracts use the same script. The solver for AST IV is capable of solving all previous levels of this contract, so the inputs of AST I, II, and III are transformed by `contracts.app.js` to treat them all like AST IV.</small>
 

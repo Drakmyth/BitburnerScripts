@@ -20,7 +20,7 @@ export async function main(ns) {
     ]
     while(true) {
         let servers = JSON.parse(ns.read(serverFile));
-        ns.print(`Reloaded ${serverFile}`);
+        ns.print(`\nReloaded ${serverFile}`);
         let playerSkill = ns.getHackingLevel();
         let ownedPrograms = programs.filter(p => ns.fileExists(p.filename));
 

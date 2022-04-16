@@ -9,6 +9,10 @@ export async function main(ns) {
     let responsePort = ns.args[1];
     ns.print(`Input: ${JSON.stringify(input)}`);
 
+    // Adapted from
+    // https://github.com/devmount/bitburner-contract-solver/blob/bbade7eb9bb0bda329ba1961c31c29f8c3defae8/app.js#L235
+    // because although I figured out AST II okay, the other 3 (and especially IV) kicked my butt
+
     let maxTransactions = input[0];
     let prices = input[1];
 

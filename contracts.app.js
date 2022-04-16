@@ -19,7 +19,8 @@ const contractTypes = [
     new ContractType(`Merge Overlapping Intervals`, `contracts/merge-overlapping-intervals.js`),
     new ContractType(`Minimum Path Sum in a Triangle`, `contracts/minimum-path-sum-in-a-triangle.js`),
     new ContractType(`Spiralize Matrix`, `contracts/spiralize-matrix.js`),
-    new ContractType(`Subarray with Maximum Sum`, `contracts/subarray-with-maximum-sum.js`)
+    new ContractType(`Subarray with Maximum Sum`, `contracts/subarray-with-maximum-sum.js`),
+    new ContractType(`Total Ways to Sum`, `contracts/total-ways-to-sum.js`)
 ];
 
 class Contract {
@@ -83,9 +84,10 @@ export async function main(ns) {
     let serverFile = `known-servers.json`;
     while (true) {
         let servers = JSON.parse(ns.read(serverFile));
-        ns.print(`Reloaded ${serverFile}`);
 
-        ns.print(`\nSearching for contracts...`);
+        ns.print(`\nReloaded ${serverFile}`);
+        ns.print(`Searching for contracts...`);
+
         let foundContracts = false;
         for (let server of servers) {
             let contracts = getContracts(ns, server.hostname);
