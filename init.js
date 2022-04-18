@@ -4,6 +4,7 @@ export async function main(ns) {
         `hacknet.app.js`,
         `netmapper.app.js`,
         `cracker.app.js`,
+        `flooder.app.js`,
         `contracts.app.js`
     ];
 

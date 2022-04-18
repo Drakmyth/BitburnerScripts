@@ -10,105 +10,63 @@ Application scripts will persistently run in the background and continue operati
 
 - [cracker.app.js](cracker.app.js) - Automatically cracks servers as cracking requirements are met. Uses `known-servers.json.txt`. Skips servers that cannot be cracked due to low hacking skill, missing port opener programs, or admin access already being available.
 
+- [flooder.app.js](flooder.app.js) - Monitors servers provided by `known-servers.json.txt`. For servers that the player has admin access to, this script will deploy and execute `weaken.daemon.js` against each server until it has reached its minimum security level at which point it will deploy and execute all three daemon scripts. Tries to identify a ratio of daemons so as to optimize keeping the money level high and the security level low while using as much ram on the target server as possible. If the target server is not able to be hacked (its max money is 0) it will use that server as a host (called a bot) to hack other servers. Every cycle of this script it will re-target all bots so as to simultaneously hack as many other servers as possible.
+
 - [hacknet.app.js](hacknet.app.js) - Automatically purchases and upgrades hacknet nodes. Will use up to 25% of the player's current money to buy a new hacknet node or the most expensive upgrade available.
 
 - [netmapper.app.js](netmapper.app.js) - Crawls the network to identify servers and stores its findings in `known-servers.json.txt`. This file is used by other application scripts to avoid having to walk the network to get a list of servers.
 
+## Daemon Scripts
+Daemon scripts are application scripts that execute continuous hack, grow, or weaken calls against a hostname, waiting for a delay period between each call. If the delay is -1, the call will be executed once and the script will terminate.
+
+- [hack.daemon.js](hack.daemon.js) - Executes hack against `HOST` waiting `DELAY` milliseconds between calls.
+  - ```
+    $ run hack.daemon.js HOST DELAY
+    ```
+
+- [grow.daemon.js](grow.daemon.js) - Executes grow against `HOST` waiting `DELAY` milliseconds between calls.
+  - ```
+    $ run grow.daemon.js HOST DELAY
+    ```
+
+- [weaken.daemon.js](weaken.daemon.js) - Executes weaken against `HOST` waiting `DELAY` milliseconds between calls.
+  - ```
+    $ run weaken.daemon.js HOST DELAY
+    ```
+
 ## Functional Scripts
-Functional scripts are scripts that are either facilitate automation or are intended to be executed directly to display information. They will terminate automatically once they have completed execution.
+Functional scripts are intended to be executed manually to display information or carry out simple interactions that generally are not desired to be continuous. They will terminate automatically once they have completed execution.
 
-### daemon.js
-```
-$ run daemon.js <HOST>
+- [init.js](init.js) - Executes a hardcoded list of application scripts. This makes restarting those scripts easier after installing augments. Waits 1 second between each script to allow any initialization to complete before starting the next service. Note that the scripts will be executed in order and if there is not enough RAM on the host server to run a script it will be skipped.
 
-Executes a weaken-grow-hack loop against HOST. Available money threshold 75% of
-maximum money. Security threshold is minimum security level + 5.
-```
+- [map.js](map.js) - Displays a recursive network tree starting at `HOST` (if provided, otherwise "home").
+  - ```
+    $ run map.js [OPTION] [HOST]
+    
+    Options:
+    -l, --level             Show hacking skill required to hack server
+    -m, --money             Show money available on each server
+    -o, --organization      Show the organization name of each server
+    -r, --root              Show user access level of each server
+    ```
 
-### dbot.js
-```
-$ run dbot.js
-
-A variant of daemon.js that crawls the network looking for servers with at least
-75% of their maximum money, and will weaken and hack those servers that it finds.
-Where daemon.js is often used to cause a server to hack itself, dbot.js is used
-on servers that do not have their own money to hack to enable those servers to hack
-others.
-```
-
-### flood.js
-```
-$ run flood.js [OPTION]
-
-Recursively deploys and executes either daemon.js or dbot.js (depending on the
-server's maximum money) to all servers on the network. Will automatically crack
-servers to gain root access. If a server is unable to be cracked, it will be
-skipped. Already existing instances of daemon.js and dbot.js will be replaced
-with the latest versions.
-
-Options:
--v, --verbose           Print extra detailed logging
-```
-
-### init.js
-```
-$ run init.js
-
-Executes a hardcoded list of application scripts. This makes restarting those scripts
-easier after installing augments. Waits 1 second between each script to allow any
-initialization to complete before starting the next service.
-```
-
-### map.js
-```
-$ run map.js [OPTION] [HOST]
-
-Displays a recursive network tree starting at HOST (if provided, otherwise "home").
-
-Options:
--l, --level             Show hacking skill required to hack server
--m, --money             Show money available on each server
--o, --organization      Show the organization name of each server
--r, --root              Show user access level of each server
-```
-
-### servers.js
-```
-$ run servers.js [OPTION]
-
-Purchases or upgrades servers to the maximum amount of RAM affordable. Always
-purchases maximum number of servers and keeps all server resources equivalent.
-Running scripts will be terminated before upgrade. Will only purchase servers
-able to run at least one thread of daemon.js.
-
-Options:
--s, --simulate          Simulates the upgrade process to display the required
-                        cost without purchasing new servers or terminating
-                        existing scripts.
-```
+- [servers.js](servers.js) - Purchases or upgrades servers to the maximum amount of RAM affordable. Always purchases maximum number of servers and keeps all server resources equivalent. Running scripts will be terminated before upgrade. Will only purchase servers able to concurrently run at least one thread of each daemon script.
+  - ```
+    $ run servers.js [OPTION]
+    
+    Options:
+    -s, --simulate          Simulates the upgrade process to display the required
+                            cost without purchasing new servers or terminating
+                            existing scripts.
+    ```
 
 ## Library Scripts
 Library scripts are not themselves executable, but contain functions or constants that are intended to be imported into other scripts.
-
-- [log.lib.js](log.lib.js) - **DEPRECATED** - Contains functions to simplify providing verbose logging without clogging up the terminal. Adds `-v` and `--verbose` flags to scripts that import this library. Intended to be imported in its entirety. No longer useful as functional scripts are being transitioned to application scripts which allows use of `ns.print` to not flood the terminal.
-
-  - Example:
-    ```js
-    import * as log from "log.lib.js";
-
-    /** @param {NS} ns **/
-    export async function main(ns) {
-        log.info(`This will always print to terminal.`)
-        log.verbose(`This will only print if -v or --verbose are provided.`)
-    }
-    ```
 
 - [ports.lib.js](ports.lib.js) - Contains constants that define which ports to use for different purposes.
 
 ## Contract Solvers
 Contract solvers are used by `contracts.app.js` to automatically complete contracts. Each solver includes a `.test.js` file that can be executed to run various payloads against it to ensure the solver is working properly. The solvers should not be executed manually except through these test scripts as they rely on having a second script listening on a port to receive the contract solution.
-
-
 
 | Contract                                | Script                                                                                                     |
 |-----------------------------------------|------------------------------------------------------------------------------------------------------------|
