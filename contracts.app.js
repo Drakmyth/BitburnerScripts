@@ -79,7 +79,6 @@ function getContracts(ns, host) {
 
 /** @param {NS} ns */
 export async function main(ns) {
-    ns.tail();
     ns.disableLog(`ALL`);
     const tenMinutes = 1000 * 60 * 10;
     const serverFile = `known-servers.json`;

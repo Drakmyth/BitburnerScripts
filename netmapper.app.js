@@ -20,7 +20,6 @@ function findServers(ns, current, knownServers) {
 
 /** @param {NS} ns **/
 export async function main(ns) {
-    ns.tail();
     ns.disableLog(`ALL`);
     const filename = `known-servers.json`;
     const tenMinutes = 1000 * 60 * 10;
