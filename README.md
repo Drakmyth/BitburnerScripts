@@ -66,7 +66,7 @@ Library scripts are not themselves executable, but contain functions or constant
 - [ports.lib.js](ports.lib.js) - Contains constants that define which ports to use for different purposes.
 
 ## Contract Solvers
-Contract solvers are used by `contracts.app.js` to automatically complete contracts. Each solver includes a `.test.js` file that can be executed to run various payloads against it to ensure the solver is working properly. The solvers should not be executed manually except through these test scripts as they rely on having a second script listening on a port to receive the contract solution.
+Contract solvers are used by `contracts.app.js` to automatically complete contracts. Each solver includes a `.test.js` file that can be executed to run various payloads against it to ensure the solver is working properly. The solvers should not be executed manually except through these test scripts as they rely on having a second script listening on a port to receive the contract solution. Most test cases are copied from https://github.com/phantomesse/bitburner/tree/main/tests.
 
 | Contract                                | Script                                                                                                     |
 |-----------------------------------------|------------------------------------------------------------------------------------------------------------|
