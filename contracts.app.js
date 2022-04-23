@@ -21,7 +21,8 @@ const contractTypes = [
     new ContractType(`Spiralize Matrix`, `contracts/spiralize-matrix.js`),
     new ContractType(`Subarray with Maximum Sum`, `contracts/subarray-with-maximum-sum.js`),
     new ContractType(`Total Ways to Sum`, `contracts/total-ways-to-sum.js`),
-    new ContractType(`Unique Paths in a Grid I`, `contracts/unique-paths-in-a-grid-i.js`)
+    new ContractType(`Unique Paths in a Grid I`, `contracts/unique-paths-in-a-grid-i.js`),
+    new ContractType(`Unique Paths in a Grid II`, `contracts/unique-paths-in-a-grid-ii.js`)
 ];
 
 class Contract {
