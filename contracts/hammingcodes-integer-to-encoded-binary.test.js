@@ -9,6 +9,7 @@ class TestCase {
 
 /** @param {NS} ns */
 export async function main(ns) {
+    // Test case available in contract text
     const testCases = [
         new TestCase(21, '1001101011')
     ];

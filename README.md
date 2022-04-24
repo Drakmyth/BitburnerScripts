@@ -66,7 +66,7 @@ Library scripts are not themselves executable, but contain functions or constant
 - [ports.lib.js](ports.lib.js) - Contains constants that define which ports to use for different purposes.
 
 ## Contract Solvers
-Contract solvers are used by `contracts.app.js` to automatically complete contracts. Each solver includes a `.test.js` file that can be executed to run various payloads against it to ensure the solver is working properly. The solvers should not be executed manually except through these test scripts as they rely on having a second script listening on a port to receive the contract solution. Most test cases are copied from https://github.com/phantomesse/bitburner/tree/main/tests.
+Contract solvers are used by `contracts.app.js` to automatically complete contracts. Each solver includes a `.test.js` file that can be executed to run various payloads against it to ensure the solver is working properly. The solvers should not be executed manually except through these test scripts as they rely on having a second script listening on a port to receive the contract solution. Test cases are copied from https://github.com/phantomesse/bitburner/tree/main/tests unless otherwise noted in the test file.
 
 | Contract                                | Script                                                                                                     |
 |-----------------------------------------|------------------------------------------------------------------------------------------------------------|
@@ -81,11 +81,12 @@ Contract solvers are used by `contracts.app.js` to automatically complete contra
 | Minimum Path Sum in a Triangle          | [contracts/minimum-path-sum-in-a-triangle.js](contracts/minimum-path-sum-in-a-triangle.js)                 |
 | Spiralize Matrix                        | [contracts/spiralize-matrix.js](contracts/spiralize-matrix.js)                                             |
 | Subarray with Maximum Sum               | [contracts/subarray-with-maximum-sum.js](contracts/subarray-with-maximum-sum.js)                           |
-| Total Ways to Sum                       | [contracts/total-ways-to-sum.js](contracts/total-ways-to-sum.js)                                           |
+| Total Ways to Sum                       | [contracts/total-ways-to-sum.js](contracts/total-ways-to-sum.js)<sup>1</sup>                               |
+| Total Ways to Sum II                    | [contracts/total-ways-to-sum.js](contracts/total-ways-to-sum.js)<sup>1</sup>                               |
 | Unique Paths in a Grid I                | [contracts/unique-paths-in-a-grid-i.js](contracts/unique-paths-in-a-grid-i.js)                             |
 | Unique Paths in a Grid II               | [contracts/unique-paths-in-a-grid-ii.js](contracts/unique-paths-in-a-grid-ii.js)                           |
 
-<sup>1</sup> <small>All four Algorithmic Stock Trader (AST) contracts use the same script. The solver for AST IV is capable of solving all previous levels of this contract, so the inputs of AST I, II, and III are transformed by `contracts.app.js` to treat them all like AST IV.</small>
+<sup>1</sup> <small>Different difficulties of the same contract may in some cases be able to be solved by the same implementation. This usually requires slight pre-processing of the input for lower difficulties. This pre-processing is performed by `contracts.app.js` where applicable.</small>
 
 ## Visual Studio Code Integration
 These scripts can be copy-pasted into the game, or you can edit them in VS Code and have them update in the game automatically!

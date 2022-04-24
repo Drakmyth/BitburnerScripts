@@ -1,4 +1,24 @@
 // Total Ways to Sum
+// Total Ways to Sum II
+
+const cache = new Map();
+
+function totalWaysToSum(ns, number, addends) {
+    if (number < 0) return 0;
+    if (number === 0) return 1;
+    const cacheKey = JSON.stringify([number, addends]);
+    if (cache.has(cacheKey)) return cache.get(cacheKey)
+
+    let numSums = 0;
+    for (let addend of addends) {
+        const s = totalWaysToSum(ns, number - addend, addends.filter(a => a <= addend));
+        numSums += s;
+    }
+
+    ns.print(`N: ${number} A: ${JSON.stringify(addends)} R: ${numSums}`);
+    cache.set(cacheKey, numSums);
+    return numSums;
+}
 
 /** @param {NS} ns */
 export async function main(ns) {
@@ -6,21 +26,10 @@ export async function main(ns) {
     const responsePort = ns.args[1];
     ns.print(`Input: ${input}`);
 
-    // Implementation taken from 
-    // https://github.com/phantomesse/bitburner/blob/main/scripts/contracts/total-ways-to-sum.js
-    // because I got tired of trying to understand why the summation recurrance relation function
-    // wasn't working.
+    const number = input[0];
+    const addends = input[1];
 
-    const waysToSum = new Array(input + 1).fill(0);
-    waysToSum[0] = 1;
-
-    for (let i = 1; i < input; i++) {
-        for (let j = i; j < input + 1; j++) {
-            waysToSum[j] = waysToSum[j] + waysToSum[j - i];
-        }
-    }
-
-    const answer = waysToSum[input];
-    ns.print(`Ways to sum is ${answer}`);
+    const answer = totalWaysToSum(ns, number, addends);
+    ns.print(`Ways to sum ${number} is ${answer}`);
     ns.writePort(responsePort, JSON.stringify(answer));
 }
