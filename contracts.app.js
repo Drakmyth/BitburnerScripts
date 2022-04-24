@@ -22,8 +22,8 @@ const contractTypes = [
     new ContractType(`Subarray with Maximum Sum`, `contracts/subarray-with-maximum-sum.js`),
     new ContractType(`Total Ways to Sum`, `contracts/total-ways-to-sum.js`, (input) => [input, [...Array(input).keys()].filter(a => a > 0)]),
     new ContractType(`Total Ways to Sum II`, `contracts/total-ways-to-sum.js`),
-    new ContractType(`Unique Paths in a Grid I`, `contracts/unique-paths-in-a-grid-i.js`),
-    new ContractType(`Unique Paths in a Grid II`, `contracts/unique-paths-in-a-grid-ii.js`)
+    new ContractType(`Unique Paths in a Grid I`, `contracts/unique-paths-in-a-grid.js`, (input) => new Array(input[0]).fill(new Array(input[1]).fill(0))),
+    new ContractType(`Unique Paths in a Grid II`, `contracts/unique-paths-in-a-grid.js`)
 ];
 
 class Contract {

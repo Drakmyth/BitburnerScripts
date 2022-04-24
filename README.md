@@ -83,8 +83,8 @@ Contract solvers are used by `contracts.app.js` to automatically complete contra
 | Subarray with Maximum Sum               | [contracts/subarray-with-maximum-sum.js](contracts/subarray-with-maximum-sum.js)                           |
 | Total Ways to Sum                       | [contracts/total-ways-to-sum.js](contracts/total-ways-to-sum.js)<sup>1</sup>                               |
 | Total Ways to Sum II                    | [contracts/total-ways-to-sum.js](contracts/total-ways-to-sum.js)<sup>1</sup>                               |
-| Unique Paths in a Grid I                | [contracts/unique-paths-in-a-grid-i.js](contracts/unique-paths-in-a-grid-i.js)                             |
-| Unique Paths in a Grid II               | [contracts/unique-paths-in-a-grid-ii.js](contracts/unique-paths-in-a-grid-ii.js)                           |
+| Unique Paths in a Grid I                | [contracts/unique-paths-in-a-grid.js](contracts/unique-paths-in-a-grid.js)<sup>1</sup>                     |
+| Unique Paths in a Grid II               | [contracts/unique-paths-in-a-grid.js](contracts/unique-paths-in-a-grid.js)<sup>1</sup>                     |
 
 <sup>1</sup> <small>Different difficulties of the same contract may in some cases be able to be solved by the same implementation. This usually requires slight pre-processing of the input for lower difficulties. This pre-processing is performed by `contracts.app.js` where applicable.</small>
 
