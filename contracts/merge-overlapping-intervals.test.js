@@ -31,7 +31,7 @@ export async function main(ns) {
         }
 
         const response = JSON.parse(port.read());
-        const result = response.every((val, i) => val[0] === test.output[i][0] && val[1] === test.output[i][1]);
+        const result = test.output.every((val, i) => val[0] === response[i][0] && val[1] === response[i][1]);
         ns.tprint(`Test ${index + 1}/${testCases.length}: ${result ? `PASS` : `!!!! FAILED !!!!`}`);
         if (!result) {
             ns.tprint(`    Expected: ${JSON.stringify(test.output)}, Received: ${JSON.stringify(response)}`);
