@@ -15,7 +15,7 @@ export async function main(ns) {
         numParityBits++;
     }
     ns.print(`numParityBits: ${numParityBits}`);
-    const encoding = new Array(numParityBits + data.length + 1).fill(0);
+    const encoding = Array(numParityBits + data.length + 1).fill(0);
     const parityBits = [];
     for (let i = 1; i < encoding.length; i++) {
         const pow = Math.log2(i);

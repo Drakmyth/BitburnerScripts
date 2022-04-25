@@ -32,8 +32,8 @@ export async function main(ns) {
         return;
     }
 
-    const rele = new Array(maxTransactions + 1).fill(0);
-    const hold = new Array(maxTransactions + 1).fill(Number.MIN_SAFE_INTEGER);
+    const rele = Array(maxTransactions + 1).fill(0);
+    const hold = Array(maxTransactions + 1).fill(Number.MIN_SAFE_INTEGER);
 
     for (let day = 0; day < prices.length; day++) {
         const price = prices[day];

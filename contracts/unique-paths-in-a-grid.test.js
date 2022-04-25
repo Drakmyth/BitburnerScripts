@@ -11,7 +11,7 @@ function generateGrid(input) {
     const rows = input[0];
     const cols = input[1];
 
-    return new Array(rows).fill(new Array(cols).fill(0));
+    return Array(rows).fill(null).map(() => Array(cols).fill(0));
 }
 
 /** @param {NS} ns */

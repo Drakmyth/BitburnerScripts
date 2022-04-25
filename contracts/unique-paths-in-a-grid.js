@@ -10,7 +10,7 @@ export async function main(ns) {
     const rows = input.length;
     const cols = input[0].length;
 
-    const grid = new Array(rows).fill(new Array(cols));
+    const grid = Array(rows).fill(null).map(() => Array(cols).fill(-1));
     grid[rows - 1][cols - 1] = 1;
 
     for (let y = rows - 1; y >= 0; y--) {
