@@ -20,6 +20,7 @@ const contractTypes = [
     new ContractType(`HammingCodes: Integer to encoded Binary`, `contracts/hammingcodes-integer-to-encoded-binary.js`),
     new ContractType(`Merge Overlapping Intervals`, `contracts/merge-overlapping-intervals.js`),
     new ContractType(`Minimum Path Sum in a Triangle`, `contracts/minimum-path-sum-in-a-triangle.js`),
+    new ContractType(`Sanitize Parentheses in Expression`, `contracts/sanitize-parentheses-in-expression.js`),
     new ContractType(`Spiralize Matrix`, `contracts/spiralize-matrix.js`),
     new ContractType(`Subarray with Maximum Sum`, `contracts/subarray-with-maximum-sum.js`),
     new ContractType(`Total Ways to Sum`, `contracts/total-ways-to-sum.js`, (input) => [input, [...Array(input).keys()].filter(a => a > 0)]),
@@ -61,9 +62,9 @@ class Contract {
         if (result !== ``) {
             this.reward = result;
             if (flags[`record`]) {
-                const recordFile = this.type.title.replace(` `, `-`).toLowerCase();
-                ns.write(recordFile, `new TestCase(${JSON.stringify(processedInput)}, ${JSON.stringify(answer)}),`, `a`);
-                ns.print(`    Recorded solution as test case.`);
+                const recordFile = this.type.title.replace(/\s+/g, `-`).toLowerCase();
+                await ns.write(recordFile, `new TestCase(${JSON.stringify(processedInput)}, ${JSON.stringify(answer)}),`, `a`);
+                ns.print(`    Recorded solution to ${recordFile} as test case.`);
             }
             return `reward`;
         } else {
