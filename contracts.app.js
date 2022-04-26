@@ -14,6 +14,7 @@ const contractTypes = [
     new ContractType(`Algorithmic Stock Trader III`, `contracts/algorithmic-stock-trader.js`, (input) => [2, input]),
     new ContractType(`Algorithmic Stock Trader IV`, `contracts/algorithmic-stock-trader.js`),
     new ContractType(`Array Jumping Game`, `contracts/array-jumping-game.js`),
+    new ContractType(`Array Jumping Game II`, `contracts/array-jumping-game-ii.js`),
     new ContractType(`Find Largest Prime Factor`, `contracts/find-largest-prime-factor.js`),
     new ContractType(`Generate IP Addresses`, `contracts/generate-ip-addresses.js`),
     new ContractType(`HammingCodes: Integer to encoded Binary`, `contracts/hammingcodes-integer-to-encoded-binary.js`),
@@ -42,12 +43,13 @@ class Contract {
     }
 
     /** @param {NS} ns */
-    async solve(ns) {
+    async solve(ns, flags) {
         if (this.type.script === ``) {
             return `new`;
         }
 
-        ns.run(this.type.script, 1, JSON.stringify(this.type.processInput(this.input)), Ports.CONTRACT_PORT);
+        const processedInput = this.type.processInput(this.input);
+        ns.run(this.type.script, 1, JSON.stringify(processedInput), Ports.CONTRACT_PORT);
 
         const port = ns.getPortHandle(Ports.CONTRACT_PORT);
         while (port.empty()) {
@@ -58,6 +60,10 @@ class Contract {
         const result = ns.codingcontract.attempt(answer, this.file, this.host, { returnReward: true });
         if (result !== ``) {
             this.reward = result;
+            if (flags[`record`]) {
+                const recordFile = this.title.replace(` `, `-`).toLowerCase();
+                ns.write(recordFile, `new TestCase(${JSON.stringify(processedInput)}, ${JSON.stringify(answer)}),`, `a`);
+            }
             return `reward`;
         } else {
             this.failure = `Answer: ${answer}, Input: ${this.input}`;
@@ -83,6 +89,9 @@ function getContracts(ns, host) {
 /** @param {NS} ns */
 export async function main(ns) {
     ns.disableLog(`ALL`);
+
+    const flags = ns.flags([[`record`, false]]);
+
     const tenMinutes = 1000 * 60 * 10;
     const serverFile = `known-servers.json`;
     while (true) {
@@ -97,7 +106,7 @@ export async function main(ns) {
             foundContracts = foundContracts || contracts.length > 0;
             for (let contract of contracts) {
                 ns.print(`Found: ${contract}`);
-                const status = await contract.solve(ns);
+                const status = await contract.solve(ns, flags);
                 switch (status) {
                     case `reward`:
                         ns.print(`    Reward: ${contract.reward}`);
