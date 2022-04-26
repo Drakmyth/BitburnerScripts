@@ -17,6 +17,8 @@ export async function main(ns) {
     ns.print(`numParityBits: ${numParityBits}`);
     const encoding = Array(numParityBits + data.length + 1).fill(0);
     const parityBits = [];
+    // TODO: populate parityBits with 2^x for x in range 0 to (numParityBits - 1), then
+    //       the below calcualtion go away in favor of `if (i in parityBits) continue;
     for (let i = 1; i < encoding.length; i++) {
         const pow = Math.log2(i);
         if (pow - Math.floor(pow) === 0) {
