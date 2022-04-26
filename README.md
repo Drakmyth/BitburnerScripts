@@ -81,6 +81,7 @@ Contract solvers are used by `contracts.app.js` to automatically complete contra
 | HammingCodes: Integer to encoded Binary | [contracts/hammingcodes-integer-to-encoded-binary.js](contracts/hammingcodes-integer-to-encoded-binary.js) |
 | Merge Overlapping Intervals             | [contracts/merge-overlapping-intervals.js](contracts/merge-overlapping-intervals.js)                       |
 | Minimum Path Sum in a Triangle          | [contracts/minimum-path-sum-in-a-triangle.js](contracts/minimum-path-sum-in-a-triangle.js)                 |
+| Sanitize Parentheses in Expression      | [contracts/sanitize-parentheses-in-expression.js](contracts/sanitize-parentheses-in-expression.js)         |
 | Spiralize Matrix                        | [contracts/spiralize-matrix.js](contracts/spiralize-matrix.js)                                             |
 | Subarray with Maximum Sum               | [contracts/subarray-with-maximum-sum.js](contracts/subarray-with-maximum-sum.js)                           |
 | Total Ways to Sum                       | [contracts/total-ways-to-sum.js](contracts/total-ways-to-sum.js)<sup>1</sup>                               |
