@@ -36,6 +36,7 @@ export async function main(ns) {
         const pid = ns.run(script.filename, 1, ...script.args);
         if (pid === 0) {
             ns.tprint(`ERROR: Unknown error starting ${script.filename}.`)
+            continue;
         } else {
             usedRam += scriptRam;
         }
