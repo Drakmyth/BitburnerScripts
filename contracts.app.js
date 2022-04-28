@@ -62,7 +62,7 @@ class Contract {
         if (result !== ``) {
             this.reward = result;
             if (flags[`record`]) {
-                const recordFile = `testcases/${this.type.title.replace(/\s+/g, `-`).replace(/[^A-Za-z0-9\-]/g, ``).toLowerCase()}.txt`;
+                const recordFile = `/testcases/${this.type.title.replace(/\s+/g, `-`).replace(/[^A-Za-z0-9\-]/g, ``).toLowerCase()}.txt`;
                 await ns.write(recordFile, `new TestCase(${JSON.stringify(processedInput)}, ${JSON.stringify(answer)}),\n`, `a`);
                 ns.print(`    Recorded solution to ${recordFile} as test case.`);
             }
