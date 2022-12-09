@@ -17,7 +17,7 @@ const contractTypes = [
     new ContractType(`Array Jumping Game II`, `contracts/array-jumping-game-ii.js`),
     new ContractType(`Find Largest Prime Factor`, `contracts/find-largest-prime-factor.js`),
     new ContractType(`Generate IP Addresses`, `contracts/generate-ip-addresses.js`),
-    new ContractType(`HammingCodes: Integer to encoded Binary`, `contracts/hammingcodes-integer-to-encoded-binary.js`),
+    new ContractType(`HammingCodes: Integer to Encoded Binary`, `contracts/hammingcodes-integer-to-encoded-binary.js`),
     new ContractType(`Merge Overlapping Intervals`, `contracts/merge-overlapping-intervals.js`),
     new ContractType(`Minimum Path Sum in a Triangle`, `contracts/minimum-path-sum-in-a-triangle.js`),
     new ContractType(`Sanitize Parentheses in Expression`, `contracts/sanitize-parentheses-in-expression.js`),
@@ -95,7 +95,7 @@ export async function main(ns) {
     const flags = ns.flags([[`record`, false]]);
 
     const tenMinutes = 1000 * 60 * 10;
-    const serverFile = `known-servers.json`;
+    const serverFile = `known-servers.json.txt`;
     while (true) {
         const servers = JSON.parse(ns.read(serverFile));
 
@@ -115,6 +115,7 @@ export async function main(ns) {
                         break;
                     case `fail`:
                         ns.print(`    !!!! FAILED !!!!`);
+                        ns.print(`    Failure: ${contract.failure}`);
                         break;
                     case `new`:
                         ns.print(`    !!!! NEW !!!!`);

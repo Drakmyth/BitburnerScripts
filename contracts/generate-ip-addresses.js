@@ -39,6 +39,7 @@ export async function main(ns) {
         }
     }
 
-    ns.print(`IP Addresses: ${JSON.stringify(addresses)}`);
-    ns.writePort(responsePort, JSON.stringify(addresses));
+    // bugfix: Shouldn't need to .toString() here, but v2.1.0 has a bug
+    ns.print(`IP Addresses: ${JSON.stringify(addresses.toString())}`);
+    ns.writePort(responsePort, JSON.stringify(addresses.toString()));
 }
