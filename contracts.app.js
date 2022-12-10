@@ -89,7 +89,9 @@ function getContracts(ns, host) {
 
 /** @param {NS} ns */
 export async function main(ns) {
-    ns.disableLog(`ALL`);
+    ns.tail();
+    ns.moveTail(1380, 0);
+    ns.resizeTail(1000, 413);
 
     const tenMinutes = 1000 * 60 * 10;
     const serverFile = `known-servers.json.txt`;
