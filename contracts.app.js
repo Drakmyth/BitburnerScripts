@@ -16,6 +16,7 @@ const contractTypes = [
     new ContractType(`Array Jumping Game`, `contracts/array-jumping-game.js`),
     new ContractType(`Array Jumping Game II`, `contracts/array-jumping-game-ii.js`),
     new ContractType(`Encryption I: Caesar Cipher`, `contracts/encryption-i-caesar-cipher.js`),
+    new ContractType(`Encryption II: Vigenère Cipher`, `contracts/encryption-ii-vigenere-cipher.js`),
     new ContractType(`Find Largest Prime Factor`, `contracts/find-largest-prime-factor.js`),
     new ContractType(`Generate IP Addresses`, `contracts/generate-ip-addresses.js`),
     new ContractType(`HammingCodes: Integer to Encoded Binary`, `contracts/hammingcodes-integer-to-encoded-binary.js`),
