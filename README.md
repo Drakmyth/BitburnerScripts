@@ -4,7 +4,7 @@
 This repository contains scripts I have written while playing the idle hacking game [Bitburner](https://store.steampowered.com/app/1812820/Bitburner/).
 
 ## Appliction Scripts
-Application scripts will persistently run in the background and continue operating until terminated. Tail log will be opened automatically upon execution.
+Application scripts will persistently run in the background and continue operating until terminated.
 
 - [contracts.app.js](contracts.app.js) - Finds and automatically solves contracts. Uses `known-servers.json.txt`. Update ContractType list to add new contract solvers.
 
@@ -66,7 +66,7 @@ Library scripts are not themselves executable, but contain functions or constant
 - [ports.lib.js](ports.lib.js) - Contains constants that define which ports to use for different purposes.
 
 ## Contract Solvers
-Contract solvers are used by `contracts.app.js` to automatically complete contracts. Each solver includes a `.test.js` file that can be executed to run various payloads against it to ensure the solver is working properly. The solvers should not be executed manually except through these test scripts as they rely on having a second script listening on a port to receive the contract solution. Test cases are copied from https://github.com/phantomesse/bitburner/tree/main/tests unless otherwise noted in the test file.
+Contract solvers are used by `contracts.app.js` to automatically complete contracts. Solvers should not be executed manually as they rely on having a second script listening on a port to receive the contract solution.
 
 | Contract                                | Script                                                                                                     |
 |-----------------------------------------|------------------------------------------------------------------------------------------------------------|
@@ -76,6 +76,9 @@ Contract solvers are used by `contracts.app.js` to automatically complete contra
 | Algorithmic Stock Trader IV             | [contracts/algorithmic-stock-trader.js](contracts/algorithmic-stock-trader.js)<sup>1</sup>                 |
 | Array Jumping Game                      | [contracts/array-jumping-game.js](contracts/array-jumping-game.js)                                         |
 | Array Jumping Game II                   | [contracts/array-jumping-game-ii.js](contracts/array-jumping-game-ii.js)                                   |
+| Compression I: RLE Compression          | [contracts/compression-i-rle-compression.js](contracts/compression-i-rle-compression.js)                   |
+| Encryption I: Caesar Cipher             | [contracts/encryption-i-caesar-cipher.js](contracts/encryption-i-caesar-cipher.js)                         |
+| Encryption II: Vigenère Cipher          | [contracts/encryption-ii-vigenere-cipher.js](contracts/encryption-ii-vigenere-cipher.js)                   |
 | Find Largest Prime Factor               | [contracts/find-largest-prime-factor.js](contracts/find-largest-prime-factor.js)                           |
 | Generate IP Addresses                   | [contracts/generate-ip-addresses.js](contracts/generate-ip-addresses.js)                                   |
 | HammingCodes: Integer to encoded Binary | [contracts/hammingcodes-integer-to-encoded-binary.js](contracts/hammingcodes-integer-to-encoded-binary.js) |
@@ -115,7 +118,7 @@ Additional information is available in the [bitburner-vscode](https://github.com
 ## Enabling Intellisense
 This repository is set up to enable Intellisense for the NS global object used in the various game scripts. However, I don't want to include that file here as it is part of the base game. To enabled Intellisense, follow these steps:
 
-1. Download [NetscriptDefinitions.d.ts](https://github.com/danielyxie/bitburner/blob/dev/src/ScriptEditor/NetscriptDefinitions.d.ts) into the root folder
+1. Download [NetscriptDefinitions.d.ts](https://github.com/bitburner-official/bitburner-src/blob/dev/src/ScriptEditor/NetscriptDefinitions.d.ts) into the root folder
 1. Add `declare global { const NS: NS; }` before the first line in that file
 1. Add `"javascript.preferences.importModuleSpecifier": "non-relative"` to your `.vscode/settings.json` file
 

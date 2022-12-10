@@ -47,7 +47,7 @@ class Contract {
     }
 
     /** @param {NS} ns */
-    async solve(ns, flags) {
+    async solve(ns) {
         if (this.type.script === ``) {
             return `new`;
         }
@@ -64,11 +64,6 @@ class Contract {
         const result = ns.codingcontract.attempt(answer, this.file, this.host, { returnReward: true });
         if (result !== ``) {
             this.reward = result;
-            if (flags[`record`]) {
-                const recordFile = `/testcases/${this.type.title.replace(/\s+/g, `-`).replace(/[^A-Za-z0-9\-]/g, ``).toLowerCase()}.txt`;
-                await ns.write(recordFile, `new TestCase(${JSON.stringify(processedInput)}, ${JSON.stringify(answer)}),\n`, `a`);
-                ns.print(`    Recorded solution to ${recordFile} as test case.`);
-            }
             return `reward`;
         } else {
             this.failure = `Answer: ${answer}, Input: ${this.input}`;
@@ -95,8 +90,6 @@ function getContracts(ns, host) {
 export async function main(ns) {
     ns.disableLog(`ALL`);
 
-    const flags = ns.flags([[`record`, false]]);
-
     const tenMinutes = 1000 * 60 * 10;
     const serverFile = `known-servers.json.txt`;
     while (true) {
@@ -111,7 +104,7 @@ export async function main(ns) {
             foundContracts = foundContracts || contracts.length > 0;
             for (let contract of contracts) {
                 ns.print(`Found: ${contract}`);
-                const status = await contract.solve(ns, flags);
+                const status = await contract.solve(ns);
                 switch (status) {
                     case `reward`:
                         ns.print(`    Reward: ${contract.reward}`);
