@@ -23,6 +23,7 @@ const contractTypes = [
     new ContractType(`HammingCodes: Integer to Encoded Binary`, `contracts/hammingcodes-integer-to-encoded-binary.js`),
     new ContractType(`Merge Overlapping Intervals`, `contracts/merge-overlapping-intervals.js`),
     new ContractType(`Minimum Path Sum in a Triangle`, `contracts/minimum-path-sum-in-a-triangle.js`),
+    new ContractType(`Proper 2-Coloring of a Graph`, `contracts/proper-2-coloring-of-a-graph.js`),
     new ContractType(`Sanitize Parentheses in Expression`, `contracts/sanitize-parentheses-in-expression.js`),
     new ContractType(`Spiralize Matrix`, `contracts/spiralize-matrix.js`),
     new ContractType(`Subarray with Maximum Sum`, `contracts/subarray-with-maximum-sum.js`),
