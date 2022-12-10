@@ -13,7 +13,7 @@ export async function main(ns) {
         new Script(`netmapper.app.js`,[], true),
         new Script(`cracker.app.js`,[], true),
         new Script(`flooder.app.js`),
-        new Script(`contracts.app.js`,[`--record`], true)
+        new Script(`contracts.app.js`, true)
     ];
 
     const host = ns.getHostname();
