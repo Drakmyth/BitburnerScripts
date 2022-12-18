@@ -7,28 +7,28 @@ export async function main(ns) {
     const vertCount = input[0];
     const edges = input[1];
     let colors = new Array(vertCount).fill(undefined);
+    colors[0] = 0;
 
     ns.print(`Vertices: ${vertCount}`);
     ns.print(`Edges: ${JSON.stringify(edges)}`);
 
-    let currentVert = 0;
-    do {
-        const adjVerts = edges.filter(e => e.indexOf(currentVert) > -1).map(e => e[0] === currentVert ? e[1] : e[0]);
-        const adj0 = adjVerts.some(v => colors[v] === 0);
-        const adj1 = adjVerts.some(v => colors[v] === 1);
+    let nextEdge = undefined;
+    while (true) {
+        nextEdge = edges.find(e => typeof(colors[e[0]]) !== typeof(colors[e[1]]));
+        if (nextEdge === undefined) break;
+
+        const v0 = nextEdge[0];
+        const v1 = nextEdge[1];
+        const lastColor = colors[v0] === undefined ? colors[v1] : colors[v0];
+        const nextColor = lastColor === 0 ? 1 : 0;
         
-        if (adj0 && adj1) {
-            colors = [];
-            break;
+        if (colors[v0] === undefined) {
+            colors[v0] = nextColor;
+        } else {
+            colors[v1] = nextColor;
         }
-        else if (adj0 && !adj1) colors[currentVert] = 1
-        else colors[currentVert] = 0
-        
-        let cv = currentVert;
-        const nextVert = adjVerts.find(v => colors[v] === undefined);
-        currentVert = nextVert === undefined ? colors.indexOf(undefined) : nextVert;
+        ns.print(colors);
     }
-    while (currentVert > -1);
 
     ns.print(`Colors: ${JSON.stringify(colors)}`);
     ns.writePort(responsePort, JSON.stringify(colors));
