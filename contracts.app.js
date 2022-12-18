@@ -26,6 +26,7 @@ const contractTypes = [
     new ContractType(`Minimum Path Sum in a Triangle`, `contracts/minimum-path-sum-in-a-triangle.js`),
     new ContractType(`Proper 2-Coloring of a Graph`, `contracts/proper-2-coloring-of-a-graph.js`),
     new ContractType(`Sanitize Parentheses in Expression`, `contracts/sanitize-parentheses-in-expression.js`),
+    new ContractType(`Shortest Path in a Grid`, `contracts/shortest-path-in-a-grid.js`),
     new ContractType(`Spiralize Matrix`, `contracts/spiralize-matrix.js`),
     new ContractType(`Subarray with Maximum Sum`, `contracts/subarray-with-maximum-sum.js`),
     new ContractType(`Total Ways to Sum`, `contracts/total-ways-to-sum.js`, (input) => [input, [...Array(input).keys()].filter(a => a > 0)]),
