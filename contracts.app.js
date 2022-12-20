@@ -21,6 +21,7 @@ const contractTypes = [
     new ContractType(`Encryption II: Vigenère Cipher`, `contracts/encryption-ii-vigenere-cipher.js`),
     new ContractType(`Find Largest Prime Factor`, `contracts/find-largest-prime-factor.js`),
     new ContractType(`Generate IP Addresses`, `contracts/generate-ip-addresses.js`),
+    new ContractType(`HammingCodes: Encoded Binary to Integer`, `contracts/hammingcodes-encoded-binary-to-integer.js`),
     new ContractType(`HammingCodes: Integer to Encoded Binary`, `contracts/hammingcodes-integer-to-encoded-binary.js`),
     new ContractType(`Merge Overlapping Intervals`, `contracts/merge-overlapping-intervals.js`),
     new ContractType(`Minimum Path Sum in a Triangle`, `contracts/minimum-path-sum-in-a-triangle.js`),

@@ -2,40 +2,35 @@
 
 /** @param {NS} ns */
 export async function main(ns) {
-    // const input = JSON.parse(ns.args[0]);
-    // const responsePort = ns.args[1];
-    const input = `110111101001011011100001000011`;
+    const input = JSON.parse(ns.args[0]);
+    const responsePort = ns.args[1];
+    let encoding = input;
     ns.print(`Input: ${JSON.stringify(input)}`);
 
-    const encoding = input.split(``).map(b => Number.parseInt(b));
-    ns.print(`Encoding: ${JSON.stringify(encoding)}`);
-
-    let numParityBits = 0;
-    while(Math.pow(2, numParityBits) < encoding.length) {
-        numParityBits++;
-    }
-    ns.print(`numParityBits: ${numParityBits}`);
-
-    const parityBits = [];
-    for (let i = 0; i < numParityBits; i++) {
-        parityBits.push(Math.pow(2, i));
+    const max_exponent = Math.floor(Math.log(input.length) / Math.log(2))
+    let parityBits = [0];
+    for (let i = 0; i < max_exponent; i++) {
+        const parityBit = Math.pow(2, i);
+        parityBits.push(parityBit);
     }
 
     ns.print(`ParityBits: ${JSON.stringify(parityBits)}`);
 
-    const matches = [...input.slice(1).matchAll(/1/g)];
-    ns.print(matches.length);
-    const encodingParity = matches.length % 2;
-
-    if (encodingParity !== encoding[0]) {
-        ns.print(`Error exists`);
-        // TODO: Fix error
+    const ones = [...input.matchAll(/1/g)];
+    const error = ones.map(m => m.index).reduce((xor, i) => xor ^ i);
+    if (error > 0) {
+        ns.print(`Error detected at position: ${error}`);
+        const bit = input.charAt(error) === `0` ? `1` : `0`;
+        encoding = input.substring(0, error) + bit + input.substring(error + 1);
     }
 
-    const data = encoding.filter((_, i) => !parityBits.includes(i) && i !== 0).join(``);
-    ns.print(`Data: ${data}`);
+    for (let i = parityBits.length - 1; i >= 0; i--) {
+        const bit = parityBits[i];
+        encoding = encoding.substring(0, bit) + encoding.substring(bit + 1);
+    }
+    ns.print(`Decoded: ${encoding}`);
 
-    const answer = Number.parseInt(data, 2);
+    const answer = Number.parseInt(encoding, 2);
     ns.print(`Answer: ${answer}`);
-    // ns.writePort(responsePort, JSON.stringify(answer));
+    ns.writePort(responsePort, JSON.stringify(answer));
 }
