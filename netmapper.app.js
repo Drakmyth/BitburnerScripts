@@ -34,14 +34,14 @@ export async function main(ns) {
 
     while(true) {
         ns.print(`\nSearching for new servers...`);
-        findServers(ns, `home`, servers);
+        findServers(ns, ns.getServer(`home`), servers);
 
         if (lastServerCount === servers.length) {
             ns.print(`No new servers found.`);
         }
         lastServerCount = servers.length;
         ns.print(`Writing ${filename}...`);
-        await ns.write(filename, JSON.stringify(servers), `w`);
+        ns.write(filename, JSON.stringify(servers), `w`);
         ns.print(`Will search again at ${new Date(Date.now() + tenMinutes).toLocaleTimeString(_, { hour12: false })}.`);
         await ns.sleep(tenMinutes);
     }
