@@ -21,7 +21,13 @@ export async function main(ns) {
 
     while (true) {
         let edge = edges.find(e => typeof(colors[e.v0]) !== typeof(colors[e.v1]));
-        if (edge === undefined) break;
+        if (edge === undefined) {
+            edge = edges.find(e => colors[e.v0] === undefined && colors[e.v1] === undefined);
+            if (edge === undefined) break;
+            colors[edge.v0] = 0;
+        }
+
+        ns.print(`Edge: (${edge.v0}, ${edge.v1})`);
 
         const newVert = colors[edge.v0] === undefined ? edge.v0 : edge.v1;
         const oldVert = colors[edge.v0] === undefined ? edge.v1 : edge.v0;
@@ -41,6 +47,8 @@ export async function main(ns) {
         colors[newVert] = nextColor;
         ns.print(colors);
     }
+
+    colors = colors.map(c => c === undefined ? 0 : c);
 
     ns.print(`Colors: ${JSON.stringify(colors)}`);
     ns.writePort(responsePort, JSON.stringify(colors));
