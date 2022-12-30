@@ -1,4 +1,3 @@
-import * as Ports from "ports.lib.js";
 
 // generated from ns.codingcontracts.getContractTypes()
 export const ContractTypes = {
@@ -49,13 +48,13 @@ export class ContractSolver {
     }
 
     /** @param {NS} ns **/
-    solve = async (ns, filename, host = 'home') => {
-        const port = ns.getPortHandle(Ports.CONTRACT_PORT);
+    solve = async (ns, filename, host, portId) => {
+        const port = ns.getPortHandle(portId);
         port.clear();
 
         const input = ns.codingcontract.getData(filename, host);
         const processedInput = this.processInput(input);
-        ns.run(this.script, 1, JSON.stringify(processedInput), Ports.CONTRACT_PORT);
+        ns.run(this.script, 1, JSON.stringify(processedInput), portId);
 
         while (port.empty()) {
             await ns.sleep(1);

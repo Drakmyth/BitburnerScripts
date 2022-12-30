@@ -1,3 +1,4 @@
+import * as Ports from "ports.lib.js";
 import { ContractSolver } from "contracts.lib.js";
 
 class Contract {
@@ -58,7 +59,7 @@ export async function main(ns) {
                 continue;
             }
 
-            const result = await solver.solve(ns, contract.filename, contract.host);
+            const result = await solver.solve(ns, contract.filename, contract.host, Ports.CONTRACT_PORT);
             let prefix = `Reward`;
             if (!result.solved) {
                 ns.tail();
