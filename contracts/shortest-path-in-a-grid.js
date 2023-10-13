@@ -25,28 +25,38 @@ function build_distance_map(grid) {
     const width = grid[0].length;
     const height = grid.length;
     const max_size = width * height;
-    const map = Array(height).fill(null).map(() => Array(width).fill(-1));
+    const map = Array(height)
+        .fill(null)
+        .map(() => Array(width).fill(-1));
 
     const unvisited_cells = [new Cell(`?`, width - 1, height - 1)];
     let firstCell = true;
 
-    while(unvisited_cells.length > 0) {
+    while (unvisited_cells.length > 0) {
         const cell = unvisited_cells.pop();
 
         const neighbors = get_adjacent_cells(grid, cell.x, cell.y);
-        const visited_neighbors = neighbors.filter(n => map[n.y][n.x] > -1);
-        const unvisited_neighbors = neighbors.filter(n => map[n.y][n.x] === -1);
+        const visited_neighbors = neighbors.filter((n) => map[n.y][n.x] > -1);
+        const unvisited_neighbors = neighbors.filter(
+            (n) => map[n.y][n.x] === -1
+        );
 
         if (firstCell) {
             map[cell.y][cell.x] = 0;
             firstCell = false;
         } else {
-            map[cell.y][cell.x] = visited_neighbors.reduce((min_dist, n) => Math.min(min_dist, map[n.y][n.x]), max_size) + 1;
+            map[cell.y][cell.x] =
+                visited_neighbors.reduce(
+                    (min_dist, n) => Math.min(min_dist, map[n.y][n.x]),
+                    max_size
+                ) + 1;
         }
 
         unvisited_cells.push(...unvisited_neighbors);
 
-        const revisit = visited_neighbors.filter(n => map[n.y][n.x] > map[cell.y][cell.x]);
+        const revisit = visited_neighbors.filter(
+            (n) => map[n.y][n.x] > map[cell.y][cell.x]
+        );
         unvisited_cells.push(...revisit);
     }
 

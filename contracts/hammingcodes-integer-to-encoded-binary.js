@@ -6,12 +6,14 @@ export async function main(ns) {
     const responsePort = ns.args[1];
     ns.print(`Input: ${JSON.stringify(input)}`);
 
-    const data = input.toString(2).split(``).map(b => Number.parseInt(b));
+    const data = input
+        .toString(2)
+        .split(``)
+        .map((b) => Number.parseInt(b));
     ns.print(`Data: ${JSON.stringify(data)}`);
 
-    
     let numParityBits = 0;
-    while(Math.pow(2, numParityBits) < numParityBits + data.length + 1) {
+    while (Math.pow(2, numParityBits) < numParityBits + data.length + 1) {
         numParityBits++;
     }
     ns.print(`numParityBits: ${numParityBits}`);
@@ -29,11 +31,18 @@ export async function main(ns) {
         encoding[i] = data.shift();
     }
 
-    ns.print(`ParityBits: ${JSON.stringify(parityBits)}`)
+    ns.print(`ParityBits: ${JSON.stringify(parityBits)}`);
 
-    const parity = encoding.reduce((total, bit, index) => total ^= bit > 0 ? index : 0, 0);
-    const parityVals = parity.toString(2).split(``).map(b => Number.parseInt(b)).reverse();
-    while(parityVals.length < parityBits.length) {
+    const parity = encoding.reduce(
+        (total, bit, index) => (total ^= bit > 0 ? index : 0),
+        0
+    );
+    const parityVals = parity
+        .toString(2)
+        .split(``)
+        .map((b) => Number.parseInt(b))
+        .reverse();
+    while (parityVals.length < parityBits.length) {
         parityVals.push(0);
     }
 
@@ -42,13 +51,14 @@ export async function main(ns) {
     }
     ns.print(`Parity: ${JSON.stringify(parityVals)}`);
 
-    const globalParity = (encoding.toString().split(`1`).length - 1) % 2 === 0 ? 0 : 1;
+    const globalParity =
+        (encoding.toString().split(`1`).length - 1) % 2 === 0 ? 0 : 1;
     ns.print(`GlobalParity: ${globalParity}`);
     encoding[0] = globalParity;
 
     ns.print(`Encoding: ${JSON.stringify(encoding)}`);
 
-    const answer = encoding.reduce((total, bit) => total += bit, ``);
+    const answer = encoding.reduce((total, bit) => (total += bit), ``);
     ns.print(`Answer: ${answer}`);
     ns.writePort(responsePort, JSON.stringify(answer));
 }

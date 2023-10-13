@@ -22,12 +22,15 @@ export async function main(ns) {
         return;
     }
 
-    if (maxTransactions > prices.length / 2) { // Is this valid if the input array hasn't been optimized?
+    if (maxTransactions > prices.length / 2) {
+        // Is this valid if the input array hasn't been optimized?
         let sum = 0;
         for (let day = 1; day < prices.length; day++) {
             sum += Math.max(prices[day] - prices[day - 1], 0);
         }
-        ns.print(`More transactions available than can be used. Maximum profit is ${sum}.`);
+        ns.print(
+            `More transactions available than can be used. Maximum profit is ${sum}.`
+        );
         ns.writePort(responsePort, sum);
         return;
     }

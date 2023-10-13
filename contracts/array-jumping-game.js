@@ -6,7 +6,7 @@ export async function main(ns) {
     const responsePort = ns.args[1];
     ns.print(`Input: ${JSON.stringify(input)}`);
 
-    const data = input.map(d => [d, false]);
+    const data = input.map((d) => [d, false]);
     data[data.length - 1][1] = true;
 
     for (let i = data.length - 1; i >= 0; i--) {
@@ -18,7 +18,7 @@ export async function main(ns) {
         }
 
         const candidates = data.slice(i, i + data[i][0] + 1);
-        if (candidates.some(d => d[1])) {
+        if (candidates.some((d) => d[1])) {
             data[i][1] = true;
         }
     }

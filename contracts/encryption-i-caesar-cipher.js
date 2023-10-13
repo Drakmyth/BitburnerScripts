@@ -11,7 +11,7 @@ export async function main(ns) {
 
     let chars = `ABCDEFGHIJKLMNOPQRSTUVWXYZ`;
 
-    const rightShift = (chars.length - shift);
+    const rightShift = chars.length - shift;
 
     let answer = ``;
     for (let i = 0; i < str.length; i++) {
@@ -21,7 +21,7 @@ export async function main(ns) {
             continue;
         }
         const end = (start + rightShift) % chars.length;
-        
+
         answer += chars[end];
     }
 

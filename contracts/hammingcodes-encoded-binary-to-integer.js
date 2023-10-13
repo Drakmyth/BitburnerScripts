@@ -7,7 +7,7 @@ export async function main(ns) {
     let encoding = input;
     ns.print(`Input: ${JSON.stringify(input)}`);
 
-    const max_exponent = Math.floor(Math.log(input.length) / Math.log(2))
+    const max_exponent = Math.floor(Math.log(input.length) / Math.log(2));
     let parityBits = [0];
     for (let i = 0; i < max_exponent; i++) {
         const parityBit = Math.pow(2, i);
@@ -17,7 +17,7 @@ export async function main(ns) {
     ns.print(`ParityBits: ${JSON.stringify(parityBits)}`);
 
     const ones = [...input.matchAll(/1/g)];
-    const error = ones.map(m => m.index).reduce((xor, i) => xor ^ i);
+    const error = ones.map((m) => m.index).reduce((xor, i) => xor ^ i);
     if (error > 0) {
         ns.print(`Error detected at position: ${error}`);
         const bit = input.charAt(error) === `0` ? `1` : `0`;

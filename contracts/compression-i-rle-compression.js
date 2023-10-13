@@ -10,7 +10,11 @@ export async function main(ns) {
     for (let i = 0; i < input.length; i) {
         let char = input[i];
         let count = 1;
-        while (i + count < input.length && count < 9 && input[i + count] == char) {
+        while (
+            i + count < input.length &&
+            count < 9 &&
+            input[i + count] == char
+        ) {
             count++;
         }
 

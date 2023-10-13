@@ -6,11 +6,11 @@ export async function main(ns) {
     const responsePort = ns.args[1];
     ns.print(`Input: ${JSON.stringify(input)}`);
 
-    const data = input.filter(i => i !== 0);
-    
+    const data = input.filter((i) => i !== 0);
+
     for (let i = 0; i < data.length - 1; i++) {
-        if (Math.sign(data[i]) === Math.sign(data[i+1])) {
-            data[i] += data[i+1];
+        if (Math.sign(data[i]) === Math.sign(data[i + 1])) {
+            data[i] += data[i + 1];
             data.splice(i + 1, 1);
             i--;
         }
@@ -24,11 +24,12 @@ export async function main(ns) {
         data.pop();
     }
 
-
     let biggestSum = 0;
     for (let i = 0; i < data.length; i++) {
-        for (let j = i; j < data.length; j+=2) {
-            let sum = data.slice(i, j+1).reduce((total, current) => total + current, 0);
+        for (let j = i; j < data.length; j += 2) {
+            let sum = data
+                .slice(i, j + 1)
+                .reduce((total, current) => total + current, 0);
             if (sum > biggestSum) {
                 biggestSum = sum;
                 ns.print(`Found bigger sum: ${biggestSum} at [${i}, ${j}]`);

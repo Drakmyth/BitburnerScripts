@@ -5,10 +5,12 @@ function findServers(ns, current, knownServers) {
         hosts.shift();
     }
 
-    const servers = hosts.map(host => ns.getServer(host));
+    const servers = hosts.map((host) => ns.getServer(host));
     for (let server of servers) {
-        const index = knownServers.findIndex(s => server.hostname === s.hostname);
-        if (index < 0){
+        const index = knownServers.findIndex(
+            (s) => server.hostname === s.hostname
+        );
+        if (index < 0) {
             ns.print(`Found: ${server.hostname}`);
             knownServers.push(server);
         } else {
@@ -32,7 +34,7 @@ export async function main(ns) {
 
     let lastServerCount = servers.length;
 
-    while(true) {
+    while (true) {
         ns.print(`\nSearching for new servers...`);
         findServers(ns, ns.getServer(`home`), servers);
 
@@ -42,7 +44,11 @@ export async function main(ns) {
         lastServerCount = servers.length;
         ns.print(`Writing ${filename}...`);
         ns.write(filename, JSON.stringify(servers), `w`);
-        ns.print(`Will search again at ${new Date(Date.now() + tenMinutes).toLocaleTimeString(_, { hour12: false })}.`);
+        ns.print(
+            `Will search again at ${new Date(
+                Date.now() + tenMinutes
+            ).toLocaleTimeString(_, { hour12: false })}.`
+        );
         await ns.sleep(tenMinutes);
     }
 }

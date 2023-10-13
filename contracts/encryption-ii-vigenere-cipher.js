@@ -20,9 +20,9 @@ export async function main(ns) {
 
     let answer = ``;
     for (let i = 0; i < str.length; i++) {
-        const shift = chars.indexOf(str[i]); 
+        const shift = chars.indexOf(str[i]);
         const end = (chars.indexOf(fullkeyword[i]) + shift) % chars.length;
-        
+
         answer += chars[end];
     }
 

@@ -52,14 +52,21 @@ export async function main(ns) {
         }
 
         for (let contract of contracts) {
-            ns.print(`Found: ${contract.host} - ${contract.filename} - ${contract.title}`);
+            ns.print(
+                `Found: ${contract.host} - ${contract.filename} - ${contract.title}`
+            );
             const solver = ContractSolver.findSolver(contract.title);
             if (solver === undefined) {
                 ns.print(`    !!!! NEW !!!!`);
                 continue;
             }
 
-            const result = await solver.solve(ns, contract.filename, contract.host, Ports.CONTRACT_PORT);
+            const result = await solver.solve(
+                ns,
+                contract.filename,
+                contract.host,
+                Ports.CONTRACT_PORT
+            );
             let prefix = `Reward`;
             if (!result.solved) {
                 ns.tail();
@@ -69,7 +76,11 @@ export async function main(ns) {
             ns.print(`    ${prefix}: ${result.message}`);
         }
 
-        ns.print(`Will search again at ${new Date(Date.now() + tenMinutes).toLocaleTimeString(_, { hour12: false })}.`);
+        ns.print(
+            `Will search again at ${new Date(
+                Date.now() + tenMinutes
+            ).toLocaleTimeString(_, { hour12: false })}.`
+        );
         await ns.sleep(tenMinutes);
     }
 }

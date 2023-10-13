@@ -20,9 +20,13 @@ export async function main(ns) {
     ns.print(`Edges: ${JSON.stringify(edges)}`);
 
     while (true) {
-        let edge = edges.find(e => typeof(colors[e.v0]) !== typeof(colors[e.v1]));
+        let edge = edges.find(
+            (e) => typeof colors[e.v0] !== typeof colors[e.v1]
+        );
         if (edge === undefined) {
-            edge = edges.find(e => colors[e.v0] === undefined && colors[e.v1] === undefined);
+            edge = edges.find(
+                (e) => colors[e.v0] === undefined && colors[e.v1] === undefined
+            );
             if (edge === undefined) break;
             colors[edge.v0] = 0;
         }
@@ -33,11 +37,13 @@ export async function main(ns) {
         const oldVert = colors[edge.v0] === undefined ? edge.v1 : edge.v0;
         const lastColor = colors[oldVert];
         const nextColor = lastColor === 0 ? 1 : 0;
-        
-        const found_conflict = edges.filter(e => e !== edge && (e.v0 === newVert || e.v1 === newVert)).some(e => {
-            const otherVert = e.v0 === newVert ? e.v1 : e.v0;
-            return colors[otherVert] === nextColor;
-        });
+
+        const found_conflict = edges
+            .filter((e) => e !== edge && (e.v0 === newVert || e.v1 === newVert))
+            .some((e) => {
+                const otherVert = e.v0 === newVert ? e.v1 : e.v0;
+                return colors[otherVert] === nextColor;
+            });
 
         if (found_conflict) {
             colors = [];
@@ -48,7 +54,7 @@ export async function main(ns) {
         ns.print(colors);
     }
 
-    colors = colors.map(c => c === undefined ? 0 : c);
+    colors = colors.map((c) => (c === undefined ? 0 : c));
 
     ns.print(`Colors: ${JSON.stringify(colors)}`);
     ns.writePort(responsePort, JSON.stringify(colors));
@@ -56,11 +62,13 @@ export async function main(ns) {
 
 function get_unique_edges(input) {
     const unique_edges = [];
-    input.map(e => new Edge(e[0], e[1])).forEach(e => {
-        if (!unique_edges.some(ue => e.v0 === ue.v0 && e.v1 === ue.v1)) {
-            unique_edges.push(e);
-        }
-    });
+    input
+        .map((e) => new Edge(e[0], e[1]))
+        .forEach((e) => {
+            if (!unique_edges.some((ue) => e.v0 === ue.v0 && e.v1 === ue.v1)) {
+                unique_edges.push(e);
+            }
+        });
 
     return unique_edges;
 }

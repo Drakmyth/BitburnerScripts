@@ -47,7 +47,7 @@ export async function main(ns) {
     const answers = [];
     for (let expression of expressions) {
         if (evaluate_expression(ns, expression) === target) {
-            answers.push(expression.join(''));
+            answers.push(expression.join(""));
         }
     }
     const evaluationTime = performance.now();
@@ -64,7 +64,7 @@ export async function main(ns) {
 }
 
 function is_token_valid(token) {
-    return token.length === 1 || token.charAt(0) !== '0';
+    return token.length === 1 || token.charAt(0) !== "0";
 }
 
 function get_all_tokenizations(digits) {
@@ -73,7 +73,7 @@ function get_all_tokenizations(digits) {
     const tokenizations = [];
 
     if (digits.length === 2) {
-        tokenizations.push(digits.split(``).map(d => parseInt(d)));
+        tokenizations.push(digits.split(``).map((d) => parseInt(d)));
     }
 
     if (digits.length > 2) {
@@ -83,7 +83,7 @@ function get_all_tokenizations(digits) {
             const firstInt = parseInt(first);
 
             const rest = get_all_tokenizations(digits.substring(i));
-            tokenizations.push(...rest.map(s => [firstInt, ...s]));
+            tokenizations.push(...rest.map((s) => [firstInt, ...s]));
         }
     }
 
@@ -99,15 +99,15 @@ function get_all_expressions(tokenizations) {
     let expressions = [];
     for (let tokens of tokenizations) {
         const built = build_expressions(tokens);
-        built.forEach(b => expressions.push(b));
+        built.forEach((b) => expressions.push(b));
     }
 
     return expressions;
 }
 
-const ADD = '+';
-const SUBTRACT = '-';
-const MULTIPLY = '*';
+const ADD = "+";
+const SUBTRACT = "-";
+const MULTIPLY = "*";
 
 function build_expressions(tokens) {
     const cacheKey = JSON.stringify(tokens);
@@ -155,7 +155,8 @@ class MultEval {
 
 function evaluate_multiplication(ns, expression, start) {
     const lastIndex = expression.length - 1;
-    if (start === lastIndex) return new MultEval(expression[lastIndex], lastIndex);
+    if (start === lastIndex)
+        return new MultEval(expression[lastIndex], lastIndex);
 
     let index = start;
     let result = expression[index];

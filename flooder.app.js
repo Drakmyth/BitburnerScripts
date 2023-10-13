@@ -13,7 +13,6 @@ class Script {
 
 /** @param {NS} ns **/
 function getHGW(ns, server, target) {
-
     const weakenTime = ns.getWeakenTime(target.hostname);
     const growTime = ns.getGrowTime(target.hostname);
     const hackTime = ns.getHackTime(target.hostname);
@@ -21,24 +20,26 @@ function getHGW(ns, server, target) {
     const hgw = [
         new Script(hackScript, 1, weakenTime - hackTime),
         new Script(growScript, 12, weakenTime - growTime),
-        new Script(weakenScript, 1, 0)
-    ]
+        new Script(weakenScript, 1, 0),
+    ];
 
     if (server.maxRam < threadRam * 3) {
-        hgw.forEach(h => h.threads = 0);
+        hgw.forEach((h) => (h.threads = 0));
         return hgw;
     }
 
-    let hgwThreads = hgw.reduce((total, h) => total += h.threads, 0);
+    let hgwThreads = hgw.reduce((total, h) => (total += h.threads), 0);
 
     if (server.maxRam < threadRam * hgwThreads) {
-        hgw[1].threads = Math.floor((server.maxRam - (threadRam * 2)) / threadRam);
+        hgw[1].threads = Math.floor(
+            (server.maxRam - threadRam * 2) / threadRam
+        );
         return hgw;
     }
 
     const hgwRam = hgwThreads * threadRam;
     hgwThreads = Math.floor(server.maxRam / hgwRam);
-    hgw.forEach(h => h.threads *= hgwThreads);
+    hgw.forEach((h) => (h.threads *= hgwThreads));
     return hgw;
 }
 
@@ -52,11 +53,14 @@ async function execGrowth(ns, server) {
 }
 
 /** @param {NS} ns **/
-async function execHGW(ns, server, target=server) {
+async function execHGW(ns, server, target = server) {
     const hgw = getHGW(ns, server, target);
     const execDelay = 500;
 
-    await ns.scp(hgw.map(h => h.script), server.hostname);
+    await ns.scp(
+        hgw.map((h) => h.script),
+        server.hostname
+    );
 
     for (let h of hgw) {
         if (h.threads === 0) continue;
@@ -73,11 +77,17 @@ export async function main(ns) {
     const flooded = [];
     const bots = [];
     const weakeningHosts = [];
-    const bankFilter = s => s.moneyMax > 0;
+    const bankFilter = (s) => s.moneyMax > 0;
     let nextBankIndex = 0;
 
     while (true) {
-        const servers = JSON.parse(ns.read(serverFile)).filter(s => s.hasAdminRights && s.hostname !== `home` && flooded.findIndex(s2 => s2.hostname === s.hostname) < 0 && bots.findIndex(s2 => s2.hostname === s.hostname) < 0);
+        const servers = JSON.parse(ns.read(serverFile)).filter(
+            (s) =>
+                s.hasAdminRights &&
+                s.hostname !== `home` &&
+                flooded.findIndex((s2) => s2.hostname === s.hostname) < 0 &&
+                bots.findIndex((s2) => s2.hostname === s.hostname) < 0
+        );
         ns.print(`\nReloaded ${serverFile}`);
 
         let foundServer = false;
@@ -115,8 +125,10 @@ export async function main(ns) {
             for (let server of bots) {
                 const target = banks[nextBankIndex];
                 nextBankIndex = (nextBankIndex + 1) % banks.length;
-    
-                ns.print(`${server.hostname} (Bot) - Flooding (${target.hostname})`);
+
+                ns.print(
+                    `${server.hostname} (Bot) - Flooding (${target.hostname})`
+                );
                 ns.killall(server.hostname);
                 await execHGW(ns, server, target);
             }
@@ -126,7 +138,11 @@ export async function main(ns) {
             ns.print(`No known floodable servers.`);
         }
 
-        ns.print(`Will search again at ${new Date(Date.now() + tenMinutes).toLocaleTimeString(_, { hour12: false })}.`);
+        ns.print(
+            `Will search again at ${new Date(
+                Date.now() + tenMinutes
+            ).toLocaleTimeString(_, { hour12: false })}.`
+        );
         await ns.sleep(tenMinutes);
     }
 }

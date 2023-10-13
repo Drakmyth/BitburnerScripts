@@ -19,7 +19,7 @@ function sliceRight(ns, data) {
                 i--;
             }
         }
-    };
+    }
     ns.print(`Right: ${JSON.stringify(right)}`);
     return right;
 }

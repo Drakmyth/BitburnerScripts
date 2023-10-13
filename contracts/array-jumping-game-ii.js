@@ -10,7 +10,9 @@ export async function main(ns) {
     jumps[jumps.length - 1] = 0;
 
     for (let i = jumps.length - 2; i >= 0; i--) {
-        const candidates = jumps.slice(i + 1, i + input[i] + 1).filter(j => j > -1);
+        const candidates = jumps
+            .slice(i + 1, i + input[i] + 1)
+            .filter((j) => j > -1);
         jumps[i] = candidates.length > 0 ? Math.min(...candidates) + 1 : -1;
     }
 

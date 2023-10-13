@@ -10,10 +10,10 @@ class Script {
 export async function main(ns) {
     const scripts = [
         new Script(`hacknet.app.js`),
-        new Script(`netmapper.app.js`,[], true),
-        new Script(`cracker.app.js`,[], true),
+        new Script(`netmapper.app.js`, [], true),
+        new Script(`cracker.app.js`, [], true),
         new Script(`flooder.app.js`),
-        new Script(`contracts.app.js`, true)
+        new Script(`contracts.app.js`, true),
     ];
 
     const host = ns.getHostname();
@@ -27,15 +27,19 @@ export async function main(ns) {
             ns.tprint(`ERROR: ${script.filename} not found.`);
             continue;
         }
-        
+
         if (usedRam + scriptRam > maxRam) {
-            ns.tprint(`ERROR: Not enough RAM available to run ${script.filename}. ${maxRam - usedRam}GB available, ${scriptRam}GB required.`);
+            ns.tprint(
+                `ERROR: Not enough RAM available to run ${script.filename}. ${
+                    maxRam - usedRam
+                }GB available, ${scriptRam}GB required.`
+            );
             continue;
         }
 
         const pid = ns.run(script.filename, 1, ...script.args);
         if (pid === 0) {
-            ns.tprint(`ERROR: Unknown error starting ${script.filename}.`)
+            ns.tprint(`ERROR: Unknown error starting ${script.filename}.`);
             continue;
         } else {
             usedRam += scriptRam;

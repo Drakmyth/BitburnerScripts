@@ -7,11 +7,15 @@ function totalWaysToSum(ns, number, addends) {
     if (number < 0) return 0;
     if (number === 0) return 1;
     const cacheKey = JSON.stringify([number, addends]);
-    if (cache.has(cacheKey)) return cache.get(cacheKey)
+    if (cache.has(cacheKey)) return cache.get(cacheKey);
 
     let numSums = 0;
     for (let addend of addends) {
-        const s = totalWaysToSum(ns, number - addend, addends.filter(a => a <= addend));
+        const s = totalWaysToSum(
+            ns,
+            number - addend,
+            addends.filter((a) => a <= addend)
+        );
         numSums += s;
     }
 
