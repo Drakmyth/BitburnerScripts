@@ -1,6 +1,7 @@
 # Bitburner Scripts
 
 [![License](https://img.shields.io/github/license/Drakmyth/BitburnerScripts)](https://github.com/Drakmyth/BitburnerScripts/blob/master/LICENSE.md)
+[![Game Version](https://img.shields.io/badge/game_version-2.5.0-blue)](https://github.com/bitburner-official/bitburner-src/releases/tag/v2.5.0)
 
 This repository contains scripts I have written while playing the idle hacking game [Bitburner](https://store.steampowered.com/app/1812820/Bitburner/).
 
