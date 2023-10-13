@@ -53,7 +53,11 @@ export class ContractSolver {
 
         const input = ns.codingcontract.getData(filename, host);
         const processedInput = this.processInput(input);
-        ns.run(this.script, 1, JSON.stringify(processedInput), portId);
+        const runOptions = {
+            threads: 1,
+            preventDuplicates: true
+        }
+        ns.run(this.script, runOptions, JSON.stringify(processedInput), portId);
 
         while (port.empty()) {
             await ns.sleep(1);

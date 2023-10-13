@@ -37,7 +37,11 @@ export async function main(ns) {
             continue;
         }
 
-        const pid = ns.run(script.filename, 1, ...script.args);
+        const runOptions = {
+            threads: 1,
+            preventDuplicates: true
+        }
+        const pid = ns.run(script.filename, runOptions, ...script.args);
         if (pid === 0) {
             ns.tprint(`ERROR: Unknown error starting ${script.filename}.`);
             continue;

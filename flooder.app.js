@@ -48,8 +48,12 @@ async function execGrowth(ns, server) {
     await ns.scp(weakenScript, server.hostname);
 
     const maxThreads = Math.floor(server.maxRam / threadRam);
+    const runOptions = {
+        threads: maxThreads,
+        preventDuplicates: true
+    }
     if (maxThreads === 0) return;
-    ns.exec(weakenScript, server.hostname, maxThreads, server.hostname, 0);
+    ns.exec(weakenScript, server.hostname, runOptions, server.hostname, 0);
 }
 
 /** @param {NS} ns **/
@@ -64,7 +68,11 @@ async function execHGW(ns, server, target = server) {
 
     for (let h of hgw) {
         if (h.threads === 0) continue;
-        ns.exec(h.script, server.hostname, h.threads, target.hostname, h.delay);
+        const runOptions = {
+            threads: h.threads,
+            preventDuplicates: true
+        }
+        ns.exec(h.script, server.hostname, runOptions, target.hostname, h.delay);
         await ns.sleep(execDelay);
     }
 }
