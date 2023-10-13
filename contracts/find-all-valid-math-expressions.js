@@ -24,10 +24,9 @@ Output: [1*0+5, 10-5]
 
 // Find All Valid Math Expressions
 
-const cache = new Map();
-
 /** @param {NS} ns */
 export async function main(ns) {
+    const cache = new Map();
     ns.clearLog();
     // const input = JSON.parse(ns.args[0]);
     // const responsePort = ns.args[1];
@@ -39,9 +38,9 @@ export async function main(ns) {
     ns.print(`Target: ${target}`);
 
     const startTime = performance.now();
-    const tokenizations = get_all_tokenizations(str);
+    const tokenizations = get_all_tokenizations(str, cache);
     const tokenTime = performance.now();
-    const expressions = get_all_expressions(tokenizations);
+    const expressions = get_all_expressions(tokenizations, cache);
     const expressionTime = performance.now();
 
     const answers = [];
@@ -67,7 +66,7 @@ function is_token_valid(token) {
     return token.length === 1 || token.charAt(0) !== "0";
 }
 
-function get_all_tokenizations(digits) {
+function get_all_tokenizations(digits, cache) {
     if (cache.has(digits)) return cache.get(digits);
 
     const tokenizations = [];
@@ -82,7 +81,7 @@ function get_all_tokenizations(digits) {
             if (!is_token_valid(first)) break;
             const firstInt = parseInt(first);
 
-            const rest = get_all_tokenizations(digits.substring(i));
+            const rest = get_all_tokenizations(digits.substring(i), cache);
             tokenizations.push(...rest.map((s) => [firstInt, ...s]));
         }
     }
@@ -95,10 +94,10 @@ function get_all_tokenizations(digits) {
     return tokenizations;
 }
 
-function get_all_expressions(tokenizations) {
+function get_all_expressions(tokenizations, cache) {
     let expressions = [];
     for (let tokens of tokenizations) {
-        const built = build_expressions(tokens);
+        const built = build_expressions(tokens, cache);
         built.forEach((b) => expressions.push(b));
     }
 
@@ -109,7 +108,7 @@ const ADD = "+";
 const SUBTRACT = "-";
 const MULTIPLY = "*";
 
-function build_expressions(tokens) {
+function build_expressions(tokens, cache) {
     const cacheKey = JSON.stringify(tokens);
     if (cache.has(cacheKey)) return cache.get(cacheKey);
 
@@ -122,7 +121,7 @@ function build_expressions(tokens) {
 
     if (tokens.length > 1) {
         const first = tokens[0];
-        const tails = build_expressions(tokens.slice(1));
+        const tails = build_expressions(tokens.slice(1), cache);
 
         for (let tail of tails) {
             for (let op of operators) {

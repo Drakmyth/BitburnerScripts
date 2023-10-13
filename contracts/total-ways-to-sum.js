@@ -1,9 +1,8 @@
 // Total Ways to Sum
 // Total Ways to Sum II
 
-const cache = new Map();
-
-function totalWaysToSum(ns, number, addends) {
+/** @param {NS} ns */
+function totalWaysToSum(ns, number, addends, cache) {
     if (number < 0) return 0;
     if (number === 0) return 1;
     const cacheKey = JSON.stringify([number, addends]);
@@ -14,7 +13,8 @@ function totalWaysToSum(ns, number, addends) {
         const s = totalWaysToSum(
             ns,
             number - addend,
-            addends.filter((a) => a <= addend)
+            addends.filter((a) => a <= addend),
+            cache
         );
         numSums += s;
     }
@@ -26,6 +26,7 @@ function totalWaysToSum(ns, number, addends) {
 
 /** @param {NS} ns */
 export async function main(ns) {
+    const cache = new Map();
     const input = JSON.parse(ns.args[0]);
     const responsePort = ns.args[1];
     ns.print(`Input: ${input}`);
@@ -33,7 +34,7 @@ export async function main(ns) {
     const number = input[0];
     const addends = input[1];
 
-    const answer = totalWaysToSum(ns, number, addends);
+    const answer = totalWaysToSum(ns, number, addends, cache);
     ns.print(`Ways to sum ${number} is ${answer}`);
     ns.writePort(responsePort, JSON.stringify(answer));
 }
