@@ -62,7 +62,7 @@ export async function main(ns) {
         await bestUpgrade.func();
         if (bestUpgrade.type === `purchase`) {
             ns.print(
-                `Purchased node for ${ns.nFormat(
+                `Purchased node for ${ns.formatNumber(
                     bestUpgrade.cost,
                     `($0.000a)`
                 )}.`
@@ -71,7 +71,7 @@ export async function main(ns) {
             ns.print(
                 `Upgraded hacknet-node-${bestUpgrade.node} ${
                     bestUpgrade.type
-                } for ${ns.nFormat(bestUpgrade.cost, `($0.000a)`)}.`
+                } for ${ns.formatNumber(bestUpgrade.cost, `($0.000a)`)}.`
             );
         }
     }
