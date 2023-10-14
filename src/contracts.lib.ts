@@ -1,3 +1,5 @@
+import { CodingContractData, NS } from "@ns";
+
 // generated from ns.codingcontracts.getContractTypes()
 export const ContractTypes = {
     FIND_LARGEST_PRIME_FACTOR: `Find Largest Prime Factor`,
@@ -29,25 +31,27 @@ export const ContractTypes = {
     ENCRYPTION_2: `Encryption II: Vigenère Cipher`,
 };
 
-class SolveResult {
-    constructor(reward, failure) {
+export class SolveResult {
+    public solved: boolean;
+    public message: string;
+
+    constructor(reward: string, failure: string) {
         this.solved = failure === "";
         this.message = this.solved ? reward : failure;
     }
 
-    static success = (message) => new SolveResult(message, "");
-    static failure = (message) => new SolveResult("", message);
+    static success = (message: string) => new SolveResult(message, "");
+    static failure = (message: string) => new SolveResult("", message);
 }
 
 export class ContractSolver {
-    constructor(title, script, inputProcessor = (input) => input) {
-        this.title = title;
-        this.script = script;
-        this.processInput = inputProcessor;
-    }
+    constructor(
+        public title: string,
+        public script: string,
+        public processInput: (input: CodingContractData) => CodingContractData = (input) => input
+    ) {}
 
-    /** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
-    solve = async (ns, filename, host, portId) => {
+    solve = async (ns: NS, filename: string, host: string, portId: number) => {
         const port = ns.getPortHandle(portId);
         port.clear();
 
@@ -55,15 +59,15 @@ export class ContractSolver {
         const processedInput = this.processInput(input);
         const runOptions = {
             threads: 1,
-            preventDuplicates: true
-        }
+            preventDuplicates: true,
+        };
         ns.run(this.script, runOptions, JSON.stringify(processedInput), portId);
 
         while (port.empty()) {
             await ns.sleep(1);
         }
 
-        const answer = JSON.parse(port.read());
+        const answer = JSON.parse(port.read().toString());
         const reward = ns.codingcontract.attempt(answer, filename, host);
         if (reward === "") {
             return SolveResult.failure(
@@ -74,7 +78,7 @@ export class ContractSolver {
         }
     };
 
-    static findSolver = (title) => {
+    static findSolver = (title: string) => {
         return ContractSolvers.find((s) => s.title === title);
     };
 }

@@ -1,5 +1,6 @@
-/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
-function findServers(ns, current, knownServers) {
+import { NS, Server } from "@ns";
+
+function findServers(ns: NS, current: Server, knownServers: Server[]) {
     const hosts = ns.scan(current.hostname);
     if (current.hostname !== `home`) {
         hosts.shift();
@@ -20,12 +21,11 @@ function findServers(ns, current, knownServers) {
     }
 }
 
-/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
-export async function main(ns) {
+export async function main(ns: NS) {
     ns.disableLog(`ALL`);
     const filename = `known-servers.json.txt`;
     const tenMinutes = 1000 * 60 * 10;
-    const servers = [];
+    const servers: Server[] = [];
 
     if (ns.fileExists(filename)) {
         ns.rm(filename);
@@ -47,7 +47,7 @@ export async function main(ns) {
         ns.print(
             `Will search again at ${new Date(
                 Date.now() + tenMinutes
-            ).toLocaleTimeString(_, { hour12: false })}.`
+            ).toLocaleTimeString(undefined, { hour12: false })}.`
         );
         await ns.sleep(tenMinutes);
     }

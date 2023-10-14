@@ -1,14 +1,15 @@
+import { NS } from "@ns";
+
 class Upgrade {
-    constructor(type, node, cost, func) {
-        this.type = type;
-        this.node = node;
-        this.cost = cost;
-        this.func = func;
-    }
+    constructor(
+        public type: string,
+        public node: number,
+        public cost: number,
+        public func: () => void
+    ) {}
 }
 
-/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
-export async function main(ns) {
+export async function main(ns: NS) {
     ns.disableLog(`ALL`);
     while (true) {
         const maximumCost = ns.getPlayer().money * 0.25;
@@ -62,16 +63,25 @@ export async function main(ns) {
         await bestUpgrade.func();
         if (bestUpgrade.type === `purchase`) {
             ns.print(
-                `Purchased node for ${ns.formatNumber(
-                    bestUpgrade.cost,
-                    `($0.000a)`
-                )}.`
+                `Purchased node for ${Intl.NumberFormat(undefined, {
+                    style: "currency",
+                    currency: "USD",
+                    currencyDisplay: "narrowSymbol",
+                    currencySign: "accounting",
+                    maximumFractionDigits: 3,
+                }).format(bestUpgrade.cost)}.`
             );
         } else if (bestUpgrade.type !== `none`) {
             ns.print(
                 `Upgraded hacknet-node-${bestUpgrade.node} ${
                     bestUpgrade.type
-                } for ${ns.formatNumber(bestUpgrade.cost, `($0.000a)`)}.`
+                } for ${Intl.NumberFormat(undefined, {
+                    style: "currency",
+                    currency: "USD",
+                    currencyDisplay: "narrowSymbol",
+                    currencySign: "accounting",
+                    maximumFractionDigits: 3,
+                }).format(bestUpgrade.cost)}.`
             );
         }
     }

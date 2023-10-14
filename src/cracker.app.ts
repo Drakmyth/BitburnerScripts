@@ -1,12 +1,13 @@
+import { NS } from "@ns";
+
 class Program {
-    constructor(filename, execFunc) {
-        this.filename = filename;
-        this.execute = execFunc;
-    }
+    constructor(
+        public filename: string,
+        public execute: (host: string) => void
+    ) {}
 }
 
-/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
-export async function main(ns) {
+export async function main(ns: NS) {
     ns.disableLog(`ALL`);
     const tenMinutes = 1000 * 60 * 10;
     const serverFile = `known-servers.json.txt`;
@@ -51,7 +52,7 @@ export async function main(ns) {
         ns.print(
             `Will search again at ${new Date(
                 Date.now() + tenMinutes
-            ).toLocaleTimeString(_, { hour12: false })}.`
+            ).toLocaleTimeString(undefined, { hour12: false })}.`
         );
         await ns.sleep(tenMinutes);
     }

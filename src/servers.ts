@@ -1,5 +1,6 @@
-/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
-async function buy_servers(ns, ram) {
+import { NS } from "@ns";
+
+async function buy_servers(ns: NS, ram: number) {
     while (ns.getPurchasedServers().length < ns.getPurchasedServerLimit()) {
         const bought = ns.purchaseServer(`foo`, ram) !== ``;
         if (!bought) {
@@ -8,8 +9,7 @@ async function buy_servers(ns, ram) {
     }
 }
 
-/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
-function delete_servers(ns) {
+function delete_servers(ns: NS) {
     const servers = ns.getPurchasedServers();
     for (let server of servers) {
         ns.killall(server);
@@ -17,22 +17,19 @@ function delete_servers(ns) {
     }
 }
 
-/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
-function get_current_server_ram(ns) {
+function get_current_server_ram(ns: NS) {
     const servers = ns.getPurchasedServers();
     return servers.length > 0 ? ns.getServerMaxRam(servers[0]) : 0;
 }
 
-/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
-function can_afford_upgrade(ns, ram) {
+function can_afford_upgrade(ns: NS, ram: number) {
     const total_servers = ns.getPurchasedServerLimit();
     return (
         ns.getPlayer().money >= ns.getPurchasedServerCost(ram) * total_servers
     );
 }
 
-/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
-export async function main(ns) {
+export async function main(ns: NS) {
     const flags = ns.flags([
         [`s`, false],
         [`simulate`, false],
@@ -59,14 +56,30 @@ export async function main(ns) {
         const upgrade_cost =
             ns.getPurchasedServerCost(next_upgrade * 2) *
             ns.getPurchasedServerLimit();
-        const formatted_cost = ns.formatNumber(upgrade_cost, `($0.000a)`);
+
+        const formatted_cost = Intl.NumberFormat(undefined, {
+            style: "currency",
+            currency: "USD",
+            currencyDisplay: "narrowSymbol",
+            currencySign: "accounting",
+            maximumFractionDigits: 3,
+        }).format(upgrade_cost);
+
         ns.tprint(`Next upgrade (${next_upgrade * 2}) at ${formatted_cost}`);
         return;
     } else if (simulate) {
         const upgrade_cost =
             ns.getPurchasedServerCost(next_upgrade) *
             ns.getPurchasedServerLimit();
-        const formatted_cost = ns.formatNumber(upgrade_cost, `($0.000a)`);
+
+        const formatted_cost = Intl.NumberFormat(undefined, {
+            style: "currency",
+            currency: "USD",
+            currencyDisplay: "narrowSymbol",
+            currencySign: "accounting",
+            maximumFractionDigits: 3,
+        }).format(upgrade_cost);
+
         ns.tprint(`Next upgrade (${next_upgrade}) at ${formatted_cost}`);
         return;
     }

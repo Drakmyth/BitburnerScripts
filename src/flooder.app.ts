@@ -1,18 +1,19 @@
+import { NS, Server } from "@ns";
+
 const threadRam = 1.75; // mem of daemon script
 const hackScript = `hack.daemon.js`;
 const growScript = `grow.daemon.js`;
 const weakenScript = `weaken.daemon.js`;
 
 class Script {
-    constructor(script, threads, delay) {
-        this.script = script;
-        this.threads = threads;
-        this.delay = delay;
-    }
+    constructor(
+        public script: string,
+        public threads: number,
+        public delay: number
+    ) {}
 }
 
-/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
-function getHGW(ns, server, target) {
+function getHGW(ns: NS, server: Server, target: Server) {
     const weakenTime = ns.getWeakenTime(target.hostname);
     const growTime = ns.getGrowTime(target.hostname);
     const hackTime = ns.getHackTime(target.hostname);
@@ -43,21 +44,19 @@ function getHGW(ns, server, target) {
     return hgw;
 }
 
-/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
-async function execGrowth(ns, server) {
+async function execGrowth(ns: NS, server: Server) {
     await ns.scp(weakenScript, server.hostname);
 
     const maxThreads = Math.floor(server.maxRam / threadRam);
     const runOptions = {
         threads: maxThreads,
-        preventDuplicates: true
-    }
+        preventDuplicates: true,
+    };
     if (maxThreads === 0) return;
     ns.exec(weakenScript, server.hostname, runOptions, server.hostname, 0);
 }
 
-/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
-async function execHGW(ns, server, target = server) {
+async function execHGW(ns: NS, server: Server, target: Server = server) {
     const hgw = getHGW(ns, server, target);
     const execDelay = 500;
 
@@ -70,27 +69,32 @@ async function execHGW(ns, server, target = server) {
         if (h.threads === 0) continue;
         const runOptions = {
             threads: h.threads,
-            preventDuplicates: true
-        }
-        ns.exec(h.script, server.hostname, runOptions, target.hostname, h.delay);
+            preventDuplicates: true,
+        };
+        ns.exec(
+            h.script,
+            server.hostname,
+            runOptions,
+            target.hostname,
+            h.delay
+        );
         await ns.sleep(execDelay);
     }
 }
 
-/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
-export async function main(ns) {
+export async function main(ns: NS) {
     ns.disableLog(`ALL`);
     const tenMinutes = 1000 * 60 * 10;
     const serverFile = `known-servers.json.txt`;
-    const flooded = [];
-    const bots = [];
+    const flooded: Server[] = [];
+    const bots: Server[] = [];
     const weakeningHosts = [];
-    const bankFilter = (s) => s.moneyMax > 0;
+    const bankFilter = (s: Server) => s.moneyMax || -1 > 0;
     let nextBankIndex = 0;
 
     while (true) {
-        const servers = JSON.parse(ns.read(serverFile)).filter(
-            (s) =>
+        const servers: Server[] = JSON.parse(ns.read(serverFile)).filter(
+            (s: Server) =>
                 s.hasAdminRights &&
                 s.hostname !== `home` &&
                 flooded.findIndex((s2) => s2.hostname === s.hostname) < 0 &&
@@ -106,7 +110,7 @@ export async function main(ns) {
                 continue;
             }
 
-            if (server.hackDifficulty > server.minDifficulty) {
+            if (server.hackDifficulty || -1 > (server.minDifficulty || -1)) {
                 if (weakeningHosts.indexOf(server.hostname) < 0) {
                     ns.killall(server.hostname);
                     await execGrowth(ns, server);
@@ -149,7 +153,7 @@ export async function main(ns) {
         ns.print(
             `Will search again at ${new Date(
                 Date.now() + tenMinutes
-            ).toLocaleTimeString(_, { hour12: false })}.`
+            ).toLocaleTimeString(undefined, { hour12: false })}.`
         );
         await ns.sleep(tenMinutes);
     }

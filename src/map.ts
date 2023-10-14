@@ -29,14 +29,15 @@ function print_host(ns: NS, prefix: string, host: string) {
         tags.push(server.organizationName);
     }
     if (show_money && server.moneyAvailable) {
-        Intl.NumberFormat(undefined, {
-            style: "currency",
-            currency: "USD",
-            currencyDisplay: "narrowSymbol",
-            currencySign: "accounting",
-            maximumFractionDigits: 3
-        });
-        tags.push(ns.formatNumber(server.moneyAvailable, 3, 0));
+        tags.push(
+            Intl.NumberFormat(undefined, {
+                style: "currency",
+                currency: "USD",
+                currencyDisplay: "narrowSymbol",
+                currencySign: "accounting",
+                maximumFractionDigits: 3,
+            }).format(server.moneyAvailable)
+        );
     }
     if (show_root) {
         tags.push(server.hasAdminRights ? `ROOT` : `USER`);

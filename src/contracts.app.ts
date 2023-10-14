@@ -1,16 +1,16 @@
-import * as Ports from "./ports.lib.js";
+import * as Ports from "./ports.lib";
 import { ContractSolver } from "./contracts.lib.js";
+import { NS } from "@ns";
 
 class Contract {
-    constructor(title, filename, host) {
-        this.title = title;
-        this.filename = filename;
-        this.host = host;
-    }
+    constructor(
+        public title: string,
+        public filename: string,
+        public host: string
+    ) {}
 }
 
-/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
-function getContractsFromHost(ns, host) {
+function getContractsFromHost(ns: NS, host: string) {
     const contracts = [];
     const contractFilenames = ns.ls(host, `.cct`);
     for (let filename of contractFilenames) {
@@ -21,8 +21,7 @@ function getContractsFromHost(ns, host) {
     return contracts;
 }
 
-/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
-function findAllContracts(ns) {
+function findAllContracts(ns: NS) {
     const serverFile = `known-servers.json.txt`;
     const servers = JSON.parse(ns.read(serverFile));
 
@@ -38,8 +37,7 @@ function findAllContracts(ns) {
     return contracts;
 }
 
-/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
-export async function main(ns) {
+export async function main(ns: NS) {
     ns.disableLog(`ALL`);
 
     const tenMinutes = 1000 * 60 * 10;
@@ -79,7 +77,7 @@ export async function main(ns) {
         ns.print(
             `Will search again at ${new Date(
                 Date.now() + tenMinutes
-            ).toLocaleTimeString(_, { hour12: false })}.`
+            ).toLocaleTimeString(undefined, { hour12: false })}.`
         );
         await ns.sleep(tenMinutes);
     }
