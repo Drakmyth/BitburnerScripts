@@ -12,7 +12,7 @@ function generateVariants(str, char) {
     return variants;
 }
 
-/** @param {NS} ns */
+/** @param {import("../../NetscriptDefinitions.d.ts").NS} ns */
 export async function main(ns) {
     const input = JSON.parse(ns.args[0])
         .replace(/^\)+/, ``)

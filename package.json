@@ -1,9 +1,6 @@
 {
     "name": "viteburner-template",
     "version": "0.0.0",
-    "scripts": {
-        "dev": "viteburner"
-    },
     "author": "Tanimodori",
     "devDependencies": {
         "@types/node": "^18.18.5",

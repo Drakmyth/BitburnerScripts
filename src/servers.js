@@ -1,4 +1,4 @@
-/** @param {NS} ns */
+/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
 async function buy_servers(ns, ram) {
     while (ns.getPurchasedServers().length < ns.getPurchasedServerLimit()) {
         const bought = ns.purchaseServer(`foo`, ram) !== ``;
@@ -8,7 +8,7 @@ async function buy_servers(ns, ram) {
     }
 }
 
-/** @param {NS} ns */
+/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
 function delete_servers(ns) {
     const servers = ns.getPurchasedServers();
     for (let server of servers) {
@@ -17,13 +17,13 @@ function delete_servers(ns) {
     }
 }
 
-/** @param {NS} ns */
+/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
 function get_current_server_ram(ns) {
     const servers = ns.getPurchasedServers();
     return servers.length > 0 ? ns.getServerMaxRam(servers[0]) : 0;
 }
 
-/** @param {NS} ns */
+/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
 function can_afford_upgrade(ns, ram) {
     const total_servers = ns.getPurchasedServerLimit();
     return (
@@ -31,7 +31,7 @@ function can_afford_upgrade(ns, ram) {
     );
 }
 
-/** @param {NS} ns */
+/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
 export async function main(ns) {
     const flags = ns.flags([
         [`s`, false],

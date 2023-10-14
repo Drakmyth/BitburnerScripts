@@ -1,4 +1,4 @@
-/** @param {NS} ns **/
+/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
 function findServers(ns, current, knownServers) {
     const hosts = ns.scan(current.hostname);
     if (current.hostname !== `home`) {
@@ -20,7 +20,7 @@ function findServers(ns, current, knownServers) {
     }
 }
 
-/** @param {NS} ns **/
+/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
 export async function main(ns) {
     ns.disableLog(`ALL`);
     const filename = `known-servers.json.txt`;

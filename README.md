@@ -104,35 +104,41 @@ Contract solvers are used by `contracts.app.js` to automatically complete contra
 
 <sup>1</sup> <small>Different difficulties of the same contract may in some cases be able to be solved by the same implementation. This usually requires slight pre-processing of the input for lower difficulties. This pre-processing is performed by `contracts.app.js` where applicable.</small>
 
-## Visual Studio Code Integration
+## IDE Integration
 
-These scripts can be copy-pasted into the game, or you can edit them in VS Code and have them update in the game automatically!
+These scripts can be copy-pasted into the game, or you can edit them in your editor of choice and have them update in the game automatically! This process used to be a lot easier due to the existence of an official VS Code extension, but that has sadly been deprecated in favor of a clunky build server approach.
 
-1. Install the [Bitburner VSCode Integration](https://marketplace.visualstudio.com/items?itemName=bitburner.bitburner-vscode-integration) extension
-1. Inside the Bitburner game, in the top menu bar:
-    1. Enable the API Server by selecting `API Server -> Enable Server`
-    1. Enable Autostart by selecting `API Server -> Autostart` so this works automatically on whenever you open the game
-    1. Select `API Server -> Copy Auth Token` to copy the authentication token to your clipboard
-1. In this directory create a `.vscode/settings.json` file with the following contents
-    ```json
-    {
-        "bitburner.authToken": "<YOUR_AUTH_TOKEN_HERE>",
-        "bitburner.scriptRoot": ".",
-        "bitburner.fileWatcher.enable": true,
-        "bitburner.showPushSuccessNotification": true,
-        "bitburner.showFileWatcherEnabledNotification": true
-    }
+This approach does have two significant advantages though:
+
+1. Any IDE can benefit from full integration, not just VS Code
+1. It enables the ability to write scripts using [TypeScript](https://www.typescriptlang.org)
+
+Because it's a bit faster and more fully-featured, this repository is configured to use the unofficial [Viteburner](https://github.com/Tanimodori/viteburner) server rather than the official [bitburner-filesync](https://github.com/bitburner-official/bitburner-filesync) server. To host the contents of this repository using Viteburner:
+
+1. Clone this repository
+1. Start the Viteburner server
     ```
+    $ npx viteburner
+    ```
+1. Inside the Bitburner game, in the left sidebar:
+    1. Enable the Remote API by selecting `Options -> Remote API`
+    1. Enter the port Viteburner is running on (should be `12525` by default and is displayed in the terminal after starting the server)
+    1. Click the `Connect` button
 
-Additional information is available in the [bitburner-vscode](https://github.com/bitburner-official/bitburner-vscode) repository.
+See [viteburner-template](https://github.com/Tanimodori/viteburner-template) for information on configuring your own repository.
+
+:warning: Note: If at any time the game is running and the server isn't, the Remote API will be disabled and you'll have to re-enable it manually. It will *NOT* be automatically enabled when starting the server. The server should be the first to start and the last to close..
 
 ## Enabling Intellisense
 
-This repository is set up to enable Intellisense for the NS global object used in the various game scripts. However, I don't want to include that file here as it is part of the base game. To enabled Intellisense, follow these steps:
-
-1. Download [NetscriptDefinitions.d.ts](https://github.com/bitburner-official/bitburner-src/blob/dev/src/ScriptEditor/NetscriptDefinitions.d.ts) into the root folder
-1. Add `declare global { const NS: NS; }` before the first line in that file
-1. Add `"javascript.preferences.importModuleSpecifier": "non-relative"` to your `.vscode/settings.json` file
+Viteburner will automatically add an up-to-date type definition file to the root directory. In your *.ts scripts you can then just import and reference all the Bitburner types directly. If you're still using *.js scripts and value your sanity, you should migrate to TypeScript! If you *really* want to keep using JavaScript, you'll need to add [JSDoc](https://jsdoc.app) comments above each function with a relative path to the types file.
+```js
+/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
+export async function main(ns: NS) {
+    ns.tprint(`Hello world!`);
+}
+```
+This is because the types file does not expose the Bitburner types as globals or as namespaces. If you try to add those constructs to the `NetscriptDefinitions.d.ts` file manually Viteburner is going to overwrite it, so this is the only available option.
 
 ## License
 

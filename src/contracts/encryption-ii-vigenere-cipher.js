@@ -1,6 +1,6 @@
 // Encryption II: Vigenère Cipher
 
-/** @param {NS} ns */
+/** @param {import("../../NetscriptDefinitions.d.ts").NS} ns */
 export async function main(ns) {
     const input = JSON.parse(ns.args[0]);
     const responsePort = ns.args[1];

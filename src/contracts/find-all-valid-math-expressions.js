@@ -24,7 +24,7 @@ Output: [1*0+5, 10-5]
 
 // Find All Valid Math Expressions
 
-/** @param {NS} ns */
+/** @param {import("../../NetscriptDefinitions.d.ts").NS} ns */
 export async function main(ns) {
     const cache = new Map();
     ns.clearLog();

@@ -6,7 +6,7 @@ class Script {
     }
 }
 
-/** @param {NS} ns **/
+/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
 export async function main(ns) {
     const scripts = [
         new Script(`hacknet.app.js`),

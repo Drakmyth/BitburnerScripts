@@ -46,7 +46,7 @@ export class ContractSolver {
         this.processInput = inputProcessor;
     }
 
-    /** @param {NS} ns **/
+    /** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
     solve = async (ns, filename, host, portId) => {
         const port = ns.getPortHandle(portId);
         port.clear();

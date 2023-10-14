@@ -1,4 +1,4 @@
-/** @param {NS} ns */
+/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
 function print_host(ns, prefix, host) {
     let label = `${prefix}  \\-- ${host}`;
 
@@ -41,7 +41,7 @@ function print_host(ns, prefix, host) {
     ns.tprint(label);
 }
 
-/** @param {NS} ns */
+/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
 function walk(ns, host, prefix = ``) {
     const servers = ns.scan(host);
     if (host != `home`) {
@@ -56,7 +56,7 @@ function walk(ns, host, prefix = ``) {
     }
 }
 
-/** @param {NS} ns */
+/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
 export async function main(ns) {
     let host = `home`;
     const args = ns.args.filter((a) => a[0] != `-`);

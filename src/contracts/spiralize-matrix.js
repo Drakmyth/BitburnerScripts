@@ -1,13 +1,13 @@
 // Spiralize Matrix
 
-/** @param {NS} ns */
+/** @param {import("../../NetscriptDefinitions.d.ts").NS} ns */
 function sliceTop(ns, data) {
     const top = data.shift();
     ns.print(`Top: ${JSON.stringify(top)}`);
     return top;
 }
 
-/** @param {NS} ns */
+/** @param {import("../../NetscriptDefinitions.d.ts").NS} ns */
 function sliceRight(ns, data) {
     const right = [];
     for (let i = 0; i < data.length; i++) {
@@ -24,7 +24,7 @@ function sliceRight(ns, data) {
     return right;
 }
 
-/** @param {NS} ns */
+/** @param {import("../../NetscriptDefinitions.d.ts").NS} ns */
 function sliceBottom(ns, data) {
     const bottom = data.pop();
     bottom.reverse();
@@ -32,7 +32,7 @@ function sliceBottom(ns, data) {
     return bottom;
 }
 
-/** @param {NS} ns */
+/** @param {import("../../NetscriptDefinitions.d.ts").NS} ns */
 function sliceLeft(ns, data) {
     const left = [];
     for (let i = data.length - 1; i >= 0; i--) {
@@ -46,7 +46,7 @@ function sliceLeft(ns, data) {
     return left;
 }
 
-/** @param {NS} ns */
+/** @param {import("../../NetscriptDefinitions.d.ts").NS} ns */
 export async function main(ns) {
     const input = JSON.parse(ns.args[0]);
     const responsePort = ns.args[1];

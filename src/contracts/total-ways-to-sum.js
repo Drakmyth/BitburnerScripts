@@ -1,7 +1,7 @@
 // Total Ways to Sum
 // Total Ways to Sum II
 
-/** @param {NS} ns */
+/** @param {import("../../NetscriptDefinitions.d.ts").NS} ns */
 function totalWaysToSum(ns, number, addends, cache) {
     if (number < 0) return 0;
     if (number === 0) return 1;
@@ -24,7 +24,7 @@ function totalWaysToSum(ns, number, addends, cache) {
     return numSums;
 }
 
-/** @param {NS} ns */
+/** @param {import("../../NetscriptDefinitions.d.ts").NS} ns */
 export async function main(ns) {
     const cache = new Map();
     const input = JSON.parse(ns.args[0]);

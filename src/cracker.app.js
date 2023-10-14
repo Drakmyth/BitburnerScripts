@@ -5,7 +5,7 @@ class Program {
     }
 }
 
-/** @param {NS} ns **/
+/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
 export async function main(ns) {
     ns.disableLog(`ALL`);
     const tenMinutes = 1000 * 60 * 10;

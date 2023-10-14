@@ -11,7 +11,7 @@ class Script {
     }
 }
 
-/** @param {NS} ns **/
+/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
 function getHGW(ns, server, target) {
     const weakenTime = ns.getWeakenTime(target.hostname);
     const growTime = ns.getGrowTime(target.hostname);
@@ -43,7 +43,7 @@ function getHGW(ns, server, target) {
     return hgw;
 }
 
-/** @param {NS} ns **/
+/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
 async function execGrowth(ns, server) {
     await ns.scp(weakenScript, server.hostname);
 
@@ -56,7 +56,7 @@ async function execGrowth(ns, server) {
     ns.exec(weakenScript, server.hostname, runOptions, server.hostname, 0);
 }
 
-/** @param {NS} ns **/
+/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
 async function execHGW(ns, server, target = server) {
     const hgw = getHGW(ns, server, target);
     const execDelay = 500;
@@ -77,7 +77,7 @@ async function execHGW(ns, server, target = server) {
     }
 }
 
-/** @param {NS} ns **/
+/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
 export async function main(ns) {
     ns.disableLog(`ALL`);
     const tenMinutes = 1000 * 60 * 10;

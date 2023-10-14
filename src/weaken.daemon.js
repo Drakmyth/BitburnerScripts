@@ -1,4 +1,4 @@
-/** @param {NS} ns **/
+/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
 export async function main(ns) {
     const host = ns.args[0];
     const delay = ns.args[1];

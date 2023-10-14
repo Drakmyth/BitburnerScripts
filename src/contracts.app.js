@@ -9,7 +9,7 @@ class Contract {
     }
 }
 
-/** @param {NS} ns */
+/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
 function getContractsFromHost(ns, host) {
     const contracts = [];
     const contractFilenames = ns.ls(host, `.cct`);
@@ -21,7 +21,7 @@ function getContractsFromHost(ns, host) {
     return contracts;
 }
 
-/** @param {NS} ns */
+/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
 function findAllContracts(ns) {
     const serverFile = `known-servers.json.txt`;
     const servers = JSON.parse(ns.read(serverFile));
@@ -38,7 +38,7 @@ function findAllContracts(ns) {
     return contracts;
 }
 
-/** @param {NS} ns */
+/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
 export async function main(ns) {
     ns.disableLog(`ALL`);
 
