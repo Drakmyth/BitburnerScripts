@@ -134,7 +134,7 @@ See [viteburner-template](https://github.com/Tanimodori/viteburner-template) for
 Viteburner will automatically add an up-to-date type definition file to the root directory. In your *.ts scripts you can then just import and reference all the Bitburner types directly. If you're still using *.js scripts and value your sanity, you should migrate to TypeScript! If you *really* want to keep using JavaScript, you'll need to add [JSDoc](https://jsdoc.app) comments above each function with a relative path to the types file.
 ```js
 /** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
-export async function main(ns: NS) {
+export async function main(ns) {
     ns.tprint(`Hello world!`);
 }
 ```
