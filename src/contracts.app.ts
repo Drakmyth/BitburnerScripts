@@ -41,6 +41,7 @@ export async function main(ns: NS) {
     ns.disableLog(`ALL`);
 
     const tenMinutes = 1000 * 60 * 10;
+    const failures: Contract[] = [];
 
     while (true) {
         const contracts = findAllContracts(ns);
@@ -53,6 +54,11 @@ export async function main(ns: NS) {
             ns.print(
                 `Found: ${contract.host} - ${contract.filename} - ${contract.title}`
             );
+            if (failures.includes(contract)) {
+                ns.print(`    Skipping due to previous failure...`);
+                continue;
+            }
+
             const solver = ContractSolver.findSolver(contract.title);
             if (solver === undefined) {
                 ns.print(`    !!!! NEW !!!!`);
@@ -70,10 +76,17 @@ export async function main(ns: NS) {
                 ns.tail();
                 ns.print(`    !!!! FAILED !!!!`);
                 prefix = `Failure`;
+                failures.push(contract);
             }
             ns.print(`    ${prefix}: ${result.message}`);
         }
 
+        ns.print(`Failed to solve: ${failures.length}`);
+        for (let failure of failures) {
+            ns.print(
+                `    ${failure.host} - ${failure.filename} - ${failure.title}`
+            );
+        }
         ns.print(
             `Will search again at ${new Date(
                 Date.now() + tenMinutes
