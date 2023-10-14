@@ -1,9 +1,10 @@
 // Compression I: RLE Compression
 
-/** @param {import("../../NetscriptDefinitions.d.ts").NS} ns */
-export async function main(ns) {
-    const input = JSON.parse(ns.args[0]);
-    const responsePort = ns.args[1];
+import { NS } from "@ns";
+
+export async function main(ns: NS) {
+    const input: string = JSON.parse(ns.args[0] as string);
+    const responsePort = ns.args[1] as number;
     ns.print(`Input: ${input}`);
 
     let answer = ``;

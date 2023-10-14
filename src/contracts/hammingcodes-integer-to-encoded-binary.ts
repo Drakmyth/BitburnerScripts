@@ -1,9 +1,10 @@
 // HammingCodes: Integer to encoded Binary
 
-/** @param {import("../../NetscriptDefinitions.d.ts").NS} ns */
-export async function main(ns) {
-    const input = JSON.parse(ns.args[0]);
-    const responsePort = ns.args[1];
+import { NS } from "@ns";
+
+export async function main(ns: NS) {
+    const input: number = JSON.parse(ns.args[0] as string); // I think parse actually returns a string here
+    const responsePort = ns.args[1] as number;
     ns.print(`Input: ${JSON.stringify(input)}`);
 
     const data = input
@@ -17,8 +18,8 @@ export async function main(ns) {
         numParityBits++;
     }
     ns.print(`numParityBits: ${numParityBits}`);
-    const encoding = Array(numParityBits + data.length + 1).fill(0);
-    const parityBits = [];
+    const encoding = Array<number>(numParityBits + data.length + 1).fill(0);
+    const parityBits: number[] = [];
     // TODO: populate parityBits with 2^x for x in range 0 to (numParityBits - 1), then
     //       the below calcualtion go away in favor of `if (i in parityBits) continue;
     for (let i = 1; i < encoding.length; i++) {
@@ -28,7 +29,7 @@ export async function main(ns) {
             continue;
         }
 
-        encoding[i] = data.shift();
+        encoding[i] = data.shift() as number;
     }
 
     ns.print(`ParityBits: ${JSON.stringify(parityBits)}`);

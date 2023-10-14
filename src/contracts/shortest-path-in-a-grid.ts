@@ -1,17 +1,14 @@
 // Shortest Path in a Grid
 
+import { NS } from "@ns";
+
 class Cell {
-    constructor(code, x, y) {
-        this.code = code;
-        this.x = x;
-        this.y = y;
-    }
+    constructor(public code: string, public x: number, public y: number) {}
 }
 
-/** @param {import("../../NetscriptDefinitions.d.ts").NS} ns */
-export async function main(ns) {
-    const input = JSON.parse(ns.args[0]);
-    const responsePort = ns.args[1];
+export async function main(ns: NS) {
+    const input: number[][] = JSON.parse(ns.args[0] as string);
+    const responsePort = ns.args[1] as number;
     ns.print(`Input: ${JSON.stringify(input)}`);
 
     const map = build_distance_map(input);
@@ -21,19 +18,19 @@ export async function main(ns) {
     ns.writePort(responsePort, JSON.stringify(answer));
 }
 
-function build_distance_map(grid) {
+function build_distance_map(grid: number[][]) {
     const width = grid[0].length;
     const height = grid.length;
     const max_size = width * height;
-    const map = Array(height)
-        .fill(null)
-        .map(() => Array(width).fill(-1));
+    const map = Array<number[]>(height)
+        .fill([])
+        .map(() => Array<number>(width).fill(-1));
 
     const unvisited_cells = [new Cell(`?`, width - 1, height - 1)];
     let firstCell = true;
 
     while (unvisited_cells.length > 0) {
-        const cell = unvisited_cells.pop();
+        const cell = unvisited_cells.pop() as Cell;
 
         const neighbors = get_adjacent_cells(grid, cell.x, cell.y);
         const visited_neighbors = neighbors.filter((n) => map[n.y][n.x] > -1);
@@ -63,7 +60,7 @@ function build_distance_map(grid) {
     return map;
 }
 
-function get_adjacent_cells(grid, x, y) {
+function get_adjacent_cells(grid: number[][], x: number, y: number) {
     const width = grid[0].length;
     const height = grid.length;
 
@@ -88,7 +85,7 @@ function get_adjacent_cells(grid, x, y) {
     return adjacent_cells;
 }
 
-function get_shortest_path(grid, map) {
+function get_shortest_path(grid: number[][], map: number[][]) {
     let answer = ``;
     let pos = [0, 0];
 

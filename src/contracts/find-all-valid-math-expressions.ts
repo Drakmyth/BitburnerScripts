@@ -22,14 +22,15 @@ Input: digits = "105", target = 5
 Output: [1*0+5, 10-5]
 */
 
+import { NS } from "@ns";
+
 // Find All Valid Math Expressions
 
-/** @param {import("../../NetscriptDefinitions.d.ts").NS} ns */
-export async function main(ns) {
-    const cache = new Map();
+export async function main(ns: NS) {
+    const cache = new Map<string, (number | string)[][]>();
     ns.clearLog();
-    // const input = JSON.parse(ns.args[0]);
-    // const responsePort = ns.args[1];
+    // const input: string = JSON.parse(ns.args[0] as string);
+    // const responsePort = ns.args[1] as number;
     // const str = input[0];
     // const target = input[1];
     const str = "177596109526"; // hardcoded for testing
@@ -62,14 +63,17 @@ export async function main(ns) {
     // ns.writePort(responsePort, JSON.stringify(answers));
 }
 
-function is_token_valid(token) {
+function is_token_valid(token: string) {
     return token.length === 1 || token.charAt(0) !== "0";
 }
 
-function get_all_tokenizations(digits, cache) {
-    if (cache.has(digits)) return cache.get(digits);
+function get_all_tokenizations(
+    digits: string,
+    cache: Map<string, (number | string)[][]>
+) {
+    if (cache.has(digits)) return cache.get(digits) as (number | string)[][];
 
-    const tokenizations = [];
+    const tokenizations: (number | string)[][] = [];
 
     if (digits.length === 2) {
         tokenizations.push(digits.split(``).map((d) => parseInt(d)));
@@ -94,8 +98,11 @@ function get_all_tokenizations(digits, cache) {
     return tokenizations;
 }
 
-function get_all_expressions(tokenizations, cache) {
-    let expressions = [];
+function get_all_expressions(
+    tokenizations: (number | string)[][],
+    cache: Map<string, (number | string)[][]>
+) {
+    let expressions: (number | string)[][] = [];
     for (let tokens of tokenizations) {
         const built = build_expressions(tokens, cache);
         built.forEach((b) => expressions.push(b));
@@ -108,12 +115,16 @@ const ADD = "+";
 const SUBTRACT = "-";
 const MULTIPLY = "*";
 
-function build_expressions(tokens, cache) {
+function build_expressions(
+    tokens: (number | string)[],
+    cache: Map<string, (number | string)[][]>
+) {
     const cacheKey = JSON.stringify(tokens);
-    if (cache.has(cacheKey)) return cache.get(cacheKey);
+    if (cache.has(cacheKey))
+        return cache.get(cacheKey) as (number | string)[][];
 
     const operators = [ADD, SUBTRACT, MULTIPLY];
-    const expressions = [];
+    const expressions: (number | string)[][] = [];
 
     if (tokens.length === 1) {
         expressions.push([tokens[0]]);
@@ -134,7 +145,7 @@ function build_expressions(tokens, cache) {
     return expressions;
 }
 
-function operate(operator, term1, term2) {
+function operate(operator: string, term1: number, term2: number) {
     switch (operator) {
         case ADD:
             return term1 + term2;
@@ -142,37 +153,40 @@ function operate(operator, term1, term2) {
             return term1 - term2;
         case MULTIPLY:
             return term1 * term2;
+        default:
+            throw "UNKNOWN OPERATOR!!!";
     }
 }
 
 class MultEval {
-    constructor(product, end) {
-        this.product = product;
-        this.end = end;
-    }
+    constructor(public product: number, public end: number) {}
 }
 
-function evaluate_multiplication(ns, expression, start) {
+function evaluate_multiplication(
+    ns: NS,
+    expression: (number | string)[],
+    start: number
+) {
     const lastIndex = expression.length - 1;
     if (start === lastIndex)
-        return new MultEval(expression[lastIndex], lastIndex);
+        return new MultEval(expression[lastIndex] as number, lastIndex);
 
     let index = start;
-    let result = expression[index];
-    let operator = expression[index + 1];
+    let result = expression[index] as number;
+    let operator = expression[index + 1] as string;
     while (operator === MULTIPLY) {
-        result = result * expression[index + 2];
+        result = result * (expression[index + 2] as number);
         index += 2;
-        operator = expression[index + 1];
+        operator = expression[index + 1] as string;
     }
 
     return new MultEval(result, index);
 }
 
-function evaluate_expression(ns, expression) {
-    if (expression.length === 1) return expression[0];
+function evaluate_expression(ns: NS, expression: (number | string)[]) {
+    if (expression.length === 1) return expression[0] as number;
 
-    let result = expression[0];
+    let result = expression[0] as number;
     let start = 0;
 
     if (expression[1] === MULTIPLY) {
@@ -183,8 +197,8 @@ function evaluate_expression(ns, expression) {
 
     let i = start;
     while (i < expression.length - 1) {
-        const operator = expression[i + 1];
-        let term2 = expression[i + 2];
+        const operator = expression[i + 1] as string;
+        let term2 = expression[i + 2] as number;
         let nextIndex = i + 2;
         if (i + 3 < expression.length && expression[i + 3] === MULTIPLY) {
             const term2Eval = evaluate_multiplication(ns, expression, i + 2);

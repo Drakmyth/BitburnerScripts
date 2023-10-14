@@ -1,23 +1,26 @@
 // Sanitize Parentheses in Expression
 
-function generateVariants(str, char) {
-    const variants = new Set();
+import { NS } from "@ns";
+
+function generateVariants(str: string, char: string) {
+    const variants = new Set<string>();
     const matchStr = new RegExp(`\\${char}`, `g`);
     const matches = [...str.matchAll(matchStr)];
     for (let match of matches) {
         variants.add(
-            `${str.slice(0, match.index)}${str.slice(match.index + 1)}`
+            `${str.slice(0, match.index)}${str.slice(
+                (match.index as number) + 1
+            )}`
         );
     }
     return variants;
 }
 
-/** @param {import("../../NetscriptDefinitions.d.ts").NS} ns */
-export async function main(ns) {
-    const input = JSON.parse(ns.args[0])
+export async function main(ns: NS) {
+    const input: string = JSON.parse(ns.args[0] as string)
         .replace(/^\)+/, ``)
         .replace(/\(+$/, ``);
-    const responsePort = ns.args[1];
+    const responsePort = ns.args[1] as number;
     ns.print(`Input: ${input}`);
 
     // Fix Closes
@@ -32,7 +35,7 @@ export async function main(ns) {
         const char = input.charAt(i);
 
         if (char === `)` && opens <= 0) {
-            const newHeads = new Set();
+            const newHeads = new Set<string>();
             for (let head of heads) {
                 generateVariants(`${head}${char}`, char).forEach((v) =>
                     newHeads.add(v)
@@ -63,7 +66,7 @@ export async function main(ns) {
             const char = head.charAt(i);
 
             if (char === `(` && closes <= 0) {
-                const newTails = new Set();
+                const newTails = new Set<string>();
                 for (let tail of tails) {
                     generateVariants(`${char}${tail}`, char).forEach((v) =>
                         newTails.add(v)

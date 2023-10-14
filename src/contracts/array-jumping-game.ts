@@ -1,12 +1,13 @@
 // Array Jumping Game
 
-/** @param {import("../../NetscriptDefinitions.d.ts").NS} ns */
-export async function main(ns) {
-    const input = JSON.parse(ns.args[0]);
-    const responsePort = ns.args[1];
+import { NS } from "@ns";
+
+export async function main(ns: NS) {
+    const input: number[] = JSON.parse(ns.args[0] as string);
+    const responsePort = ns.args[1] as number;
     ns.print(`Input: ${JSON.stringify(input)}`);
 
-    const data = input.map((d) => [d, false]);
+    const data: [number, boolean][] = input.map((d) => [d, false]);
     data[data.length - 1][1] = true;
 
     for (let i = data.length - 1; i >= 0; i--) {

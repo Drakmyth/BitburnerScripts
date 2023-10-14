@@ -1,12 +1,18 @@
 // Total Ways to Sum
 // Total Ways to Sum II
 
-/** @param {import("../../NetscriptDefinitions.d.ts").NS} ns */
-function totalWaysToSum(ns, number, addends, cache) {
+import { NS } from "@ns";
+
+function totalWaysToSum(
+    ns: NS,
+    number: number,
+    addends: number[],
+    cache: Map<string, number>
+) {
     if (number < 0) return 0;
     if (number === 0) return 1;
     const cacheKey = JSON.stringify([number, addends]);
-    if (cache.has(cacheKey)) return cache.get(cacheKey);
+    if (cache.has(cacheKey)) return cache.get(cacheKey) as number;
 
     let numSums = 0;
     for (let addend of addends) {
@@ -24,11 +30,10 @@ function totalWaysToSum(ns, number, addends, cache) {
     return numSums;
 }
 
-/** @param {import("../../NetscriptDefinitions.d.ts").NS} ns */
-export async function main(ns) {
-    const cache = new Map();
-    const input = JSON.parse(ns.args[0]);
-    const responsePort = ns.args[1];
+export async function main(ns: NS) {
+    const cache = new Map<string, number>();
+    const input: [number, number[]] = JSON.parse(ns.args[0] as string);
+    const responsePort = ns.args[1] as number;
     ns.print(`Input: ${input}`);
 
     const number = input[0];

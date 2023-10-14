@@ -1,9 +1,10 @@
 // HammingCodes: Encoded Binary to Integer
 
-/** @param {import("../../NetscriptDefinitions.d.ts").NS} ns */
-export async function main(ns) {
-    const input = JSON.parse(ns.args[0]);
-    const responsePort = ns.args[1];
+import { NS } from "@ns";
+
+export async function main(ns: NS) {
+    const input: string = JSON.parse(ns.args[0] as string); // I think parse actually returns a number here
+    const responsePort = ns.args[1] as number;
     let encoding = input;
     ns.print(`Input: ${JSON.stringify(input)}`);
 
@@ -17,7 +18,9 @@ export async function main(ns) {
     ns.print(`ParityBits: ${JSON.stringify(parityBits)}`);
 
     const ones = [...input.matchAll(/1/g)];
-    const error = ones.map((m) => m.index).reduce((xor, i) => xor ^ i);
+    const error = ones
+        .map((m) => m.index as number)
+        .reduce((xor, i) => xor ^ i);
     if (error > 0) {
         ns.print(`Error detected at position: ${error}`);
         const bit = input.charAt(error) === `0` ? `1` : `0`;

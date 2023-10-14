@@ -1,19 +1,22 @@
 // Proper 2-Coloring of a Graph
 
+import { NS } from "@ns";
+
 class Edge {
-    constructor(v0, v1) {
+    constructor(public v0: number, public v1: number) {
         this.v0 = Math.min(v0, v1);
         this.v1 = Math.max(v0, v1);
     }
 }
 
-/** @param {import("../../NetscriptDefinitions.d.ts").NS} ns */
-export async function main(ns) {
-    const input = JSON.parse(ns.args[0]);
-    const responsePort = ns.args[1];
+export async function main(ns: NS) {
+    const input: [number, [number, number][]] = JSON.parse(
+        ns.args[0] as string
+    );
+    const responsePort = ns.args[1] as number;
     const vertCount = input[0];
     const edges = get_unique_edges(input[1]);
-    let colors = new Array(vertCount).fill(undefined);
+    let colors = new Array<number | undefined>(vertCount).fill(undefined);
     colors[0] = 0;
 
     ns.print(`Vertices: ${vertCount}`);
@@ -60,8 +63,8 @@ export async function main(ns) {
     ns.writePort(responsePort, JSON.stringify(colors));
 }
 
-function get_unique_edges(input) {
-    const unique_edges = [];
+function get_unique_edges(input: [number, number][]) {
+    const unique_edges: Edge[] = [];
     input
         .map((e) => new Edge(e[0], e[1]))
         .forEach((e) => {
