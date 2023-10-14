@@ -1,13 +1,14 @@
+import { NS } from "@ns";
+
 class Script {
-    constructor(filename, args = [], tail = false) {
-        this.filename = filename;
-        this.args = args;
-        this.tail = tail;
-    }
+    constructor(
+        public filename: string,
+        public args: any[] = [],
+        public tail: boolean = false
+    ) {}
 }
 
-/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
-export async function main(ns) {
+export async function main(ns: NS) {
     const scripts = [
         new Script(`hacknet.app.js`),
         new Script(`netmapper.app.js`, [], true),
@@ -39,8 +40,8 @@ export async function main(ns) {
 
         const runOptions = {
             threads: 1,
-            preventDuplicates: true
-        }
+            preventDuplicates: true,
+        };
         const pid = ns.run(script.filename, runOptions, ...script.args);
         if (pid === 0) {
             ns.tprint(`ERROR: Unknown error starting ${script.filename}.`);
