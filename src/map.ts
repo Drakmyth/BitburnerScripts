@@ -1,5 +1,6 @@
-/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
-function print_host(ns, prefix, host) {
+import { NS } from "@ns";
+
+function print_host(ns: NS, prefix: string, host: string) {
     let label = `${prefix}  \\-- ${host}`;
 
     const flags = ns.flags([
@@ -19,16 +20,23 @@ function print_host(ns, prefix, host) {
     const show_root = flags[`r`] || flags[`root`];
     const server = ns.getServer(host);
 
-    const tags = [];
+    const tags: string[] = [];
 
-    if (show_level) {
-        tags.push(server.requiredHackingSkill);
+    if (show_level && server.requiredHackingSkill) {
+        tags.push(server.requiredHackingSkill.toString());
     }
     if (show_organization) {
         tags.push(server.organizationName);
     }
-    if (show_money) {
-        tags.push(ns.formatNumber(server.moneyAvailable, `($0.000a)`));
+    if (show_money && server.moneyAvailable) {
+        Intl.NumberFormat(undefined, {
+            style: "currency",
+            currency: "USD",
+            currencyDisplay: "narrowSymbol",
+            currencySign: "accounting",
+            maximumFractionDigits: 3
+        });
+        tags.push(ns.formatNumber(server.moneyAvailable, 3, 0));
     }
     if (show_root) {
         tags.push(server.hasAdminRights ? `ROOT` : `USER`);
@@ -41,8 +49,7 @@ function print_host(ns, prefix, host) {
     ns.tprint(label);
 }
 
-/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
-function walk(ns, host, prefix = ``) {
+function walk(ns: NS, host: string, prefix: string = ``) {
     const servers = ns.scan(host);
     if (host != `home`) {
         servers.shift();
@@ -56,10 +63,11 @@ function walk(ns, host, prefix = ``) {
     }
 }
 
-/** @param {import("../NetscriptDefinitions.d.ts").NS} ns */
-export async function main(ns) {
+export async function main(ns: NS) {
     let host = `home`;
-    const args = ns.args.filter((a) => a[0] != `-`);
+    const args: string[] = ns.args.filter(
+        (a): a is string => typeof a === "string" && a[0] != `-`
+    );
     if (args.length > 0) {
         host = args[0];
     }
