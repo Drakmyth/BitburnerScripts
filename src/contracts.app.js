@@ -1,5 +1,5 @@
-import * as Ports from "ports.lib.js";
-import { ContractSolver } from "contracts.lib.js";
+import * as Ports from "./ports.lib.js";
+import { ContractSolver } from "./contracts.lib.js";
 
 class Contract {
     constructor(title, filename, host) {
