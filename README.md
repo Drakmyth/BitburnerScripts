@@ -93,7 +93,7 @@ Contract solvers are used by [contracts.app.ts](#appliction-scripts) to automati
 | Compression III: LZ Compression         | Not Solved Yet...                                                                                              |
 | Encryption I: Caesar Cipher             | [contracts/encryption-i-caesar-cipher.ts](src/contracts/encryption-i-caesar-cipher.ts)                         |
 | Encryption II: Vigenère Cipher          | [contracts/encryption-ii-vigenere-cipher.ts](src/contracts/encryption-ii-vigenere-cipher.ts)                   |
-| Find All Valid Math Expressions         | Not Solved Yet...                                                                                              |
+| Find All Valid Math Expressions         | [contracts/find-all-valid-math-expressions.ts](src/contracts/find-all-valid-math-expressions.ts)               |
 | Find Largest Prime Factor               | [contracts/find-largest-prime-factor.ts](src/contracts/find-largest-prime-factor.ts)                           |
 | Generate IP Addresses                   | [contracts/generate-ip-addresses.ts](src/contracts/generate-ip-addresses.ts)                                   |
 | HammingCodes: Encoded Binary to Integer | [contracts/hammingcodes-encoded-binary-to-integer.ts](src/contracts/hammingcodes-encoded-binary-to-integer.ts) |

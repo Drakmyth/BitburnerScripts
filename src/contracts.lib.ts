@@ -48,7 +48,9 @@ export class ContractSolver {
     constructor(
         public title: string,
         public script: string,
-        public processInput: (input: CodingContractData) => CodingContractData = (input) => input
+        public processInput: (
+            input: CodingContractData
+        ) => CodingContractData = (input) => input
     ) {}
 
     solve = async (ns: NS, filename: string, host: string, portId: number) => {
@@ -85,43 +87,6 @@ export class ContractSolver {
 
 export const ContractSolvers = [
     new ContractSolver(
-        ContractTypes.FIND_LARGEST_PRIME_FACTOR,
-        `contracts/find-largest-prime-factor.js`
-    ),
-    new ContractSolver(
-        ContractTypes.SUBARRAY_WITH_MAXIMUM_SUM,
-        `contracts/subarray-with-maximum-sum.js`
-    ),
-    new ContractSolver(
-        ContractTypes.TOTAL_WAYS_TO_SUM_1,
-        `contracts/total-ways-to-sum.js`,
-        (input) => [input, [...Array(input).keys()].filter((a) => a > 0)]
-    ),
-    new ContractSolver(
-        ContractTypes.TOTAL_WAYS_TO_SUM_2,
-        `contracts/total-ways-to-sum.js`
-    ),
-    new ContractSolver(
-        ContractTypes.SPIRALIZE_MATRIX,
-        `contracts/spiralize-matrix.js`
-    ),
-    new ContractSolver(
-        ContractTypes.ARRAY_JUMPING_GAME_1,
-        `contracts/array-jumping-game.js`
-    ),
-    new ContractSolver(
-        ContractTypes.ARRAY_JUMPING_GAME_2,
-        `contracts/array-jumping-game-ii.js`
-    ),
-    new ContractSolver(
-        ContractTypes.MERGE_OVERLAPPING_INTERVALS,
-        `contracts/merge-overlapping-intervals.js`
-    ),
-    new ContractSolver(
-        ContractTypes.GENERATE_IP_ADDRESSES,
-        `contracts/generate-ip-addresses.js`
-    ),
-    new ContractSolver(
         ContractTypes.ALGORITHMIC_STOCK_TRADER_1,
         `contracts/algorithmic-stock-trader.js`,
         (input) => [1, input]
@@ -141,8 +106,89 @@ export const ContractSolvers = [
         `contracts/algorithmic-stock-trader.js`
     ),
     new ContractSolver(
+        ContractTypes.ARRAY_JUMPING_GAME_1,
+        `contracts/array-jumping-game.js`
+    ),
+    new ContractSolver(
+        ContractTypes.ARRAY_JUMPING_GAME_2,
+        `contracts/array-jumping-game-ii.js`
+    ),
+    new ContractSolver(
+        ContractTypes.COMPRESSION_1,
+        `contracts/compression-i-rle-compression.js`
+    ),
+    new ContractSolver(
+        ContractTypes.COMPRESSION_2,
+        `contracts/compression-ii-lz-decompression.js`
+    ),
+    // new ContractSolver(
+    //     ContractTypes.COMPRESSION_3,
+    //     `contracts/compression-iii-lz-compression.js`
+    // ),
+    new ContractSolver(
+        ContractTypes.ENCRYPTION_1,
+        `contracts/encryption-i-caesar-cipher.js`
+    ),
+    new ContractSolver(
+        ContractTypes.ENCRYPTION_2,
+        `contracts/encryption-ii-vigenere-cipher.js`
+    ),
+    new ContractSolver(
+        ContractTypes.FIND_ALL_VALID_MATH_EXPRESSIONS,
+        `contracts/find-all-valid-math-expressions.js`
+    ),
+    new ContractSolver(
+        ContractTypes.FIND_LARGEST_PRIME_FACTOR,
+        `contracts/find-largest-prime-factor.js`
+    ),
+    new ContractSolver(
+        ContractTypes.GENERATE_IP_ADDRESSES,
+        `contracts/generate-ip-addresses.js`
+    ),
+    new ContractSolver(
+        ContractTypes.HAMMINGCODES_DECODE,
+        `contracts/hammingcodes-encoded-binary-to-integer.js`
+    ),
+    new ContractSolver(
+        ContractTypes.HAMMINGCODES_ENCODE,
+        `contracts/hammingcodes-integer-to-encoded-binary.js`
+    ),
+    new ContractSolver(
+        ContractTypes.MERGE_OVERLAPPING_INTERVALS,
+        `contracts/merge-overlapping-intervals.js`
+    ),
+    new ContractSolver(
         ContractTypes.MINIMUM_PATH_SUM_IN_A_TRIANGLE,
         `contracts/minimum-path-sum-in-a-triangle.js`
+    ),
+    new ContractSolver(
+        ContractTypes.PROPER_2_COLORING_OF_A_GRAPH,
+        `contracts/proper-2-coloring-of-a-graph.js`
+    ),
+    new ContractSolver(
+        ContractTypes.SANITIZE_PARENTHESES_IN_EXPRESSION,
+        `contracts/sanitize-parentheses-in-expression.js`
+    ),
+    new ContractSolver(
+        ContractTypes.SHORTEST_PATH_IN_A_GRID,
+        `contracts/shortest-path-in-a-grid.js`
+    ),
+    new ContractSolver(
+        ContractTypes.SPIRALIZE_MATRIX,
+        `contracts/spiralize-matrix.js`
+    ),
+    new ContractSolver(
+        ContractTypes.SUBARRAY_WITH_MAXIMUM_SUM,
+        `contracts/subarray-with-maximum-sum.js`
+    ),
+    new ContractSolver(
+        ContractTypes.TOTAL_WAYS_TO_SUM_1,
+        `contracts/total-ways-to-sum.js`,
+        (input) => [input, [...Array(input).keys()].filter((a) => a > 0)]
+    ),
+    new ContractSolver(
+        ContractTypes.TOTAL_WAYS_TO_SUM_2,
+        `contracts/total-ways-to-sum.js`
     ),
     new ContractSolver(
         ContractTypes.UNIQUE_PATHS_IN_A_GRID_1,
@@ -155,43 +201,5 @@ export const ContractSolvers = [
     new ContractSolver(
         ContractTypes.UNIQUE_PATHS_IN_A_GRID_2,
         `contracts/unique-paths-in-a-grid.js`
-    ),
-    new ContractSolver(
-        ContractTypes.SHORTEST_PATH_IN_A_GRID,
-        `contracts/shortest-path-in-a-grid.js`
-    ),
-    new ContractSolver(
-        ContractTypes.SANITIZE_PARENTHESES_IN_EXPRESSION,
-        `contracts/sanitize-parentheses-in-expression.js`
-    ),
-    // new ContractSolver(ContractTypes.FIND_ALL_VALID_MATH_EXPRESSIONS, null),
-    new ContractSolver(
-        ContractTypes.HAMMINGCODES_ENCODE,
-        `contracts/hammingcodes-integer-to-encoded-binary.js`
-    ),
-    new ContractSolver(
-        ContractTypes.HAMMINGCODES_DECODE,
-        `contracts/hammingcodes-encoded-binary-to-integer.js`
-    ),
-    new ContractSolver(
-        ContractTypes.PROPER_2_COLORING_OF_A_GRAPH,
-        `contracts/proper-2-coloring-of-a-graph.js`
-    ),
-    new ContractSolver(
-        ContractTypes.COMPRESSION_1,
-        `contracts/compression-i-rle-compression.js`
-    ),
-    new ContractSolver(
-        ContractTypes.COMPRESSION_2,
-        `contracts/compression-ii-lz-decompression.js`
-    ),
-    // new ContractSolver(ContractTypes.COMPRESSION_3, null),
-    new ContractSolver(
-        ContractTypes.ENCRYPTION_1,
-        `contracts/encryption-i-caesar-cipher.js`
-    ),
-    new ContractSolver(
-        ContractTypes.ENCRYPTION_2,
-        `contracts/encryption-ii-vigenere-cipher.js`
     ),
 ];
