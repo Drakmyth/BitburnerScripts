@@ -110,7 +110,7 @@ export async function main(ns: NS) {
                 continue;
             }
 
-            if (server.hackDifficulty || -1 > (server.minDifficulty || -1)) {
+            if ((server.hackDifficulty || -1) > (server.minDifficulty || -1)) {
                 if (weakeningHosts.indexOf(server.hostname) < 0) {
                     ns.killall(server.hostname);
                     await execGrowth(ns, server);
