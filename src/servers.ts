@@ -1,19 +1,20 @@
 import { NS } from "@ns";
 
-async function buy_servers(ns: NS, ram: number) {
+async function get_servers(ns: NS, ram: number) {
     while (ns.getPurchasedServers().length < ns.getPurchasedServerLimit()) {
-        const bought = ns.purchaseServer(`foo`, ram) !== ``;
+        const append = ns.getPurchasedServers().length;
+        const bought = ns.purchaseServer(`foo-${append}`, ram) !== ``;
         if (!bought) {
             await ns.sleep(5000);
         }
     }
 }
 
-function delete_servers(ns: NS) {
+function upgrade_servers(ns: NS, ram: number) {
     const servers = ns.getPurchasedServers();
     for (let server of servers) {
         ns.killall(server);
-        ns.deleteServer(server);
+        ns.upgradePurchasedServer(server, ram);
     }
 }
 
@@ -22,10 +23,13 @@ function get_current_server_ram(ns: NS) {
     return servers.length > 0 ? ns.getServerMaxRam(servers[0]) : 0;
 }
 
-function can_afford_upgrade(ns: NS, ram: number) {
+function can_afford_upgrade(ns: NS, ram: number, current: number) {
     const total_servers = ns.getPurchasedServerLimit();
+    if (total_servers === 0) return false;
     return (
-        ns.getPlayer().money >= ns.getPurchasedServerCost(ram) * total_servers
+        ns.getPlayer().money >=
+        ns.getPurchasedServerCost(ram) * total_servers -
+            ns.getPurchasedServerCost(current) * total_servers
     );
 }
 
@@ -38,7 +42,10 @@ export async function main(ns: NS) {
     const simulate = flags[`s`] || flags[`simulate`];
 
     const current_ram = get_current_server_ram(ns);
-    const daemon_ram = ns.getScriptRam(`daemon.js`);
+    const daemon_ram =
+        ns.getScriptRam(`grow.daemon.js`) +
+        ns.getScriptRam(`hack.daemon.js`) +
+        ns.getScriptRam(`weaken.daemon.js`);
 
     let minimum_ram = 1;
     while (minimum_ram < daemon_ram) {
@@ -48,16 +55,28 @@ export async function main(ns: NS) {
     ns.tprint(`Current Server RAM: ${current_ram}`);
     let next_upgrade =
         current_ram < minimum_ram ? minimum_ram : current_ram * 2;
-    while (can_afford_upgrade(ns, next_upgrade * 2)) {
+    while (can_afford_upgrade(ns, next_upgrade * 2, current_ram)) {
         next_upgrade *= 2;
     }
 
+    let upgrade_cost =
+        ns.getPurchasedServerCost(next_upgrade) * ns.getPurchasedServerLimit() -
+        ns.getPurchasedServerCost(current_ram) * ns.getPurchasedServerLimit();
+
+    let formatted_cost = Intl.NumberFormat(undefined, {
+        style: "currency",
+        currency: "USD",
+        currencyDisplay: "narrowSymbol",
+        currencySign: "accounting",
+        maximumFractionDigits: 3,
+    }).format(upgrade_cost);
+
     if (current_ram === next_upgrade) {
-        const upgrade_cost =
-            ns.getPurchasedServerCost(next_upgrade * 2) *
+        upgrade_cost =
+            ns.getPurchasedServerCost(next_upgrade) *
             ns.getPurchasedServerLimit();
 
-        const formatted_cost = Intl.NumberFormat(undefined, {
+        formatted_cost = Intl.NumberFormat(undefined, {
             style: "currency",
             currency: "USD",
             currencyDisplay: "narrowSymbol",
@@ -68,18 +87,6 @@ export async function main(ns: NS) {
         ns.tprint(`Next upgrade (${next_upgrade * 2}) at ${formatted_cost}`);
         return;
     } else if (simulate) {
-        const upgrade_cost =
-            ns.getPurchasedServerCost(next_upgrade) *
-            ns.getPurchasedServerLimit();
-
-        const formatted_cost = Intl.NumberFormat(undefined, {
-            style: "currency",
-            currency: "USD",
-            currencyDisplay: "narrowSymbol",
-            currencySign: "accounting",
-            maximumFractionDigits: 3,
-        }).format(upgrade_cost);
-
         ns.tprint(`Next upgrade (${next_upgrade}) at ${formatted_cost}`);
         return;
     }
@@ -87,9 +94,16 @@ export async function main(ns: NS) {
     ns.tprint(`Next Affordable Upgrade: ${next_upgrade}`);
 
     if (!simulate) {
-        delete_servers(ns);
-        ns.tprint(`Buying upgraded servers...`);
-        await buy_servers(ns, next_upgrade);
-        ns.tprint(`Servers upgraded. Make sure to run flood.js.`);
+        if (ns.getPurchasedServers().length === 0) {
+            ns.tprint(`Buying servers...`);
+            await get_servers(ns, minimum_ram);
+        } else if (ns.getPlayer().money < upgrade_cost) {
+            ns.tprint(`Not enough money to upgrade servers.`);
+            return;
+        } else {
+            ns.tprint(`Upgrading servers...`);
+            upgrade_servers(ns, next_upgrade);
+        }
+        ns.tprint(`Servers upgraded. Make sure to run flooder.app.js.`);
     }
 }
